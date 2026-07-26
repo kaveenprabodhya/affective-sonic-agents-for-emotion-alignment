@@ -1,0 +1,8 @@
+numpy
+scipy
+librosa          # audio loading + acoustic feature extraction
+soundfile        # wav/flac/ogg I/O (libsndfile)
+scikit-learn     # provisional valence/arousal regressors (Estimators A & B)
+pandas           # dataset + annotation handling
+matplotlib       # diagnostic plots (predicted vs actual, error by clip length)
+tqdm             # progress bars over the dataset
