@@ -1,0 +1,10 @@
+length_s,feature_set,n_windows,val_R2,val_RMSE,aro_R2,aro_RMSE
+2.0,A (spectral/timbral),1200,0.167,0.19,0.596,0.171
+2.0,B (tonal/rhythmic/dyn),1200,0.07,0.201,0.485,0.193
+2.0,A+B (combined),1200,0.183,0.188,0.614,0.167
+3.0,A (spectral/timbral),1200,0.215,0.185,0.618,0.166
+3.0,B (tonal/rhythmic/dyn),1200,0.064,0.201,0.492,0.191
+3.0,A+B (combined),1200,0.231,0.183,0.62,0.166
+5.0,A (spectral/timbral),1199,0.224,0.183,0.617,0.167
+5.0,B (tonal/rhythmic/dyn),1199,0.074,0.2,0.515,0.187
+5.0,A+B (combined),1199,0.24,0.182,0.622,0.165
