@@ -1,0 +1,71 @@
+# 16 brand briefs, 4 per valence-arousal quadrant; coordinates distributed within each quadrant.
+# Scale [-1, 1]; 0 = neutral valence / moderate arousal. Targets are the measurable objective;
+# the brand_description is the qualitative guidance the generator maps to acoustic parameters.
+scale: [-1, 1]
+n_briefs: 16
+
+briefs:
+  - id: B01
+    quadrant: HV_HA
+    target: {valence: 0.55, arousal: 0.65}
+    brand_description: "A sports energy drink for young athletes, promising a burst of vitality and peak performance."
+  - id: B02
+    quadrant: HV_HA
+    target: {valence: 0.75, arousal: 0.45}
+    brand_description: "A family theme park advertising a joyful day out full of fun and laughter."
+  - id: B03
+    quadrant: HV_HA
+    target: {valence: 0.45, arousal: 0.8}
+    brand_description: "A competitive mobile game launch, fast-paced and thrilling, built for quick reflexes and adrenaline."
+  - id: B04
+    quadrant: HV_HA
+    target: {valence: 0.65, arousal: 0.6}
+    brand_description: "A summer music festival celebrating upbeat, celebratory energy and shared euphoria."
+  - id: B05
+    quadrant: LV_HA
+    target: {valence: -0.55, arousal: 0.65}
+    brand_description: "A home security alarm conveying urgency and the need for immediate attention to a threat."
+  - id: B06
+    quadrant: LV_HA
+    target: {valence: -0.75, arousal: 0.45}
+    brand_description: "A horror film release, unsettling and menacing, designed to provoke dread and unease."
+  - id: B07
+    quadrant: LV_HA
+    target: {valence: -0.45, arousal: 0.8}
+    brand_description: "A road-safety campaign warning of the sudden danger of distracted driving."
+  - id: B08
+    quadrant: LV_HA
+    target: {valence: -0.65, arousal: 0.6}
+    brand_description: "A cybersecurity breach-alert service signalling alarm and pressing risk."
+  - id: B09
+    quadrant: LV_LA
+    target: {valence: -0.55, arousal: -0.55}
+    brand_description: "A bereavement-support charity offering quiet comfort in times of grief and loss."
+  - id: B10
+    quadrant: LV_LA
+    target: {valence: -0.75, arousal: -0.35}
+    brand_description: "A documentary on isolation and loneliness, sombre and reflective in tone."
+  - id: B11
+    quadrant: LV_LA
+    target: {valence: -0.4, arousal: -0.75}
+    brand_description: "A funeral-planning service, subdued and solemn, providing dignified support."
+  - id: B12
+    quadrant: LV_LA
+    target: {valence: -0.6, arousal: -0.6}
+    brand_description: "A mental-health service addressing low mood and quiet despair with gentle care."
+  - id: B13
+    quadrant: HV_LA
+    target: {valence: 0.55, arousal: -0.55}
+    brand_description: "A spa and wellness retreat offering deep relaxation and tranquil escape."
+  - id: B14
+    quadrant: HV_LA
+    target: {valence: 0.75, arousal: -0.35}
+    brand_description: "A herbal tea brand evoking warmth, comfort and gentle contentment."
+  - id: B15
+    quadrant: HV_LA
+    target: {valence: 0.4, arousal: -0.75}
+    brand_description: "A meditation and sleep app promoting stillness, peace and calm."
+  - id: B16
+    quadrant: HV_LA
+    target: {valence: 0.6, arousal: -0.6}
+    brand_description: "A luxury linens brand conveying soft, serene comfort and quiet indulgence."

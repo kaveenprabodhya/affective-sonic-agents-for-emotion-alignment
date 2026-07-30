@@ -1,0 +1,83 @@
+# Stage 1 - experimental design lock.
+# Sample-size and H1 test-form items are flagged for Dr Coleman (3 August meeting)
+# and must be confirmed before any experimental data generation.
+
+scale:
+  range: [-1, 1]
+  meaning: "0 = neutral valence and moderate arousal"
+  survey_rescale: "(x - 5) / 4"        # 1 -> -1, 5 -> 0, 9 -> +1; applied identically to Q1 and Q2
+
+briefs:
+  n: 16
+  per_quadrant: 4                       # HV_HA, LV_HA, LV_LA, HV_LA
+  file: briefs.yaml
+
+generation:
+  runs_per_brief: 3
+  conditions: [non_optimised, optimised]   # non_optimised = iteration 0; optimised = final accepted iteration of the SAME run
+  matched_pairs: 48                     # 16 briefs x 3 runs
+  stimuli_total: 96                     # 48 pairs x 2 conditions
+  optimisation:
+    metric: euclidean_va
+    threshold: 0.25                     # PROVISIONAL - finalise from Estimator A frozen RMSE at Stage 3
+    threshold_basis: "Stage-0 per-axis RMSE 0.19 valence / 0.17 arousal -> sqrt(0.19^2 + 0.17^2) ~= 0.25"
+    iteration_cap: 10
+    early_stop: at_threshold
+    optimised_selection: best_distance_within_cap
+  retries: 3                            # invalid parameter JSON or failed render; run re-drawn if still failing; logged
+
+audience:
+  personas: 32                          # full 2^5 OCEAN factorial (methodology MDU: 32 persona rows)
+  file: personas.yaml
+  repetitions: 3                        # per persona x stimulus; fresh session each; stimulus order randomised
+  survey_calls: 9216                    # 32 x (16 x 3 x 2) x 3
+  retries: 3                            # invalid or out-of-range Q1-Q12; excluded and logged if still failing
+  reporting: [per_cell_completion_rate, per_cell_error_rate, overall_completion_rate, overall_error_rate]  # RO4
+
+estimators:
+  A: {corpus: DEAM,  role: optimisation_coach, model_family: tree_ensemble}
+  B: {corpus: PMEmo, role: held_out_H1_judge, model_family: svr_or_mlp, frozen_before_generation: true}
+  feature_families: combined_A_plus_B   # strict disjointness abandoned (Stage 0); independence via dual-corpus + different model families
+  independent_test_set: 4Q_panda        # generalisation check for RO4 (not for training)
+
+models:
+  audience_primary:  {name: qwen, checkpoint: TBD_at_pilot, provider: TBD, temperature: TBD}
+  generator_primary: {name: qwen, checkpoint: TBD_at_pilot, provider: TBD, temperature: TBD}
+  cross_check:       {name: claude-sonnet-5, scope: audience_survey_rerun_on_FIXED_stimuli}   # model-robustness check
+  logging: [provider, model_id, model_version, request_id, system_prompt, user_prompt,
+            sampling_settings, raw_response, parsed_response, retry_count, token_usage]
+  determinism_claim: none               # repeated runs measure model variation, not seed-based replication
+
+synthesis:
+  synth: FluidSynth
+  soundfont:
+    name: "GeneralUser GS"
+    version: "2.0.1"                     # confirm against the release actually downloaded
+    licence: "GeneralUser GS License v2.0"
+    cite: "Collins, S.C. (2024)"
+    source: "https://github.com/mrbumpy409/GeneralUser-GS"
+  render: MIDI_to_wav
+  sample_rate_hz: 22050
+
+inferential_units:
+  H1: "unit = brief (16); optimised vs non-optimised distances paired within brief (3 runs/brief).
+       Either average to brief level for a paired test, OR mixed model with runs nested in briefs.
+       Test form (paired vs mixed) is a Coleman decision - see coleman_signoff."
+  H2: "observation = persona x stimulus x repetition; crossed random effects (persona, stimulus);
+       OCEAN levels fixed; effective replication = the persona grid, not the raw response count."
+  H3: "observation = persona x stimulus x condition x repetition; brief and persona random;
+       condition fixed; repetitions at the lowest level."
+  note: "Repeated LLM calls raise precision but do NOT create additional independent respondents."
+
+stages:
+  1: "Define 16 briefs and target coordinates (this config)."
+  2: "3 generation runs per brief -> 48 matched optimised/non-optimised pairs."
+  3: "Frozen Estimator B evaluates the 96 stimuli for H1."
+  4: "Present every stimulus to every persona in 3 fresh-session repetitions; record Q1-Q12."
+  5: "Convert Q1-Q2 to VA coordinates; compute alignment distances and per-dimension differences."
+  6: "H1-H3 statistics + exploratory MDU."
+
+coleman_signoff:                          # required before data generation (3 August)
+  - "Sample sizes: 16 briefs / 32 personas / 3 runs / 3 repetitions"
+  - "H1 test form: paired t-test at brief level vs mixed model with runs nested in briefs"
+  - "Q1-Q12 survey instrument (Appendix C)"

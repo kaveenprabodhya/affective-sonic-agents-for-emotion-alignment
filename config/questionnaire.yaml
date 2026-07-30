@@ -1,0 +1,43 @@
+# Sonic Logo Perception Survey (Appendix C).
+# Identical wording, order and scales for every agent. Wording is verbatim from Appendix C.
+# This file is the single source the audience harness renders the survey from, so the
+# instrument the agents see cannot drift from the chapter.
+
+instruction: "Using only the acoustic feature values provided, rate the emotional quality you infer from the sonic logo. Answer all twelve items."
+
+dimensional:
+  - id: Q1
+    construct: valence
+    text: "Overall, how unpleasant or pleasant is the emotional quality conveyed by the sonic logo?"
+    points: 9
+    anchors: {1: "Very unpleasant", 5: "Neither unpleasant nor pleasant", 9: "Very pleasant"}
+    rescale: "(x - 5) / 4"
+  - id: Q2
+    construct: arousal
+    text: "Overall, how low or high is the level of activation conveyed by the sonic logo?"
+    points: 9
+    anchors: {1: "Very low activation", 5: "Moderate activation", 9: "Very high activation"}
+    rescale: "(x - 5) / 4"
+
+emotion_terms:
+  points: 5
+  labels: {1: "Not at all", 2: "Slightly", 3: "Moderately", 4: "Strongly", 5: "Extremely"}
+  stem: "How strongly does the sonic logo convey {term}?"
+  # order is fixed and interleaved across quadrants so consecutive items do not share valence/arousal
+  items:
+    - {id: Q3,  term: happiness,   quadrant: HV_HA}
+    - {id: Q4,  term: tension,     quadrant: LV_HA}
+    - {id: Q5,  term: calmness,    quadrant: HV_LA}
+    - {id: Q6,  term: sadness,     quadrant: LV_LA}
+    - {id: Q7,  term: excitement,  quadrant: HV_HA}
+    - {id: Q8,  term: fear,        quadrant: LV_HA}
+    - {id: Q9,  term: contentment, quadrant: HV_LA}
+    - {id: Q10, term: boredom,     quadrant: LV_LA}
+    - {id: Q11, term: relaxation,  quadrant: HV_LA}
+    - {id: Q12, term: anger,       quadrant: LV_HA}
+
+output_contract:                 # what a valid agent response must satisfy (drives validation + retries)
+  format: json_only
+  keys: [Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12]
+  ranges: {Q1: [1, 9], Q2: [1, 9], "Q3..Q12": [1, 5]}
+  integers_only: true
