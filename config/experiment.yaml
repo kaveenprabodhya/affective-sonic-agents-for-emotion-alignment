@@ -81,3 +81,16 @@ coleman_signoff:                          # required before data generation (3 A
   - "Sample sizes: 16 briefs / 32 personas / 3 runs / 3 repetitions"
   - "H1 test form: paired t-test at brief level vs mixed model with runs nested in briefs"
   - "Q1-Q12 survey instrument (Appendix C)"
+
+baselines:                              # non-OCEAN controls; analysed separately, H2 models unchanged
+  neutral:
+    description: "Same features, survey, settings and fresh-session procedure as OCEAN agents; no personality profile or listener identity."
+    prompt: config/prompts/audience_system_neutral.txt
+    responses: 288                      # 96 stimuli x 3 reps
+  generic:
+    description: "Identified only as a general listener; no traits, preferences or demographics. Isolates role-assignment from trait content."
+    prompt: config/prompts/audience_system_generic.txt
+    responses: 288
+  total_baseline_responses: 576
+  total_responses: 9792                 # 9216 OCEAN + 576 baseline
+  analysis: "Descriptive validation. An absent personality cannot be encoded as high/low trait values, so baselines are not OCEAN cells; compared against the OCEAN response distribution."
