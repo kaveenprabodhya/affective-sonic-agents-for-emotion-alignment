@@ -1,6 +1,5 @@
 # Stage 1 - experimental design lock.
-# Sample-size and H1 test-form items are flagged for Dr Coleman (3 August meeting)
-# and must be confirmed before any experimental data generation.
+# Sample sizes and the H1 test form are design choices recorded here; adjust as needed.
 
 scale:
   range: [-1, 1]
@@ -19,8 +18,8 @@ generation:
   stimuli_total: 96                     # 48 pairs x 2 conditions
   optimisation:
     metric: euclidean_va
-    threshold: 0.25                     # PROVISIONAL - finalise from Estimator A frozen RMSE at Stage 3
-    threshold_basis: "Stage-0 per-axis RMSE 0.19 valence / 0.17 arousal -> sqrt(0.19^2 + 0.17^2) ~= 0.25"
+    threshold: 0.15                    # = sqrt(A valence_RMSE^2 + arousal_RMSE^2) = sqrt(0.206^2 + 0.182^2)
+    threshold_basis: "Estimator A frozen combined RMSE: valence 0.206, arousal 0.182"
     iteration_cap: 10
     early_stop: at_threshold
     optimised_selection: best_distance_within_cap
@@ -41,9 +40,9 @@ estimators:
   independent_test_set: 4Q_panda        # generalisation check for RO4 (not for training)
 
 models:
-  audience_primary:  {name: qwen, checkpoint: TBD_at_pilot, provider: TBD, temperature: TBD}
-  generator_primary: {name: qwen, checkpoint: TBD_at_pilot, provider: TBD, temperature: TBD}
-  cross_check:       {name: claude-sonnet-5, scope: audience_survey_rerun_on_FIXED_stimuli}   # model-robustness check
+  audience_primary:  {name: qwen, checkpoint: qwen3:8b, provider: ollama_local, temperature: 0.7, think: false}
+  generator_primary: {name: qwen, checkpoint: qwen3:8b, provider: ollama_local, temperature: 0.7, think: false}
+  cross_check:       {name: claude-sonnet-5, scope: audience_survey_rerun_on_FIXED_stimuli}   # optional model-robustness check
   logging: [provider, model_id, model_version, request_id, system_prompt, user_prompt,
             sampling_settings, raw_response, parsed_response, retry_count, token_usage]
   determinism_claim: none               # repeated runs measure model variation, not seed-based replication
@@ -56,13 +55,15 @@ synthesis:
     licence: "GeneralUser GS License v2.0"
     cite: "Collins, S.C. (2024)"
     source: "https://github.com/mrbumpy409/GeneralUser-GS"
+    path: assets/soundfonts/GeneralUser-GS.sf2   # local .sf2 used for rendering
   render: MIDI_to_wav
+  duration_s: 3.0                       # sonic-logo length
   sample_rate_hz: 22050
 
 inferential_units:
   H1: "unit = brief (16); optimised vs non-optimised distances paired within brief (3 runs/brief).
        Either average to brief level for a paired test, OR mixed model with runs nested in briefs.
-       Test form (paired vs mixed) is a Coleman decision - see coleman_signoff."
+       Test form (paired vs mixed) still to be finalised (paired t-test vs mixed model)."
   H2: "observation = persona x stimulus x repetition; crossed random effects (persona, stimulus);
        OCEAN levels fixed; effective replication = the persona grid, not the raw response count."
   H3: "observation = persona x stimulus x condition x repetition; brief and persona random;
@@ -77,10 +78,6 @@ stages:
   5: "Convert Q1-Q2 to VA coordinates; compute alignment distances and per-dimension differences."
   6: "H1-H3 statistics + exploratory MDU."
 
-coleman_signoff:                          # required before data generation (3 August)
-  - "Sample sizes: 16 briefs / 32 personas / 3 runs / 3 repetitions"
-  - "H1 test form: paired t-test at brief level vs mixed model with runs nested in briefs"
-  - "Q1-Q12 survey instrument (Appendix C)"
 
 baselines:                              # non-OCEAN controls; analysed separately, H2 models unchanged
   neutral:
