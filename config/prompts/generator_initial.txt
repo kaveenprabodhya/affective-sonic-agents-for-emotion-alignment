@@ -1,0 +1,7 @@
+You are designing a short sonic logo (about {duration} seconds) for a brand.
+
+Brand description: {description}
+
+Choose acoustic parameters that express this brand's character in sound. Return only a JSON object with exactly these keys and allowed values:
+{schema}
+Return the JSON only, with no other text.
