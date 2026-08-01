@@ -82,7 +82,13 @@ class LLMClient:
                            completion_tokens=m.usage.output_tokens)
 
     def _mock(self, system, user):
-        """Fake response that reacts to features and persona, for dry-runs only."""
+        """Dispatch: generator prompts get parameter JSON, others get survey JSON."""
+        if "sonic logo" in (system + user) or '"tempo_bpm"' in user:
+            return self._mock_params(user)
+        return self._mock_survey(system, user)
+
+    def _mock_survey(self, system, user):
+        """Fake survey response that reacts to features and persona, for dry-runs only."""
         seed = int(hashlib.md5((system + user).encode()).hexdigest(), 16) % (2 ** 32)
         rnd = random.Random(seed)
         tempo = float((re.search(r"Tempo \(BPM\): ([\d.]+)", user) or [0, "100"])[1])
@@ -98,6 +104,30 @@ class LLMClient:
                "Q2": clip(arousal + rnd.uniform(-0.5, 0.5), 1, 9)}
         for i in range(3, 13):
             obj[f"Q{i}"] = rnd.randint(1, 5)
+        return LLMResponse(text=json.dumps(obj), model="mock", backend="mock")
+
+    def _mock_params(self, user):
+        """Fake generator response: valid parameters nudged toward the stated gap."""
+        gv = ga = 0.0
+        mg = re.search(r"Gap.*?valence ([+-]?\d*\.?\d+), arousal ([+-]?\d*\.?\d+)", user, re.DOTALL)
+        if mg:
+            gv, ga = float(mg.group(1)), float(mg.group(2))
+        cur = lambda pat, d: (re.search(pat, user).group(1) if re.search(pat, user) else d)
+        tempo = int(cur(r'"tempo_bpm":\s*(\d+)', "100"))
+        center = int(cur(r'"pitch_center_midi":\s*(\d+)', "64"))
+        mode = cur(r'"mode":\s*"(major|minor)"', "major")
+        tempo = int(min(200, max(40, tempo + ga * 45)))
+        center = int(min(84, max(48, center + ga * 6 + gv * 4)))
+        if gv > 0.15:
+            mode = "major"
+        elif gv < -0.15:
+            mode = "minor"
+        obj = {"tempo_bpm": tempo, "mode": mode, "pitch_center_midi": center,
+               "pitch_range": 12, "contour": "rising" if ga >= 0 else "falling",
+               "notes_per_beat": 4 if ga > 0.15 else (1 if ga < -0.15 else 2),
+               "dynamics": "loud" if ga > 0.15 else ("soft" if ga < -0.15 else "moderate"),
+               "articulation": "staccato" if ga > 0 else "legato",
+               "instrument": "trumpet" if ga > 0 else "warm pad"}
         return LLMResponse(text=json.dumps(obj), model="mock", backend="mock")
 
     # ----- logging -----
