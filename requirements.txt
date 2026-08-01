@@ -1,10 +1,15 @@
+# Python dependencies.
+# Stage 0 (feature extraction + estimators):
 numpy
 scipy
-librosa          # audio loading + acoustic feature extraction
-soundfile        # wav/flac/ogg I/O (libsndfile)
-scikit-learn     # provisional valence/arousal regressors (Estimators A & B)
-pandas           # dataset + annotation handling
-matplotlib       # diagnostic plots (predicted vs actual, error by clip length)
-tqdm             # progress bars over the dataset
-pyyaml
-anthropic
+librosa
+soundfile
+scikit-learn
+pandas
+matplotlib
+tqdm
+# Stage 1-2 (config + LLM harness):
+pyyaml              # load config/*.yaml
+pretty_midi         # build MIDI motifs for the generator (rendered by FluidSynth)
+# Ollama is called over HTTP with the stdlib (urllib) - no extra dependency.
+anthropic           # OPTIONAL - only needed if you run the Sonnet cross-check
