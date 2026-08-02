@@ -220,5 +220,13 @@ __marimo__/
 .streamlit/secrets.toml
 
 /datasets
-/data
+data/**
+!data/
+!data/analysis/
+!data/audience/
+!data/stimuli/
+!data/analysis/*.json
+!data/analysis/*.csv
+!data/audience/*.csv
+!data/stimuli/manifest.json
 /models
