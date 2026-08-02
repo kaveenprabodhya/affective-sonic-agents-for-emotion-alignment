@@ -82,8 +82,9 @@ class LLMClient:
                            completion_tokens=m.usage.output_tokens)
 
     def _mock(self, system, user):
-        """Dispatch: generator prompts get parameter JSON, others get survey JSON."""
-        if "sonic logo" in (system + user) or '"tempo_bpm"' in user:
+        """Dispatch: generator prompts (they carry the parameter schema) get parameter JSON;
+        everything else (the audience survey) gets survey JSON."""
+        if '"tempo_bpm"' in user:
             return self._mock_params(user)
         return self._mock_survey(system, user)
 
