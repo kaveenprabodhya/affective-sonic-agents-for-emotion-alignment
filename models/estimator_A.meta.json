@@ -1,0 +1,25 @@
+{
+  "name": "estimator_A",
+  "corpus": "DEAM",
+  "model_family": "rf",
+  "role": "optimisation_coach",
+  "held_out_from_optimisation": false,
+  "feature_set": "combined_A_plus_B",
+  "n_features": 70,
+  "output_scale": [
+    -1,
+    1
+  ],
+  "n_windows": 10812,
+  "n_songs": 1802,
+  "metrics_heldout_songs": {
+    "valence_R2": 0.243,
+    "valence_RMSE": 0.206,
+    "arousal_R2": 0.582,
+    "arousal_RMSE": 0.182,
+    "n_test_windows": 2166
+  },
+  "sklearn_version": "1.9.0",
+  "frozen_utc": "2026-07-31T15:25:20+00:00",
+  "seed": 42
+}

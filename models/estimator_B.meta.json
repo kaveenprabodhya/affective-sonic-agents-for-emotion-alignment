@@ -1,0 +1,25 @@
+{
+  "name": "estimator_B",
+  "corpus": "PMEmo",
+  "model_family": "svr",
+  "role": "held_out_H1_judge",
+  "held_out_from_optimisation": true,
+  "feature_set": "combined_A_plus_B",
+  "n_features": 70,
+  "output_scale": [
+    -1,
+    1
+  ],
+  "n_windows": 3848,
+  "n_songs": 751,
+  "metrics_heldout_songs": {
+    "valence_R2": 0.472,
+    "valence_RMSE": 0.236,
+    "arousal_R2": 0.539,
+    "arousal_RMSE": 0.247,
+    "n_test_windows": 782
+  },
+  "sklearn_version": "1.9.0",
+  "frozen_utc": "2026-07-31T15:42:11+00:00",
+  "seed": 42
+}
