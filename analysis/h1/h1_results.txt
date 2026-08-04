@@ -1,0 +1,29 @@
+H1 - stimulus alignment (Estimator B, held-out judge). Paired within brief/run.
+
+mean non-optimised B-distance: 0.201
+mean optimised B-distance:     0.202
+mean B-reduction (non-opt - opt): -0.001
+pairs improved: 8 / 48
+
+-- paired model: B-distance ~ condition + (1|brief/run) --
+                       Estimate   Std. Error       df  t value     Pr(>|t|)
+(Intercept)        0.2013979167 0.0303647434 15.00728 6.632624 7.956215e-06
+conditionoptimised 0.0009645833 0.0008079309 47.00464 1.193893 2.385103e-01
+
+-- paired t-test on optimised vs non-optimised B-distance (48 pairs) --
+
+	Paired t-test
+
+data:  h1$opt_B_dist and h1$nonopt_B_dist
+t = 1.1938, df = 47, p-value = 0.2385
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.0006608857  0.0025900523
+sample estimates:
+mean difference 
+   0.0009645833 
+
+
+Conclusion: report whether the INDEPENDENT judge confirms optimisation moved logos
+toward target. If non-significant, H1 is the stimulus-validity LIMITATION: logos were
+generated TOWARD targets, not proven to carry the intended VA.

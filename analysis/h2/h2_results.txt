@@ -1,0 +1,52 @@
+
+========== perceived_v ~ OCEAN + condition | (1|persona)+(1|stimulus) ==========
+                         Estimate Std. Error       df    t value     Pr(>|t|)
+(Intercept)            0.22371419 0.04488392 99.20835   4.984284 2.641048e-06
+opennesshigh           0.18191189 0.02329401 25.99996   7.809386 2.771892e-08
+conscientiousnesshigh  0.08534071 0.02329401 25.99996   3.663634 1.116794e-03
+extraversionhigh       0.20003255 0.02329401 25.99996   8.587297 4.568832e-09
+agreeablenesshigh      0.14784071 0.02329401 25.99996   6.346728 1.012744e-06
+neuroticismhigh       -0.29584418 0.02329401 25.99996 -12.700442 1.180043e-12
+conditionoptimised     0.04595269 0.04907766 93.99993   0.936326 3.515047e-01
+
+-- LRT: OCEAN traits jointly (omnibus H2) --
+Data: oc
+Models:
+lmer(f0, data = oc, REML = FALSE): f0
+update(m, REML = FALSE): f
+                                  npar     AIC     BIC logLik deviance  Chisq
+lmer(f0, data = oc, REML = FALSE)    5 -4397.4 -4361.7 2203.7  -4407.4       
+update(m, REML = FALSE)             10 -4471.3 -4400.0 2245.7  -4491.3 83.942
+                                  Df Pr(>Chisq)    
+lmer(f0, data = oc, REML = FALSE)                  
+update(m, REML = FALSE)            5  < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+singular: FALSE 
+
+========== perceived_a ~ OCEAN + condition | (1|persona)+(1|stimulus) ==========
+                         Estimate Std. Error       df    t value     Pr(>|t|)
+(Intercept)            0.24875217 0.04516185 96.64626   5.508016 2.996279e-07
+opennesshigh           0.18956163 0.02383178 25.99991   7.954153 1.969913e-08
+conscientiousnesshigh  0.09429253 0.02383178 25.99991   3.956588 5.234960e-04
+extraversionhigh       0.32020399 0.02383178 25.99991  13.436007 3.290687e-13
+agreeablenesshigh      0.06955295 0.02383178 25.99991   2.918496 7.166557e-03
+neuroticismhigh       -0.26139323 0.02383178 25.99991 -10.968262 2.991310e-11
+conditionoptimised     0.05501302 0.04883635 94.00079   1.126477 2.628312e-01
+
+-- LRT: OCEAN traits jointly (omnibus H2) --
+Data: oc
+Models:
+lmer(f0, data = oc, REML = FALSE): f0
+update(m, REML = FALSE): f
+                                  npar     AIC     BIC logLik deviance  Chisq
+lmer(f0, data = oc, REML = FALSE)    5 -1864.7 -1829.0 937.34  -1874.7       
+update(m, REML = FALSE)             10 -1941.8 -1870.5 980.88  -1961.8 87.076
+                                  Df Pr(>Chisq)    
+lmer(f0, data = oc, REML = FALSE)                  
+update(m, REML = FALSE)            5  < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+singular: FALSE 
+
+Holm-adjust the two omnibus p-values (valence, arousal) in the write-up.
