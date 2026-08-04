@@ -1,4 +1,4 @@
-"audience_group","condition","n_stimuli","mean_valence","sd_valence","mean_arousal","sd_arousal","mean_alignment_distance","sd_alignment_distance"
+"audience_group","condition","n_stimuli","mean_valence","sd_valence","mean_arousal","sd_arousal","mean_distance","sd_distance"
 "Generic-listener control","non_optimised",48,0.395833333333333,0.237264254031522,0.78125,0.38154261045574,0.966106954173398,0.382638029340111
 "Generic-listener control","optimised",48,0.534722222222222,0.387387340953023,0.805555555555556,0.369225970347267,1.0715545040167,0.427051582298892
 "Neutral control","non_optimised",48,0.680555555555556,0.30910787006304,0.829861111111111,0.292720150796673,1.16412388087675,0.377651830062314

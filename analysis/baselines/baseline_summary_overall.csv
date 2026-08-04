@@ -1,4 +1,4 @@
-"audience_group","n_stimuli","mean_valence","sd_valence","mean_arousal","sd_arousal","mean_alignment_distance","sd_alignment_distance"
+"audience_group","n_stimuli","mean_valence","sd_valence","mean_arousal","sd_arousal","mean_distance","sd_distance"
 "Generic-listener control",96,0.465277777777778,0.327060867295645,0.793402777777778,0.373653365075131,1.01883072909505,0.406781351901029
 "Neutral control",96,0.684027777777778,0.343255115146263,0.809027777777778,0.324424066090772,1.15146800155684,0.412172446343884
 "OCEAN audience",96,0.406331380208333,0.240274333990429,0.482367621527778,0.239587349546413,0.749033631867469,0.279104457367032

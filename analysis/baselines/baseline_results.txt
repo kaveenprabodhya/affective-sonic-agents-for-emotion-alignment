@@ -1,73 +1,50 @@
 ========== DESCRIPTIVE BASELINE ANALYSIS ==========
 
-The analysis compares the stimulus-level OCEAN audience mean with
-the neutral and generic-listener controls. Repetitions are averaged first.
-No inferential significance tests are used.
+Stimulus-level OCEAN mean vs neutral and generic controls. Repetitions averaged first.
+Descriptive only; no significance tests.
 
----------- OVERALL SUMMARY ----------
-# A tibble: 3 × 8
-  audience_group       n_stimuli mean_valence sd_valence mean_arousal sd_arousal
-  <chr>                    <int>        <dbl>      <dbl>        <dbl>      <dbl>
-1 Generic-listener co…        96        0.465      0.327        0.793      0.374
-2 Neutral control             96        0.684      0.343        0.809      0.324
-3 OCEAN audience              96        0.406      0.240        0.482      0.240
-# ℹ 2 more variables: mean_alignment_distance <dbl>,
-#   sd_alignment_distance <dbl>
+---------- Response counts ----------
 
----------- SUMMARY BY CONDITION ----------
-# A tibble: 6 × 9
-  audience_group        condition n_stimuli mean_valence sd_valence mean_arousal
-  <chr>                 <chr>         <int>        <dbl>      <dbl>        <dbl>
-1 Generic-listener con… non_opti…        48        0.396      0.237        0.781
-2 Generic-listener con… optimised        48        0.535      0.387        0.806
-3 Neutral control       non_opti…        48        0.681      0.309        0.830
-4 Neutral control       optimised        48        0.688      0.378        0.788
-5 OCEAN audience        non_opti…        48        0.383      0.203        0.455
-6 OCEAN audience        optimised        48        0.429      0.273        0.510
-# ℹ 3 more variables: sd_arousal <dbl>, mean_alignment_distance <dbl>,
-#   sd_alignment_distance <dbl>
+Generic-listener control          Neutral control           OCEAN audience 
+                     288                      288                     9216 
 
----------- MEAN CONTROL MINUS OCEAN DIFFERENCES ----------
-# A tibble: 1 × 6
-  neutral_minus_ocean_v neutral_minus_ocean_a neutral_minus_ocean_distance
-                  <dbl>                 <dbl>                        <dbl>
-1                 0.278                 0.327                        0.402
-# ℹ 3 more variables: generic_minus_ocean_v <dbl>, generic_minus_ocean_a <dbl>,
-#   generic_minus_ocean_distance <dbl>
+---------- Overall summary (stimulus level) ----------
+           audience_group n_stimuli mean_valence sd_valence mean_arousal
+ Generic-listener control        96    0.4652778  0.3270609    0.7934028
+          Neutral control        96    0.6840278  0.3432551    0.8090278
+           OCEAN audience        96    0.4063314  0.2402743    0.4823676
+ sd_arousal mean_distance sd_distance
+  0.3736534     1.0188307   0.4067814
+  0.3244241     1.1514680   0.4121724
+  0.2395873     0.7490336   0.2791045
 
-Positive values mean that the control scored higher than the OCEAN mean.
+---------- By condition ----------
+           audience_group     condition n_stimuli mean_valence sd_valence
+ Generic-listener control non_optimised        48    0.3958333  0.2372643
+ Generic-listener control     optimised        48    0.5347222  0.3873873
+          Neutral control non_optimised        48    0.6805556  0.3091079
+          Neutral control     optimised        48    0.6875000  0.3776013
+           OCEAN audience non_optimised        48    0.3833550  0.2026805
+           OCEAN audience     optimised        48    0.4293077  0.2730095
+ mean_arousal sd_arousal mean_distance sd_distance
+    0.7812500  0.3815426     0.9661070   0.3826380
+    0.8055556  0.3692260     1.0715545   0.4270516
+    0.8298611  0.2927202     1.1641239   0.3776518
+    0.7881944  0.3552038     1.1388121   0.4477039
+    0.4548611  0.1988777     0.7143954   0.2431164
+    0.5098741  0.2737294     0.7836719   0.3096769
 
----------- DISTRIBUTION DIAGNOSTICS ----------
-# A tibble: 18 × 19
-   audience_group    condition measure     n  mean median mean_median_difference
-   <chr>             <chr>     <chr>   <int> <dbl>  <dbl>                  <dbl>
- 1 Generic-listener… non_opti… Alignm…    48 0.966  1.05                 -0.0819
- 2 Generic-listener… non_opti… Percei…    48 0.781  1                    -0.219 
- 3 Generic-listener… non_opti… Percei…    48 0.396  0.5                  -0.104 
- 4 Generic-listener… optimised Alignm…    48 1.07   1.26                 -0.191 
- 5 Generic-listener… optimised Percei…    48 0.806  1                    -0.194 
- 6 Generic-listener… optimised Percei…    48 0.535  0.5                   0.0347
- 7 Neutral control   non_opti… Alignm…    48 1.16   1.28                 -0.117 
- 8 Neutral control   non_opti… Percei…    48 0.830  1                    -0.170 
- 9 Neutral control   non_opti… Percei…    48 0.681  0.833                -0.153 
-10 Neutral control   optimised Alignm…    48 1.14   1.30                 -0.164 
-11 Neutral control   optimised Percei…    48 0.788  1                    -0.212 
-12 Neutral control   optimised Percei…    48 0.688  0.833                -0.146 
-13 OCEAN audience    non_opti… Alignm…    48 0.714  0.754                -0.0391
-14 OCEAN audience    non_opti… Percei…    48 0.455  0.521                -0.0660
-15 OCEAN audience    non_opti… Percei…    48 0.383  0.482                -0.0984
-16 OCEAN audience    optimised Alignm…    48 0.784  0.834                -0.0502
-17 OCEAN audience    optimised Percei…    48 0.510  0.552                -0.0422
-18 OCEAN audience    optimised Percei…    48 0.429  0.518                -0.0889
-# ℹ 12 more variables: absolute_mean_median_difference <dbl>, sd <dbl>,
-#   q1 <dbl>, q3 <dbl>, iqr <dbl>, lower_outlier_fence <dbl>,
-#   upper_outlier_fence <dbl>, skewness <dbl>, absolute_skewness <dbl>,
-#   outlier_count <int>, distribution_shape <chr>,
-#   descriptive_recommendation <chr>
+---------- Mean control-minus-OCEAN differences (per stimulus) ----------
+ neutral_minus_ocean_v neutral_minus_ocean_a neutral_minus_ocean_d
+                 0.278                 0.327                 0.402
+ generic_minus_ocean_v generic_minus_ocean_a generic_minus_ocean_d
+                 0.059                 0.311                  0.27
+Positive = control scored higher than the OCEAN mean.
 
-Interpretation guide:
-|skewness| < 0.50: approximately symmetrical.
-|skewness| 0.50-1.00: moderately skewed.
-|skewness| > 1.00: strongly skewed.
-Potential outliers use the standard 1.5 x IQR boxplot rule.
-The final choice should also consider the mean-median difference and plots.
+---------- CONTROL ARGUMENT: OCEAN persona spread vs baseline gap ----------
+  valence  OCEAN persona means -0.013 to 0.839 (SD 0.229) | neutral 0.684, generic 0.465 | gap 0.219
+  arousal  OCEAN persona means 0.009 to 0.948 (SD 0.246) | neutral 0.809, generic 0.793 | gap 0.016
+  distance OCEAN persona means 0.290 to 1.323 (SD 0.295) | neutral 1.151, generic 1.019 | gap 0.133
+
+Where the OCEAN persona range/SD exceeds the neutral-generic gap, the between-persona
+variation is trait-driven rather than an artefact of role framing (descriptive; 3.6.2).
