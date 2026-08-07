@@ -404,3 +404,26 @@ cat(
     OUT
   )
 )
+
+# Post-hoc diagnostic: do personality effects vary by intended quadrant?
+
+diagnostic_additive <- lmer(
+  distance ~ quadrant +
+    openness + conscientiousness + extraversion +
+    agreeableness + neuroticism +
+    (1 | persona_id) + (1 | stimulus_file),
+  data = h3_data,
+  REML = FALSE
+)
+
+diagnostic_interaction <- lmer(
+  distance ~ quadrant *
+    (openness + conscientiousness + extraversion +
+       agreeableness + neuroticism) +
+    (1 | persona_id) + (1 | stimulus_file),
+  data = h3_data,
+  REML = FALSE
+)
+
+# Joint test of all quadrant × OCEAN interactions
+anova(diagnostic_additive, diagnostic_interaction)
