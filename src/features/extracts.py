@@ -1,18 +1,27 @@
 """
 Acoustic feature extraction for the sonic-logo emotional-alignment pipeline.
 
-Three views of a waveform, kept deliberately separate:
+The module provides three feature views:
 
-  1. extract_estimator_a()    -- spectral / timbral family (MFCCs, spectral shape).
-  2. extract_estimator_b()    -- rhythmic / tonal / dynamic family (tempo, chroma,
-                                 tonnetz, dynamics). Disjoint from family A by design,
-                                 so Estimators A and B share no feature-level bias.
-  3. extract_audience_block() -- a small, interpretable, emotionally-neutral set of
-                                 descriptors handed to the OCEAN audience agents as a
-                                 key:value block. No evaluative language, no VA target.
+  1. extract_estimator_a()    -- spectral and timbral features, including MFCCs
+                                 and spectral-shape statistics.
 
-All three run off a single load_audio() call. Audio is loaded mono at a fixed
-sample rate for reproducibility.
+  2. extract_estimator_b()    -- rhythmic, tonal and dynamic features, including
+                                 tempo, chroma, tonnetz and energy statistics.
+
+     These functions define two feature families for extraction and organisation.
+     Downstream training combines both families and supplies the same combined
+     feature vector to Estimators A and B. Estimator independence therefore
+     comes from their different training datasets and model families, not from
+     feature-level separation.
+
+  3. extract_audience_block() -- a smaller, interpretable and emotionally neutral
+                                 descriptor set supplied to the OCEAN audience
+                                 agents as a key:value block. It contains no target
+                                 coordinates, estimator outputs or evaluative labels.
+
+All feature views use the same load_audio() function. Audio is loaded in mono at
+a fixed sample rate for reproducibility.
 """
 from __future__ import annotations
 import numpy as np
@@ -119,10 +128,10 @@ def format_audience_block(block: dict) -> str:
     return "\n".join(f"{labels[k]}: {block[k]}" for k in labels)
 
 
-# ----- 2. Estimator A: spectral / timbral ------------------------------------
+# ----- 2. spectral / timbral feature family ---------------------------------
 
 def extract_estimator_a(y: np.ndarray, sr: int = SR) -> dict:
-    """Spectral/timbral family: MFCCs and spectral-shape statistics."""
+    """Extract the spectral and timbral feature family used in the combined estimator input."""
     feats = {}
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
     for i in range(mfcc.shape[0]):
@@ -146,10 +155,10 @@ def extract_estimator_a(y: np.ndarray, sr: int = SR) -> dict:
     return feats
 
 
-# ----- 3. Estimator B: rhythmic / tonal / dynamic ----------------------------
+# ----- 3. rhythmic / tonal / dynamic feature family -------------------------
 
 def extract_estimator_b(y: np.ndarray, sr: int = SR) -> dict:
-    """Rhythmic/tonal/dynamic family -- disjoint from family A by design."""
+    """Extract the rhythmic, tonal and dynamic feature family used in the combined estimator input."""
     feats = {"tempo_bpm": _tempo(y, sr), "onset_rate": _onset_rate(y, sr)}
     pulse = librosa.beat.plp(y=y, sr=sr)          # predominant local pulse
     feats["pulse_mean"] = float(pulse.mean())
