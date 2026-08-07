@@ -48,3 +48,26 @@ LV_LA: valence +0.404, arousal +0.550
 Positive valence values mean that personas perceived the logos as more
  positive than intended. Positive arousal values mean that personas perceived
  the logos as more energetic than intended.
+
+========== EXPLORATORY DIAGNOSTIC: QUADRANT × OCEAN INTERACTIONS ==========
+
+Additive model singular: FALSE 
+Interaction model singular: FALSE 
+
+Joint likelihood-ratio test of all quadrant × OCEAN interactions:
+Data: oc
+Models:
+diagnostic_additive: dist ~ quadrant + openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
+diagnostic_interaction: dist ~ quadrant * (openness + conscientiousness + extraversion + agreeableness + neuroticism) + (1 | persona_id) + (1 | brief/run)
+                       npar    AIC    BIC  logLik deviance Chisq Df Pr(>Chisq)
+diagnostic_additive      13 624.77 708.43 -299.38   598.77                    
+diagnostic_interaction   28 585.66 765.86 -264.83   529.66 69.11 15  6.433e-09
+                          
+diagnostic_additive       
+diagnostic_interaction ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+A significant result would indicate that at least one OCEAN effect
+ on intended-perceived distance differs across intended quadrants.
+ This is an exploratory diagnostic and is not the primary H3 test.

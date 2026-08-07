@@ -405,25 +405,71 @@ cat(
   )
 )
 
-# Post-hoc diagnostic: do personality effects vary by intended quadrant?
+# -------------------------------------------------------------------------
+# Exploratory diagnostic:
+# Do OCEAN effects on alignment vary by intended quadrant?
+# -------------------------------------------------------------------------
 
+sink(
+  file.path(OUT, "h3_results.txt"),
+  append = TRUE,
+  split = TRUE
+)
+
+cat(
+  "\n========== EXPLORATORY DIAGNOSTIC: QUADRANT × OCEAN INTERACTIONS ==========\n"
+)
+
+# Additive model: quadrant and OCEAN have separate effects
 diagnostic_additive <- lmer(
-  distance ~ quadrant +
-    openness + conscientiousness + extraversion +
-    agreeableness + neuroticism +
-    (1 | persona_id) + (1 | stimulus_file),
-  data = h3_data,
+  dist ~
+    quadrant +
+    openness +
+    conscientiousness +
+    extraversion +
+    agreeableness +
+    neuroticism +
+    (1 | persona_id) +
+    (1 | brief/run),
+  data = oc,
   REML = FALSE
 )
 
+# Interaction model: each OCEAN effect may differ by quadrant
 diagnostic_interaction <- lmer(
-  distance ~ quadrant *
-    (openness + conscientiousness + extraversion +
-       agreeableness + neuroticism) +
-    (1 | persona_id) + (1 | stimulus_file),
-  data = h3_data,
+  dist ~
+    quadrant *
+      (
+        openness +
+        conscientiousness +
+        extraversion +
+        agreeableness +
+        neuroticism
+      ) +
+    (1 | persona_id) +
+    (1 | brief/run),
+  data = oc,
   REML = FALSE
 )
 
-# Joint test of all quadrant × OCEAN interactions
-anova(diagnostic_additive, diagnostic_interaction)
+cat("\nAdditive model singular:", isSingular(diagnostic_additive), "\n")
+cat("Interaction model singular:", isSingular(diagnostic_interaction), "\n\n")
+
+cat(
+  "Joint likelihood-ratio test of all quadrant × OCEAN interactions:\n"
+)
+
+diagnostic_comparison <- anova(
+  diagnostic_additive,
+  diagnostic_interaction
+)
+
+print(diagnostic_comparison)
+
+cat(
+  "\nA significant result would indicate that at least one OCEAN effect\n",
+  "on intended-perceived distance differs across intended quadrants.\n",
+  "This is an exploratory diagnostic and is not the primary H3 test.\n"
+)
+
+sink()
