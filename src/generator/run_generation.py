@@ -71,10 +71,12 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     ctrl = OptimisationController(client, predict_a, sf, templates,
                                   threshold=opt["threshold"], iteration_cap=opt["iteration_cap"],
-                                  duration=duration, sr=sr, retries=draw_retries)
+                                  duration=duration, sr=sr, retries=draw_retries,
+                                  require_quadrant=opt.get("require_quadrant", True))
 
     print(f"soundfont: {sf}")
     print(f"{len(briefs)} briefs x {runs_per} runs, threshold={opt['threshold']}, "
+          f"quadrant_required={opt.get('require_quadrant', True)}, "
           f"cap={opt['iteration_cap']}, model={model}\n")
 
     manifest = []
@@ -90,15 +92,20 @@ def main():
                 continue
             manifest.append(res)
             flag = "*" if res["reached_threshold"] else " "
-            print(f" {flag}{brief['id']} run{run_idx}: "
+            qflag = "Q" if res["quadrant_held"] else "x"
+            print(f" {flag}{qflag} {brief['id']} run{run_idx}: "
                   f"non-opt d={res['non_optimised']['distance']:.3f} -> "
                   f"opt d={res['optimised']['distance']:.3f}  ({res['iterations']} iters)")
 
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2))
     reached = sum(r["reached_threshold"] for r in manifest)
+    within  = sum(r["reached_distance"] for r in manifest)
+    quad    = sum(r["quadrant_held"] for r in manifest)
     print(f"\n{len(manifest)} pairs, {2*len(manifest)} stimuli -> {out_dir}")
-    print(f"{reached}/{len(manifest)} runs reached the threshold; "
-          f"manifest.json written. (* = threshold reached)")
+    print(f"{reached}/{len(manifest)} runs met BOTH criteria; "
+          f"{within}/{len(manifest)} met the distance threshold; "
+          f"{quad}/{len(manifest)} held the intended quadrant.")
+    print("manifest.json written. (* = both criteria met, Q = quadrant held)")
 
 
 if __name__ == "__main__":

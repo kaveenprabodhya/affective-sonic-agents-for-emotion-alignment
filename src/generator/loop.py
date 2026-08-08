@@ -5,7 +5,13 @@ audio with Estimator A, computes the signed valence/arousal gap, and asks the LL
 only to revise the parameters. The LLM never decides whether its own output is good.
 
   non-optimised = iteration 0 of the run
-  optimised     = the best-distance iteration reached within the cap (same run)
+  optimised     = the best iteration reached within the cap (same run)
+
+Stopping rule: distance <= threshold AND the estimate holds the target's sign on
+both axes (quadrant condition). Distance alone is a proximity tolerance and does
+not protect quadrant membership: when a target sits near the origin relative to
+Estimator A's prediction error, a sign-crossed candidate can satisfy the distance
+threshold. Set require_quadrant=False to reproduce the distance-only behaviour.
 """
 from __future__ import annotations
 import os
@@ -60,9 +66,35 @@ def _dist(a, b):
     return math.hypot(a[0] - b[0], a[1] - b[1])
 
 
+def _quadrant_ok(est, target):
+    """True if the estimate sits on the same side of both axes as the target.
+
+    An axis whose target is exactly 0 carries no sign constraint. An estimate of
+    exactly 0 on a constrained axis is treated as NOT satisfying the condition:
+    it sits on the boundary, so quadrant membership is undefined.
+    """
+    for e, t in zip(est, target):
+        if t == 0:
+            continue
+        if e * t <= 0:
+            return False
+    return True
+
+
+def _better(cand, cur, require_quadrant):
+    """Candidate-selection rule. With the quadrant condition on, a candidate that
+    holds the intended quadrant always beats one that does not, regardless of
+    distance; ties within the same class are broken on distance.
+    """
+    if require_quadrant and cand["quadrant_ok"] != cur["quadrant_ok"]:
+        return cand["quadrant_ok"]
+    return cand["distance"] < cur["distance"]
+
+
 class OptimisationController:
     def __init__(self, client, estimator_predict, soundfont, templates,
-                 threshold, iteration_cap, duration=3.0, sr=22050, retries=3):
+                 threshold, iteration_cap, duration=3.0, sr=22050, retries=3,
+                 require_quadrant=True):
         self.client = client
         self.predict = estimator_predict
         self.sf = soundfont
@@ -72,6 +104,7 @@ class OptimisationController:
         self.duration = duration
         self.sr = sr
         self.retries = retries
+        self.require_quadrant = require_quadrant
 
     def _score(self, params, wav_path):
         render(params, self.sf, wav_path, self.duration, self.sr)
@@ -97,14 +130,18 @@ class OptimisationController:
                 return None                        # first render failed -> re-draw run
             temps.append(wav)
             d = _dist(est, target)
-            rec = {"iter": it, "distance": round(d, 4),
+            quad_ok = _quadrant_ok(est, target)
+            rec = {"iter": it, "distance": round(d, 4), "quadrant_ok": quad_ok,
                    "est": [round(est[0], 3), round(est[1], 3)], "params": params}
             history.append(rec)
             if it == 0:
                 iter0 = {**rec, "wav": wav}
-            if best is None or d < best["distance"]:
+            if best is None or _better(rec, best, self.require_quadrant):
                 best = {**rec, "wav": wav}
-            if d <= self.threshold:
+            # Stop only when the candidate is BOTH close enough and on the intended
+            # side of both axes. Distance alone can accept a sign-crossed candidate
+            # when the target sits near the origin relative to estimator error.
+            if d <= self.threshold and (quad_ok or not self.require_quadrant):
                 break
             revised = propose_revision(self.client, params, est, target,
                                        self.tpl["revision"], self.duration, self.retries)
@@ -122,12 +159,17 @@ class OptimisationController:
 
         return {
             "brief": brief["id"], "run": run_idx, "target": list(target),
+            "require_quadrant": self.require_quadrant,
             "non_optimised": {"file": os.path.basename(nonopt), "est": iter0["est"],
-                              "distance": iter0["distance"], "params": iter0["params"]},
+                              "distance": iter0["distance"],
+                              "quadrant_ok": iter0["quadrant_ok"], "params": iter0["params"]},
             "optimised": {"file": os.path.basename(opt), "est": best["est"],
                           "distance": best["distance"], "iteration": best["iter"],
-                          "params": best["params"]},
+                          "quadrant_ok": best["quadrant_ok"], "params": best["params"]},
             "iterations": len(history),
-            "reached_threshold": best["distance"] <= self.threshold,
+            "reached_distance": best["distance"] <= self.threshold,
+            "quadrant_held": best["quadrant_ok"],
+            "reached_threshold": (best["distance"] <= self.threshold
+                                  and (best["quadrant_ok"] or not self.require_quadrant)),
             "history": history,
         }

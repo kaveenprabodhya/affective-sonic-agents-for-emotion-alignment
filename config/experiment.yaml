@@ -18,11 +18,12 @@ generation:
   stimuli_total: 96                     # 48 pairs x 2 conditions
   optimisation:
     metric: euclidean_va
-    threshold: 0.15                    # = sqrt(A valence_RMSE^2 + arousal_RMSE^2) = sqrt(0.206^2 + 0.182^2)
-    threshold_basis: "Estimator A frozen combined RMSE: valence 0.206, arousal 0.182"
+    threshold: 0.15                    # proximity tolerance on Estimator A distance
+    threshold_basis: "Reduced from the Estimator A combined RMSE value (sqrt(0.206^2 + 0.182^2) = 0.275) because 42/48 runs satisfied 0.275 at iteration 0, leaving no optimisation to perform"
+    require_quadrant: true             # accepted candidate must also hold the target's valence/arousal sign
     iteration_cap: 10
-    early_stop: at_threshold
-    optimised_selection: best_distance_within_cap
+    early_stop: at_threshold_and_quadrant
+    optimised_selection: quadrant_first_then_best_distance
   retries: 3                            # invalid parameter JSON or failed render; run re-drawn if still failing; logged
 
 audience:
