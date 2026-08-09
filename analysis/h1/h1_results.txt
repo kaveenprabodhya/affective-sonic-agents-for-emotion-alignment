@@ -1,29 +1,69 @@
 H1 - stimulus alignment (Estimator B, held-out judge). Paired within brief/run.
 
-mean non-optimised B-distance: 0.201
+mean non-optimised B-distance: 0.203
 mean optimised B-distance:     0.202
-mean B-reduction (non-opt - opt): -0.001
-pairs improved: 8 / 48
+mean B-reduction (non-opt - opt): +0.001
+pairs improved: 13 / 48
 
 -- paired model: B-distance ~ condition + (1|brief/run) --
-                       Estimate   Std. Error       df  t value     Pr(>|t|)
-(Intercept)        0.2013979167 0.0303647434 15.00728 6.632624 7.956215e-06
-conditionoptimised 0.0009645833 0.0008079309 47.00464 1.193893 2.385103e-01
+                      Estimate  Std. Error       df    t value     Pr(>|t|)
+(Intercept)         0.20342708 0.029856038 15.01969  6.8135994 5.815804e-06
+conditionoptimised -0.00149375 0.001546208 47.00018 -0.9660733 3.389524e-01
 
 -- paired t-test on optimised vs non-optimised B-distance (48 pairs) --
 
 	Paired t-test
 
 data:  h1$opt_B_dist and h1$nonopt_B_dist
-t = 1.1938, df = 47, p-value = 0.2385
+t = -0.96607, df = 47, p-value = 0.339
 alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
- -0.0006608857  0.0025900523
+ -0.004604329  0.001616829
 sample estimates:
 mean difference 
-   0.0009645833 
+    -0.00149375 
+
+
+-- tie check: 20 / 48 pairs show an exact zero difference --
+(structural candidate: the optimiser's first candidate may already have been
+ its best Estimator-A-scored candidate, so optimised == non-optimised by
+ construction; check history logs before treating these as noise.)
+
+-- sign test on the 28 non-tied pairs (improved vs worsened) --
+improved: 13   worsened: 15
+
+	Exact binomial test
+
+data:  n_down and length(nz)
+number of successes = 13, number of trials = 28, p-value = 0.8506
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.2751086 0.6613009
+sample estimates:
+probability of success 
+             0.4642857 
+
+
+-- Wilcoxon signed-rank test (optimised vs non-optimised B-distance) --
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  h1$opt_B_dist and h1$nonopt_B_dist
+V = 189, p-value = 0.7585
+alternative hypothesis: true location shift is not equal to 0
 
 
 Conclusion: report whether the INDEPENDENT judge confirms optimisation moved logos
 toward target. If non-significant, H1 is the stimulus-validity LIMITATION: logos were
-generated TOWARD targets, not proven to carry the intended VA.
+generated TOWARD targets, not proven to carry the intended VA. Note that the mean-based
+paired t-test can mask a directional pattern that the sign/Wilcoxon tests reveal; report
+all three and interpret the direction, not only significance.
+
+-- quadrant verification (Estimator B vs target sign, independent check) --
+optimised stimuli crossing target quadrant sign:     36 / 48 (75.0%)
+non-optimised stimuli crossing target quadrant sign: 36 / 48 (75.0%)
+Non-optimised stimuli are iteration 0 and are NOT subject to the stopping rule,
+so crossings there are expected. Crossings among OPTIMISED stimuli indicate
+Estimator A/B disagreement on quadrant, not a failure of the rule: the loop can
+only enforce sign agreement under the estimator that guides it. Report this rate
+as a limit on stimulus validity, alongside the pre-fix rate for comparison.

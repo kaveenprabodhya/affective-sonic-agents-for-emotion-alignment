@@ -6,45 +6,45 @@ Descriptive only; no significance tests.
 ---------- Response counts ----------
 
 Generic-listener control          Neutral control           OCEAN audience 
-                     288                      288                     9216 
+                     576                      576                    18432 
 
 ---------- Overall summary (stimulus level) ----------
            audience_group n_stimuli mean_valence sd_valence mean_arousal
- Generic-listener control        96    0.4652778  0.3270609    0.7934028
-          Neutral control        96    0.6840278  0.3432551    0.8090278
-           OCEAN audience        96    0.4063314  0.2402743    0.4823676
+ Generic-listener control        96    0.4618056  0.2762311    0.8211806
+          Neutral control        96    0.6727431  0.2872141    0.8125000
+           OCEAN audience        96    0.3892958  0.2095699    0.4726834
  sd_arousal mean_distance sd_distance
-  0.3736534     1.0188307   0.4067814
-  0.3244241     1.1514680   0.4121724
-  0.2395873     0.7490336   0.2791045
+  0.3010652     1.0350251   0.3357759
+  0.2825324     1.1420225   0.3601632
+  0.2102536     0.7340753   0.2425799
 
 ---------- By condition ----------
            audience_group     condition n_stimuli mean_valence sd_valence
- Generic-listener control non_optimised        48    0.3958333  0.2372643
- Generic-listener control     optimised        48    0.5347222  0.3873873
-          Neutral control non_optimised        48    0.6805556  0.3091079
-          Neutral control     optimised        48    0.6875000  0.3776013
-           OCEAN audience non_optimised        48    0.3833550  0.2026805
-           OCEAN audience     optimised        48    0.4293077  0.2730095
+ Generic-listener control non_optimised        48    0.3906250  0.1976190
+ Generic-listener control     optimised        48    0.5329861  0.3237723
+          Neutral control non_optimised        48    0.6614583  0.2747265
+          Neutral control     optimised        48    0.6840278  0.3016691
+           OCEAN audience non_optimised        48    0.3695204  0.1797919
+           OCEAN audience     optimised        48    0.4090712  0.2359018
  mean_arousal sd_arousal mean_distance sd_distance
-    0.7812500  0.3815426     0.9661070   0.3826380
-    0.8055556  0.3692260     1.0715545   0.4270516
-    0.8298611  0.2927202     1.1641239   0.3776518
-    0.7881944  0.3552038     1.1388121   0.4477039
-    0.4548611  0.1988777     0.7143954   0.2431164
-    0.5098741  0.2737294     0.7836719   0.3096769
+    0.7968750  0.3159970     0.9770983   0.3141718
+    0.8454861  0.2866151     1.0929518   0.3497599
+    0.8020833  0.2874570     1.1288318   0.3593133
+    0.8229167  0.2801685     1.1552132   0.3643262
+    0.4421115  0.1765662     0.6986977   0.2078739
+    0.5032552  0.2372110     0.7694528   0.2705070
 
 ---------- Mean control-minus-OCEAN differences (per stimulus) ----------
  neutral_minus_ocean_v neutral_minus_ocean_a neutral_minus_ocean_d
-                 0.278                 0.327                 0.402
+                 0.283                  0.34                 0.408
  generic_minus_ocean_v generic_minus_ocean_a generic_minus_ocean_d
-                 0.059                 0.311                  0.27
+                 0.073                 0.348                 0.301
 Positive = control scored higher than the OCEAN mean.
 
 ---------- CONTROL ARGUMENT: OCEAN persona spread vs baseline gap ----------
-  valence  OCEAN persona means -0.013 to 0.839 (SD 0.229) | neutral 0.684, generic 0.465 | gap 0.219
-  arousal  OCEAN persona means 0.009 to 0.948 (SD 0.246) | neutral 0.809, generic 0.793 | gap 0.016
-  distance OCEAN persona means 0.290 to 1.323 (SD 0.295) | neutral 1.151, generic 1.019 | gap 0.133
+  valence  OCEAN persona means -0.018 to 0.820 (SD 0.227) | neutral 0.673, generic 0.462 | gap 0.211
+  arousal  OCEAN persona means 0.003 to 0.947 (SD 0.251) | neutral 0.812, generic 0.821 | gap 0.009
+  distance OCEAN persona means 0.288 to 1.310 (SD 0.295) | neutral 1.142, generic 1.035 | gap 0.107
 
 Where the OCEAN persona range/SD exceeds the neutral-generic gap, the between-persona
 variation is trait-driven rather than an artefact of role framing (descriptive; 3.6.2).

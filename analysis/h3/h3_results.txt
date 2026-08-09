@@ -5,12 +5,12 @@ Quadrant is not a primary H3 factor. It is reported descriptively below.
 
 ---------- FIXED-EFFECT ESTIMATES ----------
                          Estimate Std. Error       df    t value     Pr(>|t|)
-(Intercept)            0.58376740 0.07580765 22.32456   7.700639 1.001826e-07
-opennesshigh           0.20455474 0.02742799 25.99980   7.457882 6.425253e-08
-conscientiousnesshigh  0.10544805 0.02742799 25.99980   3.844541 7.003427e-04
-extraversionhigh       0.33380222 0.02742799 25.99980  12.170129 3.066478e-12
-agreeablenesshigh      0.08804479 0.02742799 25.99980   3.210034 3.514229e-03
-neuroticismhigh       -0.33204080 0.02742799 25.99980 -12.105909 3.449346e-12
+(Intercept)            0.55672275 0.07134402 24.48561   7.803356 4.257366e-08
+opennesshigh           0.21600497 0.02857115 26.00589   7.560247 5.014061e-08
+conscientiousnesshigh  0.10875272 0.02857115 26.00589   3.806382 7.728287e-04
+extraversionhigh       0.34965545 0.02857115 26.00589  12.238059 2.699953e-12
+agreeablenesshigh      0.07508331 0.02857115 26.00589   2.627941 1.422152e-02
+neuroticismhigh       -0.32403628 0.02857115 26.00589 -11.341379 1.444981e-11
 
 Singular fit: FALSE 
 
@@ -20,8 +20,8 @@ Models:
 m_null: dist ~ (1 | persona_id) + (1 | brief/run)
 m_full: dist ~ openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
        npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)    
-m_null    5 698.75 730.92 -344.37   688.75                         
-m_full   10 623.50 687.86 -301.75   603.50 85.245  5  < 2.2e-16 ***
+m_null    5 2965.1 3000.7 -1477.5   2955.1                         
+m_full   10 2891.2 2962.5 -1435.6   2871.2 83.854  5  < 2.2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
@@ -32,18 +32,18 @@ The omnibus test determines whether the five OCEAN traits jointly
 # A tibble: 4 × 4
   quadrant mean_dist    sd     n
   <fct>        <dbl> <dbl> <int>
-1 HV_HA        0.763 0.448  1152
-2 HV_LA        1.00  0.461  1152
-3 LV_HA        0.651 0.46   1152
-4 LV_LA        0.716 0.478  1152
+1 HV_HA        0.756 0.439  2304
+2 HV_LA        0.966 0.459  2304
+3 LV_HA        0.617 0.449  2304
+4 LV_LA        0.739 0.488  2304
 
 These values are descriptive and are not used to test H3.
 
 ========== DESCRIPTIVE DIAGNOSTIC: DIRECTION OF MISALIGNMENT ==========
-HV_HA: valence +0.456, arousal +0.525
-HV_LA: valence +0.439, arousal +0.854
-LV_HA: valence +0.467, arousal +0.347
-LV_LA: valence +0.404, arousal +0.550
+HV_HA: valence +0.420, arousal +0.536
+HV_LA: valence +0.417, arousal +0.826
+LV_HA: valence +0.425, arousal +0.324
+LV_LA: valence +0.423, arousal +0.563
 
 Positive valence values mean that personas perceived the logos as more
  positive than intended. Positive arousal values mean that personas perceived
@@ -59,9 +59,9 @@ Data: oc
 Models:
 diagnostic_additive: dist ~ quadrant + openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
 diagnostic_interaction: dist ~ quadrant * (openness + conscientiousness + extraversion + agreeableness + neuroticism) + (1 | persona_id) + (1 | brief/run)
-                       npar    AIC    BIC  logLik deviance Chisq Df Pr(>Chisq)
-diagnostic_additive      13 624.77 708.43 -299.38   598.77                    
-diagnostic_interaction   28 585.66 765.86 -264.83   529.66 69.11 15  6.433e-09
+                       npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+diagnostic_additive      13 2892.2 2984.8 -1433.1   2866.2                     
+diagnostic_interaction   28 2875.8 3075.4 -1409.9   2819.8 46.326 15  4.719e-05
                           
 diagnostic_additive       
 diagnostic_interaction ***
