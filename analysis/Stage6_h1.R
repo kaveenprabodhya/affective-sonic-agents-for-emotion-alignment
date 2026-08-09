@@ -2,20 +2,46 @@
 #   Intended VA  <->  Estimator B VA   (independent, held-out judge)
 # This is stimulus validity, NOT audience alignment. Reads the Estimator-B scoring output.
 #
-#   Rscript analysis/stage6_h1.R
+# The judge can be swapped so the pre-specified incumbent and any architecture-
+# selected replacement are both testable. Both must be reported.
+#
+#   Rscript analysis/Stage6_h1.R                 # incumbent estimator_B
+#   Rscript analysis/Stage6_h1.R estimator_B2    # architecture-selected judge
 library(lme4); library(lmerTest)
 
+args  <- commandArgs(trailingOnly = TRUE)
+judge <- if (length(args) >= 1) args[1] else "estimator_B"
+tag   <- if (judge == "estimator_B") "" else paste0("_", judge)
 
-# --- all outputs go to analysis/h1/ ---
-OUT <- "analysis/h1"
+IN  <- sprintf("data/analysis/h1_estimator_b%s.csv", tag)
+OUT <- if (judge == "estimator_B") "analysis/h1" else file.path("analysis/h1", judge)
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 
-h1 <- read.csv("data/analysis/h1_estimator_b.csv", stringsAsFactors = FALSE)
+if (!file.exists(IN)) {
+  stop(sprintf("%s not found. Run: python src/analysis/score_estimator_b.py --estimator %s",
+               IN, judge))
+}
+
+h1 <- read.csv(IN, stringsAsFactors = FALSE)
 h1$run   <- sub(".*_run([0-9]+)_.*", "\\1", paste0("x_run", h1$run, "_x"))  # run already a column
 h1$brief <- factor(h1$brief)
 
 sink(file.path(OUT, "h1_results.txt"), split = TRUE)
-cat("H1 - stimulus alignment (Estimator B, held-out judge). Paired within brief/run.\n\n")
+cat(sprintf("H1 - stimulus alignment. Judge: %s (held out). Paired within brief/run.\n\n",
+            judge))
+
+# Discrimination gate. A judge whose predictions barely vary across the stimuli
+# cannot detect movement of any size, so a null from it is uninformative about
+# whether optimisation worked. Reported before the tests, not after.
+sd_v <- sd(c(h1$nonopt_B_v, h1$opt_B_v)); sd_a <- sd(c(h1$nonopt_B_a, h1$opt_B_a))
+cat(sprintf("judge spread across stimuli: valence SD %.4f, arousal SD %.4f\n",
+            sd_v, sd_a))
+cat(sprintf("judge valence range: %.3f   arousal range: %.3f\n",
+            diff(range(c(h1$nonopt_B_v, h1$opt_B_v))),
+            diff(range(c(h1$nonopt_B_a, h1$opt_B_a)))))
+cat("Compare against this judge's own held-out RMSE in models/<judge>.meta.json.\n")
+cat("If the SD is a small fraction of that RMSE, H1 is untestable with this judge\n")
+cat("rather than rejected, and should be reported that way.\n\n")
 cat(sprintf("mean non-optimised B-distance: %.3f\n", mean(h1$nonopt_B_dist)))
 cat(sprintf("mean optimised B-distance:     %.3f\n", mean(h1$opt_B_dist)))
 cat(sprintf("mean B-reduction (non-opt - opt): %+.3f\n", mean(h1$B_reduction)))
@@ -81,4 +107,4 @@ cat("only enforce sign agreement under the estimator that guides it. Report this
 cat("as a limit on stimulus validity, alongside the pre-fix rate for comparison.\n")
 
 sink()
-cat("Saved: analysis/h1/h1_results.txt\n")
+cat(sprintf("Saved: %s/h1_results.txt\n", OUT))

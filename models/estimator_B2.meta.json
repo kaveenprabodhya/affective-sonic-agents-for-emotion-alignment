@@ -1,0 +1,67 @@
+{
+  "name": "estimator_B2",
+  "corpus": "PMEmo",
+  "model_family": "svr_linear",
+  "hyperparameters": {
+    "C": 10.0
+  },
+  "role": "held_out_H1_judge",
+  "held_out_from_optimisation": true,
+  "selected_by": "architecture comparison, criteria independent of H1",
+  "selection_rule": {
+    "criteria": [
+      "in_domain_r2",
+      "discrimination_on_study_stimuli"
+    ],
+    "r2_tolerance": 0.05,
+    "min_discrimination": 0.25,
+    "rank_by": "discrimination",
+    "excluded_criteria": [
+      "H1 effect size",
+      "H1 p-value",
+      "H1 direction"
+    ],
+    "incumbent": "estimator_B"
+  },
+  "selection_rule_hash": "4a58e347633d",
+  "n_candidates_fitted": 33,
+  "families_compared": [
+    "gbr",
+    "mlp",
+    "rf",
+    "ridge",
+    "svr_linear",
+    "svr_rbf"
+  ],
+  "feature_set": "combined_A_plus_B",
+  "n_features": 70,
+  "output_scale": [
+    -1,
+    1
+  ],
+  "n_windows": 3848,
+  "n_songs": 751,
+  "metrics_heldout_songs": {
+    "valence_R2": 0.448,
+    "valence_RMSE": 0.242,
+    "arousal_R2": 0.597,
+    "arousal_RMSE": 0.231
+  },
+  "discrimination_on_study_stimuli": {
+    "stim_sd_valence": 0.2397,
+    "stim_sd_arousal": 0.2467,
+    "range_ratio_valence": 0.991,
+    "range_ratio_arousal": 1.069,
+    "discrimination": 0.991
+  },
+  "domain_shift_vs_training": {
+    "mean_abs_z": 1.82,
+    "median_abs_z": 1.328,
+    "max_abs_z": 16.719,
+    "frac_features_beyond_3sd": 0.134,
+    "mean_euclidean_z_distance": 21.936
+  },
+  "sklearn_version": "1.9.0",
+  "frozen_utc": "2026-08-09T16:30:46+00:00",
+  "seed": 42
+}

@@ -12,6 +12,7 @@ It never modifies the stimuli and never regenerates anything.
 """
 import sys
 import json
+import argparse
 import hashlib
 import warnings
 from pathlib import Path
@@ -39,14 +40,31 @@ def dist(e, t):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--estimator", default="estimator_B",
+                    help="Which frozen judge to score with (default: estimator_B, "
+                         "the pre-specified incumbent)")
+    ap.add_argument("--suffix", default=None,
+                    help="Output suffix. Defaults to '' for estimator_B so the "
+                         "incumbent keeps its original filenames, otherwise the "
+                         "estimator name.")
+    args = ap.parse_args()
+    tag = args.suffix if args.suffix is not None else (
+        "" if args.estimator == "estimator_B" else f"_{args.estimator}")
+
     exp = load("experiment.yaml")
     sr = exp["synthesis"]["sample_rate_hz"]
     stim_dir = ROOT / "data" / "stimuli"
     manifest = json.loads((stim_dir / "manifest.json").read_text())
     briefs = {b["id"]: b for b in load("briefs.yaml")["briefs"]}
-    predict_b, meta_b = load_estimator("estimator_B")
-    print(f"Estimator B: {meta_b['corpus']}/{meta_b['model_family']}, "
-          f"held_out={meta_b['held_out_from_optimisation']}\n")
+    predict_b, meta_b = load_estimator(args.estimator)
+    print(f"{args.estimator}: {meta_b['corpus']}/{meta_b['model_family']}, "
+          f"held_out={meta_b['held_out_from_optimisation']}")
+    disc = meta_b.get("discrimination_on_study_stimuli")
+    if disc:
+        print(f"  selected by architecture comparison; discrimination "
+              f"{disc['discrimination']:.3f}")
+    print()
 
     integrity, rows, silent, missing = {}, [], [], []
     with warnings.catch_warnings():
@@ -82,7 +100,7 @@ def main():
     df = pd.DataFrame(rows)
     out_dir = ROOT / "data" / "analysis"
     out_dir.mkdir(parents=True, exist_ok=True)
-    df.to_csv(out_dir / "h1_estimator_b.csv", index=False)
+    df.to_csv(out_dir / f"h1_estimator_b{tag}.csv", index=False)
     (out_dir / "integrity.json").write_text(json.dumps(integrity, indent=2))
 
     # ---- integrity report ----
@@ -110,7 +128,15 @@ def main():
     print(f"\nper-axis mean |error|:  valence {dv_no:.3f} -> {dv_op:.3f}   "
           f"arousal {da_no:.3f} -> {da_op:.3f}")
     print(f"\n(reference) mean A-reduction (coach): {df['A_reduction'].mean():+.3f}")
-    print("\nSaved: data/analysis/h1_estimator_b.csv  +  data/analysis/integrity.json")
+    sd_v, sd_a = df[["nonopt_B_v", "opt_B_v"]].stack().std(), df[["nonopt_B_a", "opt_B_a"]].stack().std()
+    rmse = meta_b["metrics_heldout_songs"]
+    print(f"\njudge discrimination on these stimuli: valence SD {sd_v:.4f} "
+          f"(own RMSE {rmse['valence_RMSE']}), arousal SD {sd_a:.4f} "
+          f"(own RMSE {rmse['arousal_RMSE']})")
+    if sd_v < 0.25 * rmse["valence_RMSE"]:
+        print("  !! valence SD is under a quarter of this judge's own RMSE: it is barely")
+        print("     discriminating between stimuli, so H1 cannot be fairly tested with it.")
+    print(f"\nSaved: data/analysis/h1_estimator_b{tag}.csv  +  data/analysis/integrity.json")
     print("This IS the H1 dataset. Keep all 48 pairs; formal paired/mixed test is Stage 6.")
 
 

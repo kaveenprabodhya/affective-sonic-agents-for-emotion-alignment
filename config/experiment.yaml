@@ -40,6 +40,17 @@ estimators:
   feature_families: combined_A_plus_B   # strict disjointness abandoned (Stage 0); independence via dual-corpus + different model families
   independent_test_set: 4Q_panda        # generalisation check for RO4 (not for training)
 
+# ---------------------------------------------------------------------------
+# Architecture selection for the held-out judge.
+# ---------------------------------------------------------------------------
+estimator_selection:
+  criteria: ["in_domain_r2", "discrimination_on_study_stimuli"]
+  r2_tolerance: 0.05            # gate: within this of the best mean in-domain R2
+  min_discrimination: 0.25      # stimulus prediction SD must reach 1/4 of own RMSE
+  rank_by: discrimination       # among gated candidates; ties break on mean R2
+  excluded_criteria: ["H1 effect size", "H1 p-value", "H1 direction"]
+  incumbent: estimator_B        # never overwritten; both are scored and both reported
+
 models:
   audience_primary:  {name: qwen, checkpoint: qwen3:8b, provider: ollama_local, temperature: 0.7, think: false}
   generator_primary: {name: qwen, checkpoint: qwen3:8b, provider: ollama_local, temperature: 0.7, think: false}
