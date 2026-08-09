@@ -43,11 +43,20 @@ def main():
     ap.add_argument("--model", default=None)
     ap.add_argument("--host", default="http://localhost:11434")
     ap.add_argument("--limit", type=int, help="Only the first N briefs (quick run)")
+    ap.add_argument("--briefs", help="Comma-separated brief IDs, e.g. B01,B05,B09,B13 "
+                                     "(pilot across quadrants; overrides --limit)")
     args = ap.parse_args()
 
     exp = load("experiment.yaml")
     briefs = load("briefs.yaml")["briefs"]
-    if args.limit:
+    if args.briefs:
+        want = [b.strip() for b in args.briefs.split(",")]
+        by_id = {b["id"]: b for b in briefs}
+        missing = [w for w in want if w not in by_id]
+        if missing:
+            sys.exit(f"Unknown brief id(s): {', '.join(missing)}")
+        briefs = [by_id[w] for w in want]
+    elif args.limit:
         briefs = briefs[:args.limit]
 
     sf = resolve_soundfont(args.soundfont, exp)
