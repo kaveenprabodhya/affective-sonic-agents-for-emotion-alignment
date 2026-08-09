@@ -123,7 +123,7 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   │   ├── data.py                  # corpus loading, feature caching
 │   │   ├── model.py                 # fit / freeze / load
 │   │   ├── build.py                 # ENTRY: builds and freezes Estimator A and B
-│   │   └── select.py                # ENTRY: architecture comparison for the judge
+│   │   └── select_estimator.py      # ENTRY: architecture comparison for the judge
 │   ├── generator/
 │   │   ├── synth.py                 # parameter schema, validation, MIDI -> WAV render
 │   │   ├── probe_reachable.py       # ENTRY: maps the reachable VA region
@@ -240,8 +240,8 @@ Config knobs (`config/experiment.yaml` → `generation.optimisation`):
 Optional. Runs after generation, because one of the two criteria is measured on the study stimuli.
 
 ```bash
-python src/estimators/select.py --pmemo datasets/PMEmo --no-freeze   # report only
-python src/estimators/select.py --pmemo datasets/PMEmo --name estimator_B2
+python src/estimators/select_estimator.py --pmemo datasets/PMEmo --no-freeze   # report only
+python src/estimators/select_estimator.py --pmemo datasets/PMEmo --name estimator_B2
 ```
 
 Compares ridge, linear SVR, RBF SVR (gamma grid), random forest, gradient boosting and MLP. Split three ways by song: train fits, validation ranks hyperparameters within a family, test gives the reported metric.
@@ -351,7 +351,7 @@ time python -W ignore src/generator/run_generation.py --backend ollama
 python src/analysis/score_estimator_b.py
 
 # 3b. optional: architecture selection, then score that judge too
-python src/estimators/select.py --pmemo datasets/PMEmo --name estimator_B2
+python src/estimators/select_estimator.py --pmemo datasets/PMEmo --name estimator_B2
 python src/analysis/score_estimator_b.py --estimator estimator_B2
 
 # 4. H1 for every judge scored                                      seconds
@@ -393,7 +393,7 @@ python src/audience/run_audience.py --backend ollama --limit-agents 8 --limit-st
 python spike/persona_pilot.py --backend ollama --model qwen3:8b
 
 # Architecture selection, report only
-python src/estimators/select.py --pmemo datasets/PMEmo --no-freeze
+python src/estimators/select_estimator.py --pmemo datasets/PMEmo --no-freeze
 ```
 
 `--briefs` picks specific IDs. `--limit N` takes the *first* N briefs, and briefs are ordered in quadrant blocks of four, so `--limit 2` only covers HV_HA.
@@ -426,7 +426,7 @@ cp -r data analysis logs models config archive/pre_quadrant_fix/
 | `No soundfont found` | `.sf2` missing or an LFS stub | `git lfs pull`, or pass `--soundfont path/to.sf2` |
 | Ollama connection refused | Daemon not running | `ollama serve`, check with `ollama ps` |
 | R: `there is no package called 'smacof'` | Installed for the wrong user | `sudo Rscript -e 'install.packages("smacof", repos="https://cloud.r-project.org")'` |
-| `No manifest at ...` from `select.py` | Generation has not run | Run Stage 2 first |
+| `No manifest at ...` from `select_estimator.py` | Generation has not run | Run Stage 2 first |
 | Estimator loads but predictions look wrong | sklearn version drift | Compare `python -c "import sklearn; print(sklearn.__version__)"` against the `.meta.json` |
 
 **Timing reference** (measured, Qwen3:8b local, ~2.9 s per LLM call):
