@@ -1,0 +1,83 @@
+QUADRANT CONFIDENCE
+======================================================================== 
+held     = same sign on both axes, both coordinates clear of the axes by >= margin
+marginal = same sign, but within margin of an axis (would flip under small error)
+crossed  = opposite sign on at least one axis
+
+-- estimator_A2  (n = 48 pairs) --
+   spread on these stimuli: valence SD 0.1091, arousal SD 0.1819
+   margin       held   marginal   crossed   held %
+   0.00           19          0        29    39.6%
+   0.02           17          2        29    35.4%
+   0.05           14          5        29    29.2%
+   0.10           11          8        29    22.9%
+   sign only: non-optimised 16/48 held -> optimised 19/48 held
+
+   by intended quadrant (sign only):
+       
+        crossed held
+  HV_HA       8    4
+  HV_LA       9    3
+  LV_HA      12    0
+  LV_LA       0   12
+
+-- estimator_B2  (n = 48 pairs) --
+   spread on these stimuli: valence SD 0.2083, arousal SD 0.2558
+   margin       held   marginal   crossed   held %
+   0.00           17          0        31    35.4%
+   0.02           16          1        31    33.3%
+   0.05           11          6        31    22.9%
+   0.10            6         11        31    12.5%
+   sign only: non-optimised 17/48 held -> optimised 17/48 held
+
+   by intended quadrant (sign only):
+       
+        crossed held
+  HV_HA       8    4
+  HV_LA       2   10
+  LV_HA      12    0
+  LV_LA       9    3
+
+-- estimator_B  (n = 48 pairs) --
+   spread on these stimuli: valence SD 0.0098, arousal SD 0.0090
+   margin       held   marginal   crossed   held %
+   0.00           12          0        36    25.0%
+   0.02           12          0        36    25.0%
+   0.05            4          8        36     8.3%
+   0.10            0         12        36     0.0%
+   sign only: non-optimised 12/48 held -> optimised 12/48 held
+
+   by intended quadrant (sign only):
+       
+        crossed held
+  HV_HA       0   12
+  HV_LA      12    0
+  LV_HA      12    0
+  LV_LA      12    0
+
+------------------------------------------------------------------------ 
+AGREEMENT BETWEEN JUDGES (optimised stimuli, quadrant of the prediction)
+
+quadrant of each estimator's prediction, across the 48 optimised stimuli:
+  estimator_A2   HV_HA 9   HV_LA 7   LV_HA 0   LV_LA 32
+  estimator_B2   HV_HA 6   HV_LA 37   LV_HA 0   LV_LA 5
+  estimator_B    HV_HA 48   HV_LA 0   LV_HA 0   LV_LA 0
+
+An estimator concentrated in one quadrant inflates raw agreement with
+everything else, which is why kappa is reported alongside it.
+
+pair                                raw   chance    kappa
+estimator_A2 vs estimator_B2      33.3%    20.5%   +0.161
+estimator_A2 vs estimator_B       18.8%    18.8%   +0.000
+estimator_B2 vs estimator_B       12.5%    12.5%   +0.000
+
+kappa near 0 means the estimators agree no more than their own marginal
+distributions would produce by chance. Negative means less than chance.
+The usual reference bands (Landis & Koch, 1977) are conventions rather than
+thresholds: <=0.20 slight, 0.21-0.40 fair, 0.41-0.60 moderate,
+0.61-0.80 substantial, >0.80 almost perfect.
+
+Low agreement means the estimators disagree about where these stimuli sit,
+not that one of them is wrong. Nothing here establishes which is closer to
+what a listener would report. A pair involving an estimator with almost no
+spread should be read as a discrimination failure, not as disagreement.

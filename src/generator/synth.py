@@ -116,6 +116,37 @@ def params_to_midi(p: dict, duration: float = 3.0) -> pretty_midi.PrettyMIDI:
     return pm
 
 
+def grid_params(n=300, seed=0):
+    """A deterministic spread across the parameter space.
+
+    Lives here rather than in probe_reachable so it can be imported without
+    pulling in the estimator stack. Both the reachable-region probe and the
+    coach-selection probe draw on this one definition, so they sweep the same
+    space.
+    """
+    import itertools
+    tempos = [50, 90, 130, 170, 200]
+    modes = ["major", "minor"]
+    centers = [50, 62, 74, 84]
+    contours = ["rising", "falling", "arch", "wave"]
+    npbs = [1, 2, 4]
+    dyns = ["soft", "moderate", "loud"]
+    arts = ["legato", "staccato"]
+    insts = ["warm pad", "string ensemble", "nylon guitar", "vibraphone",
+             "flute", "trumpet", "music box", "church organ"]
+
+    full = list(itertools.product(tempos, modes, centers, contours, npbs, dyns, arts, insts))
+    rng = np.random.default_rng(seed)
+    idx = rng.choice(len(full), size=min(n, len(full)), replace=False)
+    combos = []
+    for i in idx:
+        t, m, c, co, npb, d, a, inst = full[i]
+        combos.append({"tempo_bpm": t, "mode": m, "pitch_center_midi": c, "pitch_range": 12,
+                       "contour": co, "notes_per_beat": npb, "dynamics": d,
+                       "articulation": a, "instrument": inst})
+    return combos
+
+
 def render(p: dict, soundfont: str, out_wav: str, duration: float = 3.0, sr: int = 22050):
     """Render parameters to a WAV via FluidSynth, trimmed to exactly `duration`.
 

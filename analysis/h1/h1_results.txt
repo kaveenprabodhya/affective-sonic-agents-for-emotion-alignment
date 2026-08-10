@@ -1,53 +1,53 @@
 H1 - stimulus alignment. Judge: estimator_B (held out). Paired within brief/run.
 
-judge spread across stimuli: valence SD 0.0120, arousal SD 0.0114
-judge valence range: 0.063   arousal range: 0.074
+judge spread across stimuli: valence SD 0.0098, arousal SD 0.0090
+judge valence range: 0.051   arousal range: 0.050
 Compare against this judge's own held-out RMSE in models/<judge>.meta.json.
 If the SD is a small fraction of that RMSE, H1 is untestable with this judge
 rather than rejected, and should be reported that way.
 
-mean non-optimised B-distance: 0.203
-mean optimised B-distance:     0.202
-mean B-reduction (non-opt - opt): +0.001
-pairs improved: 13 / 48
+mean non-optimised B-distance: 0.314
+mean optimised B-distance:     0.311
+mean B-reduction (non-opt - opt): +0.003
+pairs improved: 22 / 48
 
 -- paired model: B-distance ~ condition + (1|brief/run) --
-                      Estimate  Std. Error       df    t value     Pr(>|t|)
-(Intercept)         0.20342708 0.029856038 15.01969  6.8135994 5.815804e-06
-conditionoptimised -0.00149375 0.001546208 47.00018 -0.9660733 3.389524e-01
+                       Estimate  Std. Error       df   t value     Pr(>|t|)
+(Intercept)         0.314375000 0.025918302 15.01784 12.129460 3.681935e-09
+conditionoptimised -0.003122917 0.001258734 46.99933 -2.480999 1.673676e-02
 
 -- paired t-test on optimised vs non-optimised B-distance (48 pairs) --
 
 	Paired t-test
 
 data:  h1$opt_B_dist and h1$nonopt_B_dist
-t = -0.96607, df = 47, p-value = 0.339
+t = -2.481, df = 47, p-value = 0.01674
 alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
- -0.004604329  0.001616829
+ -0.0056551533 -0.0005906801
 sample estimates:
 mean difference 
-    -0.00149375 
+   -0.003122917 
 
 
--- tie check: 20 / 48 pairs show an exact zero difference --
+-- tie check: 17 / 48 pairs show an exact zero difference --
 (structural candidate: the optimiser's first candidate may already have been
  its best Estimator-A-scored candidate, so optimised == non-optimised by
  construction; check history logs before treating these as noise.)
 
--- sign test on the 28 non-tied pairs (improved vs worsened) --
-improved: 13   worsened: 15
+-- sign test on the 31 non-tied pairs (improved vs worsened) --
+improved: 22   worsened: 9
 
 	Exact binomial test
 
 data:  n_down and length(nz)
-number of successes = 13, number of trials = 28, p-value = 0.8506
+number of successes = 22, number of trials = 31, p-value = 0.02945
 alternative hypothesis: true probability of success is not equal to 0.5
 95 percent confidence interval:
- 0.2751086 0.6613009
+ 0.5196393 0.8577715
 sample estimates:
 probability of success 
-             0.4642857 
+             0.7096774 
 
 
 -- Wilcoxon signed-rank test (optimised vs non-optimised B-distance) --
@@ -55,7 +55,7 @@ probability of success
 	Wilcoxon signed rank test with continuity correction
 
 data:  h1$opt_B_dist and h1$nonopt_B_dist
-V = 189, p-value = 0.7585
+V = 119, p-value = 0.0118
 alternative hypothesis: true location shift is not equal to 0
 
 

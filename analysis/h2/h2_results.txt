@@ -1,13 +1,13 @@
 
 ========== perceived_v ~ OCEAN + condition | (1|persona)+(1|stimulus) ==========
-                         Estimate Std. Error       df    t value     Pr(>|t|)
-(Intercept)            0.20838759 0.04117183 88.65230   5.061412 2.236962e-06
-opennesshigh           0.18375651 0.02282255 26.00016   8.051534 1.567860e-08
-conscientiousnesshigh  0.08387587 0.02282255 26.00016   3.675132 1.084293e-03
-extraversionhigh       0.19504123 0.02282255 26.00016   8.545989 5.017409e-09
-agreeablenesshigh      0.14968533 0.02282255 26.00016   6.558660 5.919461e-07
-neuroticismhigh       -0.29009332 0.02282255 26.00016 -12.710821 1.158397e-12
-conditionoptimised     0.03955078 0.04281147 93.99889   0.923836 3.579371e-01
+                          Estimate Std. Error       df     t value     Pr(>|t|)
+(Intercept)            0.174940321 0.04596359 97.60538   3.8060630 2.464870e-04
+opennesshigh           0.190917969 0.02411426 25.99961   7.9172237 2.148860e-08
+conscientiousnesshigh  0.079698351 0.02411426 25.99961   3.3050303 2.773503e-03
+extraversionhigh       0.188530816 0.02411426 25.99961   7.8182303 2.714688e-08
+agreeablenesshigh      0.143825955 0.02411426 25.99961   5.9643535 2.699284e-06
+neuroticismhigh       -0.282389323 0.02411426 25.99961 -11.7104715 7.189583e-12
+conditionoptimised    -0.009711372 0.04988179 94.00123  -0.1946877 8.460576e-01
 
 -- LRT: OCEAN traits jointly (omnibus H2) --
 Data: oc
@@ -15,36 +15,36 @@ Models:
 lmer(f0, data = oc, REML = FALSE): f0
 update(m, REML = FALSE): f
                                   npar     AIC     BIC logLik deviance  Chisq
-lmer(f0, data = oc, REML = FALSE)    5 -3022.1 -2982.9 1516.0  -3032.1       
-update(m, REML = FALSE)             10 -3096.7 -3018.4 1558.3  -3116.7 84.597
+lmer(f0, data = oc, REML = FALSE)    5 -4315.3 -4279.7 2162.7  -4325.3       
+update(m, REML = FALSE)             10 -4385.5 -4314.2 2202.7  -4405.5 80.175
                                   Df Pr(>Chisq)    
 lmer(f0, data = oc, REML = FALSE)                  
-update(m, REML = FALSE)            5  < 2.2e-16 ***
+update(m, REML = FALSE)            5  7.714e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 singular: FALSE 
 
 ========== perceived_a ~ OCEAN + condition | (1|persona)+(1|stimulus) ==========
-                         Estimate Std. Error       df    t value     Pr(>|t|)
-(Intercept)            0.23130968 0.04259529 81.42481   5.430405 5.684554e-07
-opennesshigh           0.19200304 0.02458254 26.00005   7.810546 2.764218e-08
-conscientiousnesshigh  0.09564887 0.02458254 26.00005   3.890928 6.209423e-04
-extraversionhigh       0.33121745 0.02458254 26.00005  13.473689 3.086428e-13
-agreeablenesshigh      0.06472439 0.02458254 26.00005   2.632942 1.405947e-02
-neuroticismhigh       -0.26199002 0.02458254 26.00005 -10.657566 5.537882e-11
-conditionoptimised     0.06114366 0.04268213 94.00003   1.432536 1.553079e-01
+                          Estimate Std. Error       df    t value     Pr(>|t|)
+(Intercept)            0.211371528 0.04805085 77.91807  4.3989133 3.408787e-05
+opennesshigh           0.206380208 0.02825503 26.00004  7.3041924 9.325220e-08
+conscientiousnesshigh  0.093967014 0.02825503 26.00004  3.3256733 2.633720e-03
+extraversionhigh       0.336154514 0.02825503 26.00004 11.8971546 5.071286e-12
+agreeablenesshigh      0.042968750 0.02825503 26.00004  1.5207467 1.403928e-01
+neuroticismhigh       -0.260850694 0.02825503 26.00004 -9.2320076 1.089531e-09
+conditionoptimised     0.009548611 0.04725464 93.99999  0.2020671 8.403009e-01
 
 -- LRT: OCEAN traits jointly (omnibus H2) --
 Data: oc
 Models:
 lmer(f0, data = oc, REML = FALSE): f0
 update(m, REML = FALSE): f
-                                  npar     AIC     BIC logLik deviance  Chisq
-lmer(f0, data = oc, REML = FALSE)    5 -516.61 -477.50 263.30  -526.61       
-update(m, REML = FALSE)             10 -593.10 -514.88 306.55  -613.10 86.489
-                                  Df Pr(>Chisq)    
-lmer(f0, data = oc, REML = FALSE)                  
-update(m, REML = FALSE)            5  < 2.2e-16 ***
+                                  npar   AIC     BIC logLik deviance  Chisq Df
+lmer(f0, data = oc, REML = FALSE)    5 -1313 -1277.3 661.49    -1323          
+update(m, REML = FALSE)             10 -1382 -1310.8 701.02    -1402 79.055  5
+                                  Pr(>Chisq)    
+lmer(f0, data = oc, REML = FALSE)               
+update(m, REML = FALSE)            1.323e-15 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 singular: FALSE 

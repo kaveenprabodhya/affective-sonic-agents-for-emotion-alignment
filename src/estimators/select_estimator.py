@@ -42,6 +42,7 @@ import argparse
 import datetime as _dt
 import hashlib
 import json
+import os
 import sys
 import warnings
 from pathlib import Path
@@ -158,13 +159,16 @@ def score(model, X, y, idx):
 # --------------------------------------------------------------------------
 # study stimuli
 # --------------------------------------------------------------------------
-def stimulus_features(feat_cols, sr):
-    """Extract features for every stimulus the judge will have to score."""
+def study_stimulus_features(feat_cols, sr):
+    """Features for the 96 generated study stimuli.
+
+    Correct for a JUDGE, which only ever scores these files.
+    """
     stim_dir = ROOT / "data" / "stimuli"
     manifest_path = stim_dir / "manifest.json"
     if not manifest_path.exists():
-        sys.exit(f"No manifest at {manifest_path}. Generation must run before selection, "
-                 "because discrimination is measured on the study stimuli.")
+        sys.exit(f"No manifest at {manifest_path}. Generation must run first when "
+                 "discrimination is measured on the study stimuli.")
 
     files = []
     for r in json.loads(manifest_path.read_text()):
@@ -175,15 +179,46 @@ def stimulus_features(feat_cols, sr):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         for fn in files:
-            p = stim_dir / fn
-            if not p.exists():
+            fp = stim_dir / fn
+            if not fp.exists():
                 continue
-            y, _sr = load_audio(str(p), sr=sr)
+            y, _sr = load_audio(str(fp), sr=sr)
             rows.append(combined_features(y, _sr))
     if not rows:
         sys.exit("No stimulus audio found. Run generation first.")
-    df = pd.DataFrame(rows)
-    return df[feat_cols].to_numpy(), len(rows)
+    return pd.DataFrame(rows)[feat_cols].to_numpy(), len(rows)
+
+
+def probe_grid_features(feat_cols, sr, soundfont, duration, n):
+    """Features for a deterministic sweep of the synthesiser parameter space.
+
+    Correct for a COACH. The coach's job is to tell candidate parameter settings
+    apart across the space it will search, and that space exists independently of
+    any estimator. Measuring a coach on the study stimuli would be circular: those
+    stimuli were produced by the previous coach and are biased toward whatever
+    region it could represent.
+    """
+    import tempfile
+    from generator.synth import render, grid_params
+
+    combos = grid_params(n)
+    rows = []
+    with tempfile.TemporaryDirectory() as tmp:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            for i, params in enumerate(combos, 1):
+                wav = os.path.join(tmp, "probe.wav")
+                try:
+                    render(params, soundfont, wav, duration, sr)
+                    y, _sr = load_audio(wav, sr=sr)
+                    rows.append(combined_features(y, _sr))
+                except Exception:
+                    continue
+                if i % 50 == 0:
+                    print(f"  probe {i}/{len(combos)}")
+    if not rows:
+        sys.exit("Probe grid produced no audio. Check the soundfont path.")
+    return pd.DataFrame(rows)[feat_cols].to_numpy(), len(rows)
 
 
 def domain_shift(X_train, X_stim):
@@ -234,6 +269,13 @@ def main():
     ap.add_argument("--name", default="estimator_B2", help="Name to freeze the winner under")
     ap.add_argument("--role", default="held_out_H1_judge")
     ap.add_argument("--songs", type=int, default=None, help="Cap songs (quick run)")
+    ap.add_argument("--discriminate-on", default="study", choices=["study", "probe"],
+                    help="Where discrimination is measured. 'study' = the 96 generated "
+                         "stimuli (correct for a judge). 'probe' = a deterministic sweep "
+                         "of the synth parameter space (correct for a coach, and not "
+                         "circular, since the sweep does not depend on any estimator).")
+    ap.add_argument("--probe-n", type=int, default=300, help="Probe grid size")
+    ap.add_argument("--soundfont", default=None)
     ap.add_argument("--no-freeze", action="store_true", help="Report only, freeze nothing")
     ap.add_argument("--no-cache", action="store_true")
     args = ap.parse_args()
@@ -268,11 +310,20 @@ def main():
     print(f"{args.corpus}: {len(df)} windows, {df['song_id'].nunique()} songs "
           f"-> train {len(tr)} / val {len(val)} / test {len(te)} (split by song)\n")
 
-    X_stim, n_stim = stimulus_features(feat_cols, sr)
+    if args.discriminate_on == "probe":
+        sf = args.soundfont or str(ROOT / exp["synthesis"]["soundfont"]["path"])
+        duration = exp.get("synthesis", {}).get("duration_s", 3.0)
+        print(f"Rendering the probe grid for discrimination ({args.probe_n} logos)...")
+        X_stim, n_stim = probe_grid_features(feat_cols, sr, sf, duration, args.probe_n)
+        stim_label = "probe grid"
+    else:
+        X_stim, n_stim = study_stimulus_features(feat_cols, sr)
+        stim_label = "study stimuli"
     shift = domain_shift(X[tr], X_stim)
-    print(f"Study stimuli: {n_stim} files")
+    print(f"{stim_label.capitalize()}: {n_stim} files")
     print(f"Domain shift vs training distribution: mean |z| = {shift['mean_abs_z']:.2f}, "
           f"{shift['frac_features_beyond_3sd']*100:.1f}% of features beyond 3 SD\n")
+    disc_key = f"discrimination_on_{'probe_grid' if args.discriminate_on == 'probe' else 'study_stimuli'}"
 
     # ---- fit every candidate, pick the best hyperparameters per family on val ----
     print(f"Fitting {len(candidates())} candidate configurations...")
@@ -301,7 +352,7 @@ def main():
             best_per_family[c["family"]] = c
 
     # ---- score family winners on the untouched test split + on the stimuli ----
-    print("\nEvaluating family winners on the held-out test split and the study stimuli...")
+    print(f"\nEvaluating family winners on the held-out test split and the {stim_label}...")
     results = []
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -344,7 +395,7 @@ def main():
         f"selection rule: [{rhash}] gate within {rule['r2_tolerance']} mean R2 of best, "
         f"then maximise discrimination",
         f"criteria:      in-domain R2 (held-out songs) and discrimination "
-        f"(stimulus prediction SD / own RMSE)",
+        f"(prediction SD on the {stim_label} / own RMSE)",
         "H1 was not consulted at any point in this procedure.",
         "",
         "DOMAIN SHIFT (diagnostic, not a selection criterion)",
@@ -353,6 +404,8 @@ def main():
     for k, v in shift.items():
         lines.append(f"  {k:32s} {v:.3f}")
     lines += [
+        "",
+        f"discrimination measured on: {stim_label} ({n_stim} renders)",
         "",
         "CANDIDATES (best hyperparameters per family, scored on the untouched test split)",
         "-" * 72,
@@ -367,14 +420,14 @@ def main():
                      f"{'<<<' if r['selected'] else '   '}")
     lines += [
         "",
-        "DISCRIMINATION is the prediction SD on the 96 study stimuli divided by the",
+        f"DISCRIMINATION is the prediction SD on the {stim_label} divided by the",
         "candidate's own held-out RMSE. A value near zero means the estimator returns",
         "almost the same coordinate whatever it is given, and cannot judge H1 at all.",
         "",
         f"SELECTED: {winner['family']}  {winner['params']}",
         f"  in-domain   valence R2 {winner['valence_R2']:+.3f}  "
         f"arousal R2 {winner['arousal_R2']:+.3f}",
-        f"  on stimuli  valence SD {winner['stim_sd_valence']:.4f}  "
+        f"  on {stim_label:<10s} valence SD {winner['stim_sd_valence']:.4f}  "
         f"arousal SD {winner['stim_sd_arousal']:.4f}",
         f"  discrimination {winner['discrimination']:.3f}",
     ]
@@ -432,7 +485,8 @@ def main():
             "arousal_R2": round(winner["arousal_R2"], 3),
             "arousal_RMSE": round(winner["arousal_RMSE"], 3),
         },
-        "discrimination_on_study_stimuli": {
+        "discrimination_measured_on": stim_label,
+        disc_key: {
             "stim_sd_valence": round(winner["stim_sd_valence"], 4),
             "stim_sd_arousal": round(winner["stim_sd_arousal"], 4),
             "range_ratio_valence": round(winner["range_ratio_valence"], 3),
@@ -448,9 +502,7 @@ def main():
 
     print(f"\nFroze models/{args.name}.joblib  (+ .meta.json)")
     print(f"Comparison table: models/selection/candidate_comparison.csv")
-    print(f"\nThe incumbent estimator_B is untouched. Score both and report both:")
-    print(f"  python src/analysis/score_estimator_b.py --estimator estimator_B")
-    print(f"  python src/analysis/score_estimator_b.py --estimator {args.name}")
+    print(f"\nThe incumbent is untouched. Score both and report both.")
 
 
 if __name__ == "__main__":

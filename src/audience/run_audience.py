@@ -15,6 +15,7 @@ import sys
 import os
 import csv
 import json
+import hashlib
 import time
 import random
 import argparse
@@ -30,7 +31,8 @@ from features.extracts import load_audio, extract_audience_block, format_audienc
 TRAITS = ["openness", "conscientiousness", "extraversion", "agreeableness", "neuroticism"]
 Q_COLS = [f"Q{i}" for i in range(1, 13)]
 FIELDS = (["agent_kind", "persona_id"] + TRAITS +
-          ["stimulus_file", "brief", "condition", "target_v", "target_a", "rep"] +
+          ["stimulus_file", "brief", "condition", "target_v", "target_a",
+           "stimulus_sha256", "rep"] +
           Q_COLS + ["perceived_v", "perceived_a"])
 
 
@@ -60,6 +62,14 @@ def cell_key(agent_id, stim_file, rep):
     return f"{agent_id}|{stim_file}|{rep}"
 
 
+def sha256_of(path, chunk=1 << 20):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for block in iter(lambda: f.read(chunk), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
 def load_done(csv_path):
     done = set()
     if csv_path.exists():
@@ -69,6 +79,44 @@ def load_done(csv_path):
     return done
 
 
+def stale_rows(csv_path, stimuli, tol=1e-6):
+    """Rows in an existing CSV that do not describe the current stimuli.
+
+    Generation reuses filenames, so old rows carry the same stimulus_file while
+    describing audio that no longer exists. Resuming onto them merges two studies
+    into one file with nothing left to separate them afterwards.
+
+    The check prefers the recorded sha256, because the hash identifies the audio
+    a response actually heard. The target only identifies the brief, so it misses
+    a regeneration that left the briefs alone - and since LLM output is not
+    deterministic, every regeneration produces different audio under unchanged
+    filenames and unchanged targets. Rows written before the hash column existed
+    fall back to the target comparison, which is weaker but better than nothing.
+    """
+    if not csv_path.exists():
+        return 0, 0
+    want_t = {s["file"]: (float(s["target"][0]), float(s["target"][1])) for s in stimuli}
+    want_h = {s["file"]: s.get("sha256") for s in stimuli}
+    stale = total = 0
+    with open(csv_path) as f:
+        for row in csv.DictReader(f):
+            total += 1
+            fn = row["stimulus_file"]
+            if fn not in want_t:
+                stale += 1
+                continue
+            have_h = (row.get("stimulus_sha256") or "").strip()
+            if have_h and want_h.get(fn):
+                if have_h != want_h[fn]:
+                    stale += 1
+                continue
+            t = want_t[fn]
+            if (abs(float(row["target_v"]) - t[0]) > tol
+                    or abs(float(row["target_a"]) - t[1]) > tol):
+                stale += 1
+    return stale, total
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--backend", default="ollama", choices=["ollama", "anthropic", "mock"])
@@ -76,6 +124,9 @@ def main():
     ap.add_argument("--host", default="http://localhost:11434")
     ap.add_argument("--reps", type=int, default=None)
     ap.add_argument("--resume", action="store_true", help="skip cells already in the output CSV")
+    ap.add_argument("--force", action="store_true",
+                    help="resume even when the existing rows were scored against "
+                         "different stimuli (not recommended)")
     ap.add_argument("--limit-stimuli", type=int)
     ap.add_argument("--limit-agents", type=int)
     ap.add_argument("--out", default=None)
@@ -118,12 +169,36 @@ def main():
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         for s in stimuli:
-            y, _sr = load_audio(str(stim_dir / s["file"]), sr=sr)
+            path = stim_dir / s["file"]
+            s["sha256"] = sha256_of(path)
+            y, _sr = load_audio(str(path), sr=sr)
             s["ftext"] = format_audience_block(extract_audience_block(y, _sr))
 
-    done = load_done(csv_path) if args.resume else set()
-    new_file = not csv_path.exists() or (not args.resume and csv_path.stat().st_size == 0)
-    if new_file and not args.resume:
+    # A run without --resume starts a new file. The previous one is kept under a
+    # timestamped name rather than deleted:
+    if args.resume:
+        stale, total = stale_rows(csv_path, stimuli)
+        if stale and not args.force:
+            sys.exit(
+                f"\nRefusing to resume: {stale} of {total} rows in {csv_path.name} were\n"
+                f"scored against different stimuli than the current manifest (the brief\n"
+                f"targets have changed since they were written).\n\n"
+                f"Filenames are reused across generations, so resuming would mix two\n"
+                f"studies into one file with no way to separate them afterwards.\n\n"
+                f"  start fresh:      python {Path(__file__).name} --backend <backend>\n"
+                f"  inspect/salvage:  python src/analysis/clean_audience.py\n"
+                f"  override anyway:  --force\n")
+        if stale and args.force:
+            print(f"WARNING: --force with {stale}/{total} rows from different stimuli.\n")
+        done = load_done(csv_path)
+    else:
+        done = set()
+        if csv_path.exists() and csv_path.stat().st_size > 0:
+            stamp = time.strftime("%Y%m%d-%H%M%S")
+            backup = csv_path.with_name(f"{csv_path.stem}_{stamp}.csv")
+            csv_path.rename(backup)
+            print(f"existing responses moved to {backup.name} "
+                  f"(pass --resume to continue one instead)")
         with open(csv_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=FIELDS).writeheader()
 
@@ -149,7 +224,8 @@ def main():
             row = {"agent_kind": a["kind"], "persona_id": a["id"],
                    **a["traits"],
                    "stimulus_file": s["file"], "brief": s["brief"], "condition": s["condition"],
-                   "target_v": s["target"][0], "target_a": s["target"][1], "rep": rep,
+                   "target_v": s["target"][0], "target_a": s["target"][1],
+                   "stimulus_sha256": s.get("sha256", ""), "rep": rep,
                    **{q: obj[q] for q in Q_COLS},
                    "perceived_v": round((obj["Q1"] - 5) / 4, 3),
                    "perceived_a": round((obj["Q2"] - 5) / 4, 3)}

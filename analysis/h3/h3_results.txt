@@ -4,13 +4,13 @@ Model: distance ~ OCEAN traits + (1|persona_id) + (1|brief/run)
 Quadrant is not a primary H3 factor. It is reported descriptively below.
 
 ---------- FIXED-EFFECT ESTIMATES ----------
-                         Estimate Std. Error       df    t value     Pr(>|t|)
-(Intercept)            0.55672275 0.07134402 24.48561   7.803356 4.257366e-08
-opennesshigh           0.21600497 0.02857115 26.00589   7.560247 5.014061e-08
-conscientiousnesshigh  0.10875272 0.02857115 26.00589   3.806382 7.728287e-04
-extraversionhigh       0.34965545 0.02857115 26.00589  12.238059 2.699953e-12
-agreeablenesshigh      0.07508331 0.02857115 26.00589   2.627941 1.422152e-02
-neuroticismhigh       -0.32403628 0.02857115 26.00589 -11.341379 1.444981e-11
+                         Estimate Std. Error       df   t value     Pr(>|t|)
+(Intercept)            0.54063289 0.06380960 31.79624  8.472595 1.167381e-09
+opennesshigh           0.19464805 0.03207537 25.99804  6.068459 2.064689e-06
+conscientiousnesshigh  0.09458858 0.03207537 25.99804  2.948948 6.659935e-03
+extraversionhigh       0.29102161 0.03207537 25.99804  9.073056 1.544622e-09
+agreeablenesshigh      0.03551332 0.03207537 25.99804  1.107183 2.783539e-01
+neuroticismhigh       -0.26872798 0.03207537 25.99804 -8.378017 7.366810e-09
 
 Singular fit: FALSE 
 
@@ -19,9 +19,9 @@ Data: oc
 Models:
 m_null: dist ~ (1 | persona_id) + (1 | brief/run)
 m_full: dist ~ openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
-       npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)    
-m_null    5 2965.1 3000.7 -1477.5   2955.1                         
-m_full   10 2891.2 2962.5 -1435.6   2871.2 83.854  5  < 2.2e-16 ***
+       npar     AIC     BIC logLik deviance  Chisq Df Pr(>Chisq)    
+m_null    5 -394.23 -362.06 202.12  -404.23                         
+m_full   10 -451.65 -387.30 235.83  -471.65 67.421  5  3.523e-13 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
@@ -32,18 +32,18 @@ The omnibus test determines whether the five OCEAN traits jointly
 # A tibble: 4 × 4
   quadrant mean_dist    sd     n
   <fct>        <dbl> <dbl> <int>
-1 HV_HA        0.756 0.439  2304
-2 HV_LA        0.966 0.459  2304
-3 LV_HA        0.617 0.449  2304
-4 LV_LA        0.739 0.488  2304
+1 HV_HA        0.628 0.346  1152
+2 HV_LA        0.86  0.431  1152
+3 LV_HA        0.534 0.349  1152
+4 LV_LA        0.834 0.495  1152
 
 These values are descriptive and are not used to test H3.
 
 ========== DESCRIPTIVE DIAGNOSTIC: DIRECTION OF MISALIGNMENT ==========
-HV_HA: valence +0.420, arousal +0.536
-HV_LA: valence +0.417, arousal +0.826
-LV_HA: valence +0.425, arousal +0.324
-LV_LA: valence +0.423, arousal +0.563
+HV_HA: valence +0.218, arousal +0.381
+HV_LA: valence +0.196, arousal +0.761
+LV_HA: valence +0.353, arousal +0.125
+LV_LA: valence +0.510, arousal +0.628
 
 Positive valence values mean that personas perceived the logos as more
  positive than intended. Positive arousal values mean that personas perceived
@@ -59,12 +59,12 @@ Data: oc
 Models:
 diagnostic_additive: dist ~ quadrant + openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
 diagnostic_interaction: dist ~ quadrant * (openness + conscientiousness + extraversion + agreeableness + neuroticism) + (1 | persona_id) + (1 | brief/run)
-                       npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
-diagnostic_additive      13 2892.2 2984.8 -1433.1   2866.2                     
-diagnostic_interaction   28 2875.8 3075.4 -1409.9   2819.8 46.326 15  4.719e-05
-                          
-diagnostic_additive       
-diagnostic_interaction ***
+                       npar     AIC     BIC logLik deviance  Chisq Df
+diagnostic_additive      13 -456.44 -372.77 241.22  -482.44          
+diagnostic_interaction   28 -681.76 -501.57 368.88  -737.76 255.33 15
+                       Pr(>Chisq)    
+diagnostic_additive                  
+diagnostic_interaction  < 2.2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 

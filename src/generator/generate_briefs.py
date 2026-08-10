@@ -29,9 +29,11 @@ def main():
     if not rp.exists():
         sys.exit("Run probe_reachable.py first (models/reachable_va.json is missing).")
     r = json.loads(rp.read_text())["report"]
+    coach = r.get("coach", "estimator_A")     # recorded by probe_reachable.py
     v_pos, v_neg = r["valence"]["p95"], r["valence"]["p5"]
     a_pos, a_neg = r["arousal"]["p95"], r["arousal"]["p5"]
-    print(f"reachable region:  valence [{v_neg:+.2f}, {v_pos:+.2f}]   arousal [{a_neg:+.2f}, {a_pos:+.2f}]")
+    print(f"reachable region ({coach}):  valence [{v_neg:+.2f}, {v_pos:+.2f}]   "
+          f"arousal [{a_neg:+.2f}, {a_pos:+.2f}]")
 
     for cond, msg in [
         (v_pos <= 0.03, "valence barely reaches positive - HV quadrants will be weak"),
@@ -49,7 +51,7 @@ def main():
     briefs = load("briefs_full_range.yaml")["briefs"]
 
     lines = ["# 16 brand briefs, 4 per quadrant. Targets rescaled into the reachable VA",
-             "# region measured by probe_reachable.py (synthetic logos scored by Estimator A):",
+             f"# region measured by probe_reachable.py (synthetic logos scored by {coach}):",
              f"#   reachable valence [{v_neg:+.2f}, {v_pos:+.2f}], arousal [{a_neg:+.2f}, {a_pos:+.2f}].",
              "# Original full-circumplex targets are preserved in briefs_full_range.yaml.",
              "scale: [-1, 1]", "n_briefs: 16", "", "briefs:"]

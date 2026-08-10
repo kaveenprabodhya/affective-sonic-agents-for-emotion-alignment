@@ -144,11 +144,14 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   │                                               ├── mdu_fit_summary.csv   (Stress-1, all solutions)
 │   │                                               ├── pooled/               (all stimuli)
 │   │                                               └── quadrants/            (4x, optimised only)
-│   └── Stage6_baselines.R -> analysis/baselines/  neutral + generic control comparison
+│   ├── Stage6_baselines.R -> analysis/baselines/  neutral + generic control comparison
+│   └── Check_quadrant_confidence.R -> analysis/h1/quadrant_confidence.txt
+│                                                  held / marginal / crossed per estimator,
+│                                                  plus raw, chance and kappa agreement
 │
 ├── data/
 │   ├── stimuli/                     # 96 WAV files + manifest.json (generation record)
-│   ├── stimuli_mp3/                 # MP3 copies + index.html for listening
+│   ├── stimuli_mp3/                 # MP3 copies + create_index.py + index.html
 │   ├── analysis/
 │   │   ├── h1_estimator_b.csv       # 48 matched pairs, held-out estimator distances -> input to H1
 │   │   ├── h1_estimator_b_<judge>.csv  # same, for any additional judge scored
@@ -159,6 +162,7 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   ├── estimator_A.joblib(.meta.json)   # DEAM, random forest — guides optimisation
 │   ├── estimator_B.joblib(.meta.json)   # PMEmo, SVR — held out, scores H1
 │   ├── estimator_B2.joblib(.meta.json)  # architecture-selected judge, if built
+│   ├── estimator_A2.joblib(.meta.json)  # architecture-selected coach, if built
 │   ├── selection/                       # candidate_comparison.csv + selection_report.txt
 │   ├── reachable_va.json                # measured reachable region
 │   └── cache/                           # feature caches (safe to delete, slow to rebuild)
@@ -166,7 +170,10 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 ├── logs/                            # every LLM call, with ts / tokens / prompt / response
 │   ├── generation.jsonl
 │   ├── audience.jsonl
-│   └── pilot.jsonl
+│   ├── pilot.jsonl
+│   └── pipeline/<timestamp>/         # one log per run_pipeline.sh step
+│
+├── run_pipeline.sh                  # staged runner with preflight + per-step logs
 │
 └── spike/                           # exploratory work, not part of the pipeline
     ├── estimator_transfer_test.py   # window-length transfer check
@@ -206,7 +213,12 @@ Stale cache: `rm -f models/cache/pmemo_*` then rebuild.
 ```bash
 python src/generator/probe_reachable.py          # -> models/reachable_va.json
 python src/generator/generate_briefs.py          # -> rewrites config/briefs.yaml
+
+# with a different coach
+python src/generator/probe_reachable.py --coach estimator_A2
 ```
+
+The reachable region is measured *through the coach*, so the coach used here must be the one used in Stage 2. The name is recorded in `reachable_va.json`.
 
 `probe_reachable.py` scores a fixed sample of parameter combinations with Estimator A. `generate_briefs.py` rescales the full-range targets into that region, per axis and per sign.
 
@@ -219,6 +231,8 @@ time python -W ignore src/generator/run_generation.py --backend ollama
 16 briefs × 3 runs = 48 matched pairs = 96 stimuli, into `data/stimuli/` with `manifest.json`.
 
 Stopping rule (`src/generator/loop.py`): the loop stops when the Estimator A prediction is within `threshold` of the target **and** on the same side of both axes as the target, or when `iteration_cap` is hit. `best` is tracked every iteration and prefers quadrant-holding candidates before shortest distance.
+
+`manifest.json` is rewritten from scratch with only the briefs in that run, and matching WAV files are overwritten — so a `--briefs` pilot replaces a 48-run manifest with a 12-run one.
 
 Output flags: `*` = both criteria met, `Q` = quadrant held.
 
@@ -235,13 +249,28 @@ Config knobs (`config/experiment.yaml` → `generation.optimisation`):
 | `require_quadrant` | enforce sign agreement; `false` gives distance-only behaviour |
 | `iteration_cap` | max iterations per run |
 
+`--coach` selects the estimator that guides the loop (default `estimator_A`) and records the name in `manifest.json`:
+
+```bash
+python -W ignore src/generator/run_generation.py --backend ollama --coach estimator_A2
+```
+
 ### Stage 2b — Architecture selection for the held-out judge
 
 Optional. Runs after generation, because one of the two criteria is measured on the study stimuli.
 
+For the **judge**, discrimination is measured on the 96 generated stimuli — the files it will score:
+
 ```bash
 python src/estimators/select_estimator.py --pmemo datasets/PMEmo --no-freeze   # report only
 python src/estimators/select_estimator.py --pmemo datasets/PMEmo --name estimator_B2
+```
+
+For the **coach**, use `--discriminate-on probe`. Discrimination is then measured on a deterministic sweep of the synthesiser parameter space rather than on the study stimuli, which were produced by the previous coach:
+
+```bash
+python src/estimators/select_estimator.py --deam datasets/DEAM --corpus DEAM \
+    --name estimator_A2 --role optimisation_coach --discriminate-on probe
 ```
 
 Compares ridge, linear SVR, RBF SVR (gamma grid), random forest, gradient boosting and MLP. Split three ways by song: train fits, validation ranks hyperparameters within a family, test gives the reported metric.
@@ -263,7 +292,19 @@ models/selection/selection_report.txt        # rule hash, domain-shift diagnosti
 models/<name>.joblib + .meta.json            # the frozen winner
 ```
 
+| Flag | Default | Meaning |
+|---|---|---|
+| `--corpus` | `PMEmo` | which corpus to train on; pair with `--pmemo` or `--deam` |
+| `--name` | `estimator_B2` | name to freeze under; must differ from `estimator_A` and `estimator_B` |
+| `--role` | `held_out_H1_judge` | recorded in the metadata |
+| `--discriminate-on` | `study` | `study` = the 96 stimuli, `probe` = the parameter sweep |
+| `--probe-n` | `300` | probe grid size when `--discriminate-on probe` |
+| `--no-freeze` | off | write the report only |
+| `--songs` | all | cap songs for a quick run |
+
 `--name` must differ from `estimator_A` and `estimator_B`; the script refuses to overwrite them.
+
+Swapping the **coach** means re-running Stages 1 and 2 with `--coach <name>`, since the reachable region and the brief targets are both derived through the coach.
 
 ### Stage 3 — Score with the held-out judge
 
@@ -273,6 +314,14 @@ python src/analysis/score_estimator_b.py --estimator estimator_B2     # any othe
 ```
 
 Writes `data/analysis/h1_estimator_b.csv` (or `..._estimator_B2.csv`) and `data/analysis/integrity.json`. Read-only on the stimuli. Prints the judge's spread across the stimuli next to its own RMSE.
+
+The coach can be scored the same way, which adds it as a column to the quadrant check and the listening page:
+
+```bash
+python src/analysis/score_estimator_b.py --estimator estimator_A2
+```
+
+Do not pass the coach to `Stage6_h1.R`. The loop selected `best` by minimising the coach's own distance, so an H1 test against the coach is true by construction — its numbers are a description of what the optimiser did, not evidence about it.
 
 ### Stage 4 — Run the synthetic audience
 
@@ -286,6 +335,8 @@ time python -W ignore src/audience/run_audience.py --backend ollama
 python src/audience/run_audience.py --backend ollama --resume    # skips rows already written
 ```
 
+A run without `--resume` starts a new file, moving the previous one to `responses_<timestamp>.csv`. A run with `--resume` refuses to continue if the existing rows were scored against different stimuli: generation reuses filenames, so resuming after the brief targets change would merge two studies into one file with no way to separate them afterwards. `--force` overrides; `python src/analysis/clean_audience.py` reports and salvages a file that has already been merged.
+
 ### Stage 5 — Convert stimuli for listening (optional)
 
 ```bash
@@ -294,13 +345,43 @@ python data/stimuli_mp3/create_index.py
 xdg-open data/stimuli_mp3/index.html
 ```
 
-The page pairs each non-optimised and optimised stimulus with its brand brief, both estimators' VA plots, and the synthesiser parameters that changed. Filter by quadrant, by whether quadrant was held, or by unchanged pairs.
+One card per matched pair. Each card holds the brand brief that seeded it, both audio versions labelled with the winning iteration, a VA plot for Estimator A and for every judge scored, a distance row per estimator marked closer/further, and the synthesiser parameters the optimiser changed. Filter by quadrant, by whether quadrant was held, or by unchanged pairs. Only one audio player runs at a time.
+
+Judges are discovered automatically from `data/analysis/h1_estimator_b*.csv`, so anything scored in Stage 3 appears without a flag. A judge that has not been scored is simply absent, and the page prints the command that would add it.
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `--judges` | every estimator scored | comma-separated names, e.g. `estimator_B,estimator_B2`; also fixes column order |
+| `--scale` | `shared` | `shared` puts every estimator on one axis; `per-judge` scales each to its own range |
+
+```bash
+python data/stimuli_mp3/create_index.py --scale per-judge          # read positions
+python data/stimuli_mp3/create_index.py --judges estimator_B2      # one column only
+```
+
+**Where the numbers come from.** The coach column is read from `data/stimuli/manifest.json` (`non_optimised.est` / `optimised.est`) — the estimates recorded during generation. Every other column is read from a `data/analysis/h1_estimator_b*.csv` written by Stage 3. Nothing is recomputed or interpolated.
+
+**Adding a column.** `score_estimator_b.py` accepts any frozen estimator, so any of them can be put on the page:
+
+```bash
+python src/analysis/score_estimator_b.py --estimator estimator_A2
+python data/stimuli_mp3/create_index.py
+```
+
+The coach column is labelled from the `coach` field the generation run recorded, so if `estimator_A2` produced the stimuli the column says so, and the quadrant badge is attributed to it.
+
+**Plot size and scrolling.** Plots are a fixed 168 px and never shrink as columns are added. The strip scrolls horizontally with scroll-snap, so four or more estimators are read by sliding rather than squinting. `PLOT_PX` at the top of `create_index.py` changes the size.
+
+**Axis scale.** Axes are computed from the data with 10% headroom, so no point is ever clipped, and the scale is printed in each column heading (`Estimator B · held out · ±0.30`) rather than inside the plot, where it would sit under the data. Under `shared` every estimator uses one axis, which keeps columns comparable — a compressed estimator visibly stays compressed next to one that spreads, but its dots may overlap. Under `per-judge` each gets its own axis, so positions are readable and columns are **not** comparable; the legend says so. `DOMAIN_MIN` and `DOMAIN_HEADROOM` set the floor and the headroom.
+
+The coordinates being plotted are printed under each plot and the target in the card header, so any plot can be checked against the CSV.
 
 ### Stage 6 — Statistical analysis
 
 ```bash
-Rscript analysis/Stage6_h1.R              # H1, estimator_B
-Rscript analysis/Stage6_h1.R estimator_B2 # H1, another judge -> analysis/h1/estimator_B2/
+Rscript analysis/Stage6_h1.R                     # H1, estimator_B
+Rscript analysis/Stage6_h1.R estimator_B2        # H1, another judge -> analysis/h1/estimator_B2/
+Rscript analysis/Check_quadrant_confidence.R     # quadrant classification + judge agreement
 Rscript analysis/Stage6_h2.R
 Rscript analysis/Stage6_h3_alignment.R
 Rscript analysis/Stage6_mdu.R
@@ -311,6 +392,15 @@ Rscript analysis/Stage6_baselines.R
 
 **`Stage6_h1.R` → `analysis/h1/`** (or `analysis/h1/<judge>/` when a judge is named)
 `h1_results.txt` — the judge's spread across the stimuli, descriptives, mixed-effects model, paired t-test, tie count, sign test, Wilcoxon signed-rank, and a quadrant check counting how often optimised and non-optimised stimuli sit on the target's side of both axes.
+
+**`Check_quadrant_confidence.R` → `analysis/h1/quadrant_confidence.txt`**
+Reads every `data/analysis/h1_estimator_b*.csv` and classifies each optimised stimulus per estimator as **held** (same sign as the target on both axes, both coordinates at least `margin` clear of the axes), **marginal** (same sign, but within `margin` of an axis, so a small error flips it) or **crossed** (opposite sign on at least one axis). The margin is not a property of the data, so the table is reported across several values — 0.00, 0.02, 0.05, 0.10 by default, or pass your own:
+
+```bash
+Rscript analysis/Check_quadrant_confidence.R 0.02 0.05 0.10 0.15
+```
+
+Also breaks results down by intended quadrant, and reports agreement between estimators as raw agreement, chance agreement, and Cohen's kappa. Kappa matters here because an estimator concentrated in one quadrant inflates raw agreement with everything else: where one estimator is near-constant, raw agreement equals chance by construction and kappa is 0. Only pairs where both estimators have real spread are interpretable.
 
 **`Stage6_h2.R` → `analysis/h2/`**
 `h2_results.txt` — mixed-effects models for perceived valence and perceived arousal, omnibus LRT across the five OCEAN traits, singularity check.
@@ -340,37 +430,142 @@ The script prints a warning when Stress-1 falls below 0.01.
 
 ---
 
-## 6. Run order after a stopping-rule or estimator change
+## 6. Running the pipeline
+
+`run_pipeline.sh` wraps every stage below with preflight checks, per-step logging, and a stop at the first failure. Each stage can also be run on its own, so a crash part-way through does not mean repeating the stages before it.
 
 ```bash
-# 1. archive (Section 8)
-# 2. regenerate all 96 stimuli                                      ~20 min
-time python -W ignore src/generator/run_generation.py --backend ollama
+chmod +x run_pipeline.sh
+source .venv/bin/activate
 
-# 3. score — writes the H1 input                                    ~2 min
-python src/analysis/score_estimator_b.py
+DRY=1 ./run_pipeline.sh all      # print every command, run nothing
+./run_pipeline.sh                # steps 1-6, then stop at the checkpoint
+```
 
-# 3b. optional: architecture selection, then score that judge too
+The default run stops after H1 so the result can be read before committing to the 9-hour audience stage:
+
+```bash
+cat analysis/h1/estimator_B2/h1_results.txt
+
+./run_pipeline.sh audience       # step 7,  ~9 h
+./run_pipeline.sh analysis       # step 8,  H2, H3, MDU, baselines
+./run_pipeline.sh page           # step 9,  MP3s + listening page
+```
+
+### Targets
+
+| Argument | Steps | What it does |
+|---|---|---|
+| *(none)* | 1–5 | select coach, re-measure region, regenerate, score, H1 — then stop |
+| `audience` | 6 | the 9,792-response run |
+| `analysis` | 7 | every statistical test: H1, quadrant confidence, H2, H3, MDU, baselines |
+| `page` | 8 | MP3 conversion and the listening page |
+| `all` | 1–8 | everything, no checkpoint pause |
+| `preflight` | 0 | environment checks only |
+| `clean` | — | clear every generated output, run nothing |
+| `3` | 3 | a single numbered step |
+| `4 5` | 4–5 | a range of steps |
+
+### Steps
+
+| # | Step | Time |
+|---|---|---|
+| 0 | preflight — files, LFS stubs, venv, Ollama, Rscript, ffmpeg | instant |
+| 1 | coach architecture selection (`--discriminate-on probe`) | ~15 min |
+| 2 | re-measure the reachable region, re-place the brief targets | ~5 min |
+| 3 | regenerate all 96 stimuli | ~20 min |
+| 4 | score with both judges, plus the coach as a diagnostic | ~6 min |
+| 5 | H1 for both judges, quadrant confidence | seconds |
+| 6 | synthetic audience | ~9 h |
+| 7 | every statistical test: H1, quadrant confidence, H2, H3, MDU, baselines | minutes |
+| 8 | MP3 conversion, listening page | ~2 min |
+
+### Outputs are replaced, not added to
+
+Before a step runs, whatever it produced last time is deleted. A rerun therefore cannot leave orphans behind — stimuli from briefs no longer in the set, scored CSVs for judges no longer in use, or LLM logs spanning several studies.
+
+Cleaning is scoped to the steps requested, so `./run_pipeline.sh analysis` clears the analysis outputs and leaves the stimuli and audience data alone.
+
+| Steps | Cleared first |
+|---|---|
+| 1 | `models/selection/` |
+| 2 | `models/reachable_va.json` |
+| 3 | `data/stimuli/*.wav`, `manifest.json`, `logs/generation.jsonl` |
+| 4 | `data/analysis/h1_estimator_b*.csv`, `integrity.json` |
+| 5 | `analysis/h1/` |
+| 6 | `data/audience/responses.csv`, `logs/audience.jsonl` |
+| 7 | `analysis/{h1,h2,h3,mdu,baselines,tables}/` |
+| 8 | `data/stimuli_mp3/*.mp3`, `index.html` |
+
+Scripts, configs, corpora and frozen estimators are never touched — only generated artefacts.
+
+```bash
+DRY=1 ./run_pipeline.sh all       # lists exactly what would be removed
+./run_pipeline.sh clean           # clear everything, run nothing
+KEEP=1 ./run_pipeline.sh all      # leave previous outputs in place
+```
+
+Step logs under `logs/pipeline/<timestamp>/` are kept for the last `KEEP_RUNS` runs (default 5) and older ones are pruned.
+
+### Environment overrides
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `COACH` | `estimator_A2` | coach to select and generate with |
+| `JUDGE` | `estimator_B2` | additional judge to score and test |
+| `DEAM` | `datasets/DEAM` | DEAM corpus root |
+| `PMEMO` | `datasets/PMEmo` | PMEmo corpus root |
+| `BACKEND` | `ollama` | LLM backend |
+| `DRY` | `0` | `1` prints commands without running them |
+| `KEEP` | `0` | `1` skips clearing previous outputs |
+| `KEEP_RUNS` | `5` | how many runs of step logs to retain |
+
+```bash
+COACH=estimator_A3 ./run_pipeline.sh 1 3
+DEAM=/mnt/data/DEAM ./run_pipeline.sh
+```
+
+`analysis` deliberately repeats H1 and the quadrant check, so that one target reproduces the complete result set from whatever is currently in `data/`. Both take seconds and are idempotent.
+
+### Logs and failure behaviour
+
+Every step writes to `logs/pipeline/<timestamp>/NN_<step>.log` and reports its own duration. The script uses `set -Eeuo pipefail` with an ERR trap, so the first failure halts the run rather than letting later stages work on stale inputs. Step 3 greps its own log to confirm the generation actually used the requested coach.
+
+Preflight fails hard on a surviving `src/estimators/select.py` (it shadows Python's stdlib `select` module) and on Git-LFS pointer stubs, which otherwise surface as `KeyError: 118`. Missing Ollama, Rscript or ffmpeg are warnings, since not every target needs them.
+
+### Running stages by hand
+
+The runner is a convenience, not a requirement. Each stage is an ordinary command:
+
+```bash
+# after changing the judge only — no audience rerun needed
 python src/estimators/select_estimator.py --pmemo datasets/PMEmo --name estimator_B2
 python src/analysis/score_estimator_b.py --estimator estimator_B2
+Rscript analysis/Stage6_h1.R estimator_B2
+Rscript analysis/Check_quadrant_confidence.R
 
-# 4. H1 for every judge scored                                      seconds
+# after changing the coach — starts from Stage 1, because the reachable region
+# and the brief targets are both derived through the coach
+python src/estimators/select_estimator.py --deam datasets/DEAM --corpus DEAM \
+    --name estimator_A2 --role optimisation_coach --discriminate-on probe
+python src/generator/probe_reachable.py --coach estimator_A2
+python src/generator/generate_briefs.py
+time python -W ignore src/generator/run_generation.py --backend ollama --coach estimator_A2
+python src/analysis/score_estimator_b.py
+python src/analysis/score_estimator_b.py --estimator estimator_B2
 Rscript analysis/Stage6_h1.R
 Rscript analysis/Stage6_h1.R estimator_B2
-
-# 5. audience                                                       ~9 h
+Rscript analysis/Check_quadrant_confidence.R
 time python -W ignore src/audience/run_audience.py --backend ollama
-
-# 6. remaining analyses                                             minutes
 Rscript analysis/Stage6_h2.R
 Rscript analysis/Stage6_h3_alignment.R
 Rscript analysis/Stage6_mdu.R
 Rscript analysis/Stage6_baselines.R
 ```
 
-Step 3 is required: `run_audience.py` reads only `manifest.json` and will run without it, but `score_estimator_b.py` is what writes the H1 input and refreshes `integrity.json`.
+Scoring is required before H1: `run_audience.py` reads only `manifest.json` and will run without it, but `score_estimator_b.py` is what writes the H1 input and refreshes `integrity.json`.
 
-Changing the judge does not require an audience rerun — Estimator B is used only in Stage 3, and the audience agents receive acoustic features, not estimator output. Changing Estimator A does require full regeneration and the 9-hour audience run.
+Changing the judge does not require an audience rerun — it is used only in Stage 3, and the audience agents receive acoustic features, not estimator output.
 
 ---
 
@@ -394,29 +589,20 @@ python spike/persona_pilot.py --backend ollama --model qwen3:8b
 
 # Architecture selection, report only
 python src/estimators/select_estimator.py --pmemo datasets/PMEmo --no-freeze
+
+# The whole pipeline, printed but not executed
+DRY=1 ./run_pipeline.sh all
+
+# Coach selection, report only (renders the probe grid)
+python src/estimators/select_estimator.py --deam datasets/DEAM --corpus DEAM \
+    --discriminate-on probe --probe-n 60 --no-freeze
 ```
 
 `--briefs` picks specific IDs. `--limit N` takes the *first* N briefs, and briefs are ordered in quadrant blocks of four, so `--limit 2` only covers HV_HA.
 
 ---
 
-## 8. Before you regenerate — archive first
-
-`run_generation.py` rewrites `manifest.json` with only the briefs in that run and overwrites matching WAV files. A `--briefs` pilot replaces a 48-run manifest with a 12-run one.
-
-```bash
-git lfs pull                                   # archive real files, not stubs
-mkdir -p archive/pre_quadrant_fix
-cp -r data analysis logs models config archive/pre_quadrant_fix/
-```
-
-`models/` and `config/` are included so the estimator versions and threshold settings that produced the old results are preserved alongside them.
-
-`logs/*.jsonl` append across runs rather than resetting, so the archive copy is how you separate old calls from new.
-
----
-
-## 9. Troubleshooting
+## 8. Troubleshooting
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -427,7 +613,11 @@ cp -r data analysis logs models config archive/pre_quadrant_fix/
 | Ollama connection refused | Daemon not running | `ollama serve`, check with `ollama ps` |
 | R: `there is no package called 'smacof'` | Installed for the wrong user | `sudo Rscript -e 'install.packages("smacof", repos="https://cloud.r-project.org")'` |
 | `No manifest at ...` from `select_estimator.py` | Generation has not run | Run Stage 2 first |
+| `cannot import name 'grid_params'` | Stale copy of `probe_reachable.py` or `synth.py` | `grid_params` lives in `synth.py`; update both files |
+| A step ran but used the wrong estimator | `--coach` omitted | Check the `coach:` line in the generation output, or run `./run_pipeline.sh preflight` |
 | Estimator loads but predictions look wrong | sklearn version drift | Compare `python -c "import sklearn; print(sklearn.__version__)"` against the `.meta.json` |
+
+Run `./run_pipeline.sh preflight` to check all of the above at once.
 
 **Timing reference** (measured, Qwen3:8b local, ~2.9 s per LLM call):
 
@@ -436,13 +626,14 @@ cp -r data analysis logs models config archive/pre_quadrant_fix/
 | Pilot (4 briefs) | ~98 | ~5 min |
 | Full generation | ~416 | ~17 min |
 | Estimator scoring | 0 | ~1 min |
-| Architecture selection | 0 | ~10 min (cached features) |
+| Architecture selection (judge) | 0 | ~10 min (cached features) |
+| Architecture selection (coach, probe grid) | 0 | ~15 min (300 renders) |
 | Audience | 9,792 | ~9 h |
 | R analysis (all five) | 0 | minutes |
 
 ---
 
-## 10. What gets recorded
+## 9. What gets recorded
 
 - `models/*.meta.json` — corpus, model family, hyperparameters, held-out metrics, sklearn version, seed, freeze timestamp. Selected judges also record the selection rule, its hash, the families compared, and the domain-shift diagnostic.
 - `logs/*.jsonl` — every LLM call with timestamp, model, temperature, full prompt, response and token counts.

@@ -12,7 +12,7 @@
 #   2. average the 32 OCEAN personas to a stimulus-level OCEAN mean,
 #   3. compare that stimulus-level OCEAN mean with the two controls.
 #
-# Run:  Rscript analysis/stage6_baselines.R
+# Run:  Rscript analysis/Stage6_baselines.R
 # Packages: install.packages(c("dplyr","tidyr","ggplot2"))
 
 library(dplyr); library(tidyr); library(ggplot2)
@@ -59,11 +59,11 @@ agent_stim <- base %>%
 # -------------------------------------------------------------------------
 stim <- agent_stim %>%
   group_by(audience_group, stimulus_file, condition, target_v, target_a) %>%
-  summarise(perceived_v = mean(perceived_v, na.rm = TRUE),
+  summarise(persona_sd_v = ifelse(n() > 1, sd(perceived_v, na.rm = TRUE), NA_real_),
+            persona_sd_a = ifelse(n() > 1, sd(perceived_a, na.rm = TRUE), NA_real_),
+            perceived_v = mean(perceived_v, na.rm = TRUE),
             perceived_a = mean(perceived_a, na.rm = TRUE),
             alignment_distance = mean(alignment_distance, na.rm = TRUE),
-            persona_sd_v = ifelse(n() > 1, sd(perceived_v, na.rm = TRUE), NA_real_),
-            persona_sd_a = ifelse(n() > 1, sd(perceived_a, na.rm = TRUE), NA_real_),
             respondents = n(), .groups = "drop")
 
 # -------------------------------------------------------------------------
@@ -88,8 +88,19 @@ summary_by_condition <- stim %>%
 # -------------------------------------------------------------------------
 # Stimulus-matched control-minus-OCEAN differences
 # -------------------------------------------------------------------------
+dup <- stim %>%
+  count(audience_group, stimulus_file, condition, name = "n_rows") %>%
+  filter(n_rows > 1)
+if (nrow(dup) > 0) {
+  cat("\n!! ", nrow(dup), " (audience_group, stimulus_file, condition) combinations\n", sep = "")
+  cat("   appear more than once in `stim`. Run analysis/Diagnose_baselines.R to see why.\n")
+  print(utils::head(dup, 10))
+  stop("cannot pivot: stimulus-level rows are not unique")
+}
+
 wide <- stim %>%
-  select(audience_group, stimulus_file, condition, perceived_v, perceived_a, alignment_distance) %>%
+  select(audience_group, stimulus_file, condition, target_v, target_a,
+         perceived_v, perceived_a, alignment_distance) %>%
   pivot_wider(names_from = audience_group,
               values_from = c(perceived_v, perceived_a, alignment_distance),
               names_sep = "__")

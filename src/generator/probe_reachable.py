@@ -24,47 +24,27 @@ from config_loader import load, ROOT                       # noqa: E402
 from estimators.model import load as load_estimator         # noqa: E402
 from estimators.data import combined_features               # noqa: E402
 from features.extracts import load_audio                     # noqa: E402
-from generator.synth import render, INSTRUMENTS             # noqa: E402
-
-
-def grid_params():
-    """A spread across the parameter space, biased to sample the extremes and middle."""
-    tempos = [50, 90, 130, 170, 200]
-    modes = ["major", "minor"]
-    centers = [50, 62, 74, 84]
-    contours = ["rising", "falling", "arch", "wave"]
-    npbs = [1, 2, 4]
-    dyns = ["soft", "moderate", "loud"]
-    arts = ["legato", "staccato"]
-    insts = ["warm pad", "string ensemble", "nylon guitar", "vibraphone",
-             "flute", "trumpet", "music box", "church organ"]
-    combos = []
-    rng = np.random.default_rng(0)
-    # full grid is huge; sample a representative subset deterministically
-    full = list(itertools.product(tempos, modes, centers, contours, npbs, dyns, arts, insts))
-    idx = rng.choice(len(full), size=min(300, len(full)), replace=False)
-    for i in idx:
-        t, m, c, co, n, d, a, inst = full[i]
-        combos.append({"tempo_bpm": t, "mode": m, "pitch_center_midi": c, "pitch_range": 12,
-                       "contour": co, "notes_per_beat": n, "dynamics": d,
-                       "articulation": a, "instrument": inst})
-    return combos
+from generator.synth import render, grid_params             # noqa: E402
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--soundfont")
     ap.add_argument("--n", type=int, default=300, help="number of logos to probe")
+    ap.add_argument("--coach", default="estimator_A",
+                    help="Estimator that defines the reachable region. Must match the "
+                         "coach used for generation.")
     args = ap.parse_args()
 
     exp = load("experiment.yaml")
     sf = args.soundfont or str(ROOT / exp["synthesis"]["soundfont"]["path"])
     duration = exp.get("synthesis", {}).get("duration_s", 3.0)
     sr = exp.get("synthesis", {}).get("sample_rate_hz", 22050)
-    predict, _ = load_estimator("estimator_A")
+    predict, meta = load_estimator(args.coach)
 
-    combos = grid_params()[:args.n]
-    print(f"probing {len(combos)} logos through the synth + Estimator A...")
+    combos = grid_params(args.n)
+    print(f"probing {len(combos)} logos through the synth + {args.coach} "
+          f"({meta['corpus']}/{meta['model_family']})...")
     ests = []
     with tempfile.TemporaryDirectory() as tmp:
         with warnings.catch_warnings():
@@ -84,6 +64,7 @@ def main():
     ests = np.array(ests)
     v, a = ests[:, 0], ests[:, 1]
     report = {
+        "coach": args.coach,
         "n": len(ests),
         "valence": {"min": round(float(v.min()), 3), "max": round(float(v.max()), 3),
                     "p5": round(float(np.percentile(v, 5)), 3),
@@ -98,7 +79,7 @@ def main():
     out.write_text(json.dumps({"report": report,
                                "estimates": [[round(x, 3), round(y, 3)] for x, y in ests]}, indent=2))
 
-    print("\n=== Reachable VA region (Estimator A on synthetic logos) ===")
+    print(f"\n=== Reachable VA region ({args.coach} on synthetic logos) ===")
     print(f"  valence:  {report['valence']['min']:+.2f} .. {report['valence']['max']:+.2f}   "
           f"(p5..p95: {report['valence']['p5']:+.2f} .. {report['valence']['p95']:+.2f})")
     print(f"  arousal:  {report['arousal']['min']:+.2f} .. {report['arousal']['max']:+.2f}   "

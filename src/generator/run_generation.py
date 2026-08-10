@@ -45,6 +45,9 @@ def main():
     ap.add_argument("--limit", type=int, help="Only the first N briefs (quick run)")
     ap.add_argument("--briefs", help="Comma-separated brief IDs, e.g. B01,B05,B09,B13 "
                                      "(pilot across quadrants; overrides --limit)")
+    ap.add_argument("--coach", default="estimator_A",
+                    help="Frozen estimator that guides the optimisation loop. The name is "
+                         "recorded in the manifest so downstream tools can label it.")
     args = ap.parse_args()
 
     exp = load("experiment.yaml")
@@ -72,7 +75,7 @@ def main():
     LOGS.mkdir(exist_ok=True)
     client = LLMClient(backend=args.backend, model=model, host=args.host,
                        log_path=str(LOGS / "generation.jsonl"))
-    predict_a, meta_a = load_estimator("estimator_A")
+    predict_a, meta_a = load_estimator(args.coach)
     templates = {"initial": (ROOT / "config/prompts/generator_initial.txt").read_text(),
                  "revision": (ROOT / "config/prompts/generator_revision.txt").read_text()}
 
@@ -86,7 +89,8 @@ def main():
     print(f"soundfont: {sf}")
     print(f"{len(briefs)} briefs x {runs_per} runs, threshold={opt['threshold']}, "
           f"quadrant_required={opt.get('require_quadrant', True)}, "
-          f"cap={opt['iteration_cap']}, model={model}\n")
+          f"cap={opt['iteration_cap']}, model={model}")
+    print(f"coach: {args.coach} ({meta_a['corpus']}/{meta_a['model_family']})\n")
 
     manifest = []
     for brief in briefs:
@@ -99,6 +103,7 @@ def main():
             if not res:
                 print(f"  FAILED {brief['id']} run{run_idx} (no valid pair after retries)")
                 continue
+            res["coach"] = args.coach
             manifest.append(res)
             flag = "*" if res["reached_threshold"] else " "
             qflag = "Q" if res["quadrant_held"] else "x"
