@@ -73,13 +73,21 @@ def parse_validate(text: str):
     return {k: obj[k] for k in KEYS}, None
 
 
-def run_survey(client, persona, feature_block_text, cfg, retries=3, agent_kind="ocean"):
-    """Call the model, validate, retry up to `retries` times. Returns (obj, err, last_response)."""
+def run_survey(client, persona, feature_block_text, cfg, retries=3, agent_kind="ocean",
+               seed=None):
+    """Call the model, validate, retry up to `retries` times. Returns (obj, err, last_response).
+
+    `seed` varies by repetition. Without it the prompt for rep 0, 1 and 2 of a
+    persona-stimulus pair is byte-identical, and Ollama's default fixed seed
+    returns the same answer three times - so three trials carry one trial's worth
+    of information.
+    """
     system, user = build_messages(persona, feature_block_text, cfg, agent_kind)
     err = None
     r = None
-    for _ in range(retries + 1):
-        r = client.complete(system, user, force_json=True)
+    for attempt in range(retries + 1):
+        r = client.complete(system, user, force_json=True,
+                            seed=None if seed is None else seed + attempt)
         obj, err = parse_validate(r.text)
         if obj is not None:
             return obj, None, r

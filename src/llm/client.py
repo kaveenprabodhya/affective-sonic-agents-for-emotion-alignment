@@ -27,6 +27,16 @@ class LLMResponse:
     raw: dict = field(default_factory=dict)
 
 
+def call_seed(*parts) -> int:
+    """Reproducible per-call seed from whatever identifies the call.
+
+    Deterministic across runs, distinct between them: seed("B01", 0, 3) is always
+    the same number and is never the same as seed("B01", 1, 3).
+    """
+    key = "|".join(str(x) for x in parts)
+    return int(hashlib.sha256(key.encode()).hexdigest()[:8], 16)
+
+
 class LLMClient:
     def __init__(self, backend="ollama", model="qwen3:8b", temperature=0.7,
                  host="http://localhost:11434", log_path=None, timeout=180, think=False):
@@ -38,27 +48,34 @@ class LLMClient:
         self.timeout = timeout
         self.think = think          # Qwen3 & other reasoning models: False = no hidden chain-of-thought
 
-    def complete(self, system: str, user: str, force_json=True) -> LLMResponse:
+    def complete(self, system: str, user: str, force_json=True, seed=None) -> LLMResponse:
+        """`seed` makes a call reproducible without making it identical to its
+        neighbours. Ollama defaults options.seed to 0, so the same prompt returns
+        the same completion however high the temperature - which silently turned
+        repeated runs and repeated survey trials into exact copies. Passing a seed
+        derived from the run and repetition index restores variation and keeps the
+        study reproducible."""
         if self.backend == "ollama":
-            r = self._ollama(system, user, force_json)
+            r = self._ollama(system, user, force_json, seed)
         elif self.backend == "anthropic":
             r = self._anthropic(system, user)
         elif self.backend == "mock":
             r = self._mock(system, user)
         else:
             raise ValueError(f"unknown backend: {self.backend}")
-        self._log(system, user, r)
+        self._log(system, user, r, seed)
         return r
 
     # ----- backends -----
-    def _ollama(self, system, user, force_json):
+    def _ollama(self, system, user, force_json, seed=None):
         body = {
             "model": self.model,
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": user}],
             "stream": False,
             "think": self.think,
-            "options": {"temperature": self.temperature},
+            "options": {"temperature": self.temperature,
+                        **({"seed": int(seed)} if seed is not None else {})},
         }
         if force_json:
             body["format"] = "json"
@@ -132,11 +149,12 @@ class LLMClient:
         return LLMResponse(text=json.dumps(obj), model="mock", backend="mock")
 
     # ----- logging -----
-    def _log(self, system, user, r: LLMResponse):
+    def _log(self, system, user, r: LLMResponse, seed=None):
         if not self.log_path:
             return
         rec = {"ts": time.time(), "backend": r.backend, "model": r.model,
-               "temperature": self.temperature, "system": system, "user": user,
+               "temperature": self.temperature, "seed": seed,
+               "system": system, "user": user,
                "response": r.text, "prompt_tokens": r.prompt_tokens,
                "completion_tokens": r.completion_tokens}
         with open(self.log_path, "a") as f:

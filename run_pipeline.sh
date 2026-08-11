@@ -93,15 +93,26 @@ clean_range() {
   (( from<=1 && to>=1 )) && rm_glob "selection report" models/selection
   (( from<=2 && to>=2 )) && rm_glob "reachable region" models/reachable_va.json
   if (( from<=3 && to>=3 )); then
-    rm_glob "stimuli"          data/stimuli/*.wav data/stimuli/manifest.json
-    rm_glob "generation log"   logs/generation.jsonl
+    # Every rendered file, not just *.wav: a stale .mid or .tmp left by a failed
+    # render is still stale. manifest.json is rewritten with only the briefs in
+    # the run, so orphan audio from a wider run must go with it.
+    rm_glob "stimuli"         data/stimuli
+    rm_glob "generation log"  logs/generation.jsonl logs/pilot.jsonl
   fi
   if (( from<=4 && to>=4 )); then
-    rm_glob "scored distances" data/analysis/h1_estimator_b*.csv data/analysis/integrity.json
+    rm_glob "scored distances" data/analysis
   fi
   (( from<=5 && to>=5 )) && rm_glob "H1 outputs" analysis/h1
   if (( from<=6 && to>=6 )); then
-    rm_glob "audience responses" data/audience/responses.csv
+    # responses_*.csv are the timestamped copies run_audience.py sets aside when
+    # it starts a new file, plus responses_current/_all from clean_audience.py.
+    # Left in place they accumulate across studies and invite loading the wrong one.
+    if [[ -f data/audience/responses.csv ]]; then
+      local rows; rows=$(( $(wc -l < data/audience/responses.csv) - 1 ))
+      warn "removing $rows audience responses and every responses_*.csv backup"
+      warn "that is the ~9 hour run; copy them out first if you still need them"
+    fi
+    rm_glob "audience responses" data/audience
     rm_glob "audience log"       logs/audience.jsonl
   fi
   if (( from<=7 && to>=7 )); then
@@ -109,9 +120,14 @@ clean_range() {
                                analysis/mdu analysis/baselines analysis/tables
   fi
   if (( from<=8 && to>=8 )); then
-    rm_glob "mp3s and page" data/stimuli_mp3/*.mp3 data/stimuli_mp3/index.html
+    # create_index.py lives in this directory and is source, not output, so the
+    # directory is emptied by pattern rather than removed.
+    rm_glob "mp3s and page" data/stimuli_mp3/*.mp3 data/stimuli_mp3/*.html
   fi
 
+  if [[ "$DRY" != "1" ]]; then
+    mkdir -p data/stimuli data/analysis data/audience data/stimuli_mp3 logs
+  fi
   printf '%s    cleared%s\n' "$grn" "$off"
 }
 
@@ -163,7 +179,11 @@ s1_select() {
 s2_region() {
   step 2 probe_reachable python src/generator/probe_reachable.py --coach "$COACH"
   step 2 generate_briefs python src/generator/generate_briefs.py
-  warn "compare the region against the old one: valence [-0.14,+0.11] arousal [-0.28,+0.10]"
+  # generate_briefs.py already prints the region it used and warns when a
+  # quadrant is unreachable. A hardcoded "compare against" line here goes stale
+  # the moment the coach or the generator changes, and quoting a region from two
+  # coaches ago is worse than saying nothing.
+  warn "check the region printed above spans all four quadrants before continuing"
 }
 
 s3_generate() {

@@ -25,6 +25,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config_loader import load, ROOT, LOGS                  # noqa: E402
 from llm.client import LLMClient                             # noqa: E402
+from llm.client import call_seed
 from audience.survey import run_survey                       # noqa: E402
 from features.extracts import load_audio, extract_audience_block, format_audience_block  # noqa: E402
 
@@ -217,7 +218,8 @@ def main():
         writer = csv.DictWriter(f, fieldnames=FIELDS)
         for i, (a, s, rep) in enumerate(todo, 1):
             obj, err, _ = run_survey(client, a["persona"], s["ftext"], cfg,
-                                     retries=exp["audience"]["retries"], agent_kind=a["kind"])
+                                     retries=exp["audience"]["retries"], agent_kind=a["kind"],
+                                     seed=call_seed(a["id"], s["file"], rep))
             if obj is None:
                 print(f"  INVALID {a['id']} {s['file']} rep{rep}: {err}")
                 continue
