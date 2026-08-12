@@ -1,5 +1,5 @@
 # H1 - STIMULUS alignment: did optimisation move the logo toward its intended VA?
-#   Intended VA  <->  Estimator B VA   (independent, held-out judge)
+#   Intended VA  <->  held-out judge VA   (estimator_B or estimator_B2)
 # This is stimulus validity, NOT audience alignment. Reads the Estimator-B scoring output.
 #
 # The judge can be swapped so the pre-specified incumbent and any architecture-
@@ -12,9 +12,11 @@ library(lme4); library(lmerTest)
 args  <- commandArgs(trailingOnly = TRUE)
 judge <- if (length(args) >= 1) args[1] else "estimator_B"
 tag   <- if (judge == "estimator_B") "" else paste0("_", judge)
+jl    <- sub("^estimator_", "", judge)          # short label: B, B2
+jf    <- tolower(jl)                            # filename suffix: b, b2
 
 IN  <- sprintf("data/analysis/h1_estimator_b%s.csv", tag)
-OUT <- if (judge == "estimator_B") "analysis/h1" else file.path("analysis/h1", judge)
+OUT <- "analysis/h1"
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 
 if (!file.exists(IN)) {
@@ -26,7 +28,8 @@ h1 <- read.csv(IN, stringsAsFactors = FALSE)
 h1$run   <- sub(".*_run([0-9]+)_.*", "\\1", paste0("x_run", h1$run, "_x"))  # run already a column
 h1$brief <- factor(h1$brief)
 
-sink(file.path(OUT, "h1_results.txt"), split = TRUE)
+RES <- file.path(OUT, sprintf("h1_results_%s.txt", jf))
+sink(RES, split = TRUE)
 cat(sprintf("H1 - stimulus alignment. Judge: %s (held out). Paired within brief/run.\n\n",
             judge))
 
@@ -42,9 +45,9 @@ cat(sprintf("judge valence range: %.3f   arousal range: %.3f\n",
 cat("Compare against this judge's own held-out RMSE in models/<judge>.meta.json.\n")
 cat("If the SD is a small fraction of that RMSE, H1 is untestable with this judge\n")
 cat("rather than rejected, and should be reported that way.\n\n")
-cat(sprintf("mean non-optimised B-distance: %.3f\n", mean(h1$nonopt_B_dist)))
-cat(sprintf("mean optimised B-distance:     %.3f\n", mean(h1$opt_B_dist)))
-cat(sprintf("mean B-reduction (non-opt - opt): %+.3f\n", mean(h1$B_reduction)))
+cat(sprintf("mean non-optimised %s-distance: %.3f\n", jl, mean(h1$nonopt_B_dist)))
+cat(sprintf("mean optimised %s-distance:     %.3f\n", jl, mean(h1$opt_B_dist)))
+cat(sprintf("mean %s-reduction (non-opt - opt): %+.3f\n", jl, mean(h1$B_reduction)))
 cat(sprintf("pairs improved: %d / %d\n\n", sum(h1$B_reduction > 0), nrow(h1)))
 
 # long form for a paired mixed model: distance ~ condition, brief/run + (pair) structure
@@ -54,10 +57,10 @@ long <- data.frame(
   Bdist = c(h1$nonopt_B_dist, h1$opt_B_dist))
 long$condition <- relevel(factor(long$condition), ref = "non_optimised")
 m <- lmer(Bdist ~ condition + (1|brief/run), data = long)
-cat("-- paired model: B-distance ~ condition + (1|brief/run) --\n"); print(summary(m)$coefficients)
+cat(sprintf("-- paired model: %s-distance ~ condition + (1|brief/run) --\n", jl)); print(summary(m)$coefficients)
 
 # transparent primary: paired test on 48 brief/run differences
-cat("\n-- paired t-test on optimised vs non-optimised B-distance (48 pairs) --\n")
+cat(sprintf("\n-- paired t-test on optimised vs non-optimised %s-distance (%d pairs) --\n", jl, nrow(h1)))
 print(t.test(h1$opt_B_dist, h1$nonopt_B_dist, paired = TRUE))
 
 # --- sensitivity analyses (Section 3.7.1): the paired differences include a high
@@ -79,7 +82,7 @@ cat(sprintf("-- sign test on the %d non-tied pairs (improved vs worsened) --\n",
 cat(sprintf("improved: %d   worsened: %d\n", n_down, n_up))
 print(binom.test(n_down, length(nz), p = 0.5))
 
-cat("\n-- Wilcoxon signed-rank test (optimised vs non-optimised B-distance) --\n")
+cat(sprintf("\n-- Wilcoxon signed-rank test (optimised vs non-optimised %s-distance) --\n", jl))
 print(wilcox.test(h1$opt_B_dist, h1$nonopt_B_dist, paired = TRUE))
 
 cat("\nConclusion: report whether the INDEPENDENT judge confirms optimisation moved logos\n")
@@ -91,8 +94,8 @@ cat("all three and interpret the direction, not only significance.\n")
 # --- quadrant verification: the stopping rule now requires distance <= threshold
 # AND sign agreement with the target on both axes (Section 3.4.2.2). Estimator A
 # enforces that rule inside the loop; this checks it against the independent
-# Estimator B, which never sees the optimisation. ---
-cat("\n-- quadrant verification (Estimator B vs target sign, independent check) --\n")
+# the held-out judge, which never sees the optimisation. ---
+cat(sprintf("\n-- quadrant verification (Estimator %s vs target sign, independent check) --\n", jl))
 sgn <- function(x) ifelse(x >= 0, 1, -1)
 cross_opt    <- (sgn(h1$opt_B_v)    != sgn(h1$target_v)) | (sgn(h1$opt_B_a)    != sgn(h1$target_a))
 cross_nonopt <- (sgn(h1$nonopt_B_v) != sgn(h1$target_v)) | (sgn(h1$nonopt_B_a) != sgn(h1$target_a))
@@ -102,9 +105,9 @@ cat(sprintf("non-optimised stimuli crossing target quadrant sign: %d / %d (%.1f%
             sum(cross_nonopt), nrow(h1), 100 * mean(cross_nonopt)))
 cat("Non-optimised stimuli are iteration 0 and are NOT subject to the stopping rule,\n")
 cat("so crossings there are expected. Crossings among OPTIMISED stimuli indicate\n")
-cat("Estimator A/B disagreement on quadrant, not a failure of the rule: the loop can\n")
+cat(sprintf("Estimator A/%s disagreement on quadrant, not a failure of the rule: the loop can\n", jl))
 cat("only enforce sign agreement under the estimator that guides it. Report this rate\n")
 cat("as a limit on stimulus validity, alongside the pre-fix rate for comparison.\n")
 
 sink()
-cat(sprintf("Saved: %s/h1_results.txt\n", OUT))
+cat(sprintf("Saved: %s\n", RES))

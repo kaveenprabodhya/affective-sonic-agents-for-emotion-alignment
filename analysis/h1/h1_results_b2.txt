@@ -6,17 +6,17 @@ Compare against this judge's own held-out RMSE in models/<judge>.meta.json.
 If the SD is a small fraction of that RMSE, H1 is untestable with this judge
 rather than rejected, and should be reported that way.
 
-mean non-optimised B-distance: 0.512
-mean optimised B-distance:     0.445
-mean B-reduction (non-opt - opt): +0.067
+mean non-optimised B2-distance: 0.512
+mean optimised B2-distance:     0.445
+mean B2-reduction (non-opt - opt): +0.067
 pairs improved: 22 / 48
 
--- paired model: B-distance ~ condition + (1|brief/run) --
+-- paired model: B2-distance ~ condition + (1|brief/run) --
                       Estimate Std. Error       df  t value     Pr(>|t|)
 (Intercept)         0.51236042 0.03784973 16.68794 13.53670 2.005859e-10
 conditionoptimised -0.06745417 0.01729501 79.00004 -3.90021 2.006381e-04
 
--- paired t-test on optimised vs non-optimised B-distance (48 pairs) --
+-- paired t-test on optimised vs non-optimised B2-distance (48 pairs) --
 
 	Paired t-test
 
@@ -50,7 +50,7 @@ probability of success
              0.6666667 
 
 
--- Wilcoxon signed-rank test (optimised vs non-optimised B-distance) --
+-- Wilcoxon signed-rank test (optimised vs non-optimised B2-distance) --
 
 	Wilcoxon signed rank test with continuity correction
 
@@ -65,11 +65,11 @@ generated TOWARD targets, not proven to carry the intended VA. Note that the mea
 paired t-test can mask a directional pattern that the sign/Wilcoxon tests reveal; report
 all three and interpret the direction, not only significance.
 
--- quadrant verification (Estimator B vs target sign, independent check) --
+-- quadrant verification (Estimator B2 vs target sign, independent check) --
 optimised stimuli crossing target quadrant sign:     31 / 48 (64.6%)
 non-optimised stimuli crossing target quadrant sign: 31 / 48 (64.6%)
 Non-optimised stimuli are iteration 0 and are NOT subject to the stopping rule,
 so crossings there are expected. Crossings among OPTIMISED stimuli indicate
-Estimator A/B disagreement on quadrant, not a failure of the rule: the loop can
+Estimator A/B2 disagreement on quadrant, not a failure of the rule: the loop can
 only enforce sign agreement under the estimator that guides it. Report this rate
 as a limit on stimulus validity, alongside the pre-fix rate for comparison.
