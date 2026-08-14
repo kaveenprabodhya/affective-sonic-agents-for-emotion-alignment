@@ -243,9 +243,9 @@ run_mdu <- function(data_subset, analysis_name, output_directory) {
     ) +
 
     labs(
-      title = paste(
-        "Multidimensional Unfolding (MDU) - personas and emotion words:",
-        analysis_name
+      title = paste0(
+        "Multidimensional Unfolding (MDU)\n",
+        "Personas and emotion words: ", analysis_name
       ),
       subtitle = sprintf(
         "Emotion words rated similarly appear close together. Interval unfolding, Stress-1 = %.3f",
@@ -260,7 +260,12 @@ run_mdu <- function(data_subset, analysis_name, output_directory) {
     ) +
 
     theme(
-      panel.grid.minor = element_blank()
+      panel.grid.minor = element_blank(),
+      plot.title    = element_text(size = 12, lineheight = 1.1,
+                                   margin = margin(b = 4)),
+      plot.subtitle = element_text(size = 10,
+                                   margin = margin(b = 8)),
+      plot.title.position = "plot"
     )
 
 
@@ -270,7 +275,7 @@ run_mdu <- function(data_subset, analysis_name, output_directory) {
       "mdu_persona_emotion.png"
     ),
     plot = persona_emotion_plot,
-    width = 9,
+    width = 10,
     height = 7,
     dpi = 300
   )
@@ -321,7 +326,12 @@ run_mdu <- function(data_subset, analysis_name, output_directory) {
     ) +
 
     theme(
-      panel.grid.minor = element_blank()
+      panel.grid.minor = element_blank(),
+      plot.title    = element_text(size = 12, lineheight = 1.1,
+                                   margin = margin(b = 4)),
+      plot.subtitle = element_text(size = 10,
+                                   margin = margin(b = 8)),
+      plot.title.position = "plot"
     )
 
 
@@ -331,7 +341,7 @@ run_mdu <- function(data_subset, analysis_name, output_directory) {
       "mdu_emotions_only.png"
     ),
     plot = emotion_plot,
-    width = 8,
+    width = 9,
     height = 6.5,
     dpi = 300
   )
