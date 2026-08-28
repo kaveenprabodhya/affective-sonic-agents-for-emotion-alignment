@@ -1,0 +1,6 @@
+"configuration","type","omega","stress_1","cv_disparities","cv_distances","distinct_disparities","spread_personas","spread_emotions","verdict"
+"interval (used in this study)","interval",1,0.08828,0.3722,0.3578,209,0.262,0.899,"interpretable"
+"ratio","ratio",1,0.07748,0.3246,0.3131,209,0.235,0.917,"interpretable"
+"ordinal, default penalty","ordinal",1,0.0864,0.3731,0.3593,216,0.267,0.897,"interpretable"
+"ordinal, weak penalty","ordinal",0.1,0.06637,0.3355,0.3306,40,0.294,0.895,"interpretable"
+"ordinal, no penalty","ordinal",0,NA,NA,NA,NA,NA,NA,"did not converge"

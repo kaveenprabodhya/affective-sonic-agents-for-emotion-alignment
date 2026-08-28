@@ -144,10 +144,15 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   │                                               ├── mdu_fit_summary.csv   (Stress-1, all solutions)
 │   │                                               ├── pooled/               (all stimuli)
 │   │                                               └── quadrants/            (4x, optimised only)
+│   ├── Stage6_h3_supplementary.R -> analysis/h3/  centred distance + rank agreement
 │   ├── Stage6_baselines.R -> analysis/baselines/  neutral + generic control comparison
-│   └── Check_quadrant_confidence.R -> analysis/h1/quadrant_confidence.txt
-│                                                  held / marginal / crossed per estimator,
-│                                                  plus raw, chance and kappa agreement
+│   ├── Stage7_scale_usage.R -> analysis/stage7_scale_usage/   response-scale descriptives
+│   ├── Check_quadrant_confidence.R -> analysis/h1/quadrant_confidence.txt
+│   │                                              held / marginal / crossed per estimator,
+│   │                                              plus raw, chance and kappa agreement
+│   ├── Check_mdu_degeneracy.R -> analysis/mdu/    ordinal vs interval degeneracy evidence
+│   ├── Check_estimator_b_range.R                  judge spread vs own RMSE (superseded)
+│   └── Diagnose_baselines.R                       why the baselines pivot sees duplicates
 │
 ├── data/
 │   ├── stimuli/                     # 96 WAV files + manifest.json (generation record)
@@ -384,8 +389,10 @@ Rscript analysis/Stage6_h1.R estimator_B2        # H1, another judge -> analysis
 Rscript analysis/Check_quadrant_confidence.R     # quadrant classification + judge agreement
 Rscript analysis/Stage6_h2.R
 Rscript analysis/Stage6_h3_alignment.R
+Rscript analysis/Stage6_h3_supplementary.R
 Rscript analysis/Stage6_mdu.R
 Rscript analysis/Stage6_baselines.R
+Rscript analysis/Stage7_scale_usage.R
 ```
 
 #### What each produces
@@ -408,6 +415,9 @@ Also breaks results down by intended quadrant, and reports agreement between est
 **`Stage6_h3_alignment.R` → `analysis/h3/`**
 `h3_results.txt`, `h3_distance_by_quadrant.png`, `h3_offset_vectors.png` — alignment distance against the five traits with a joint LRT, plus descriptive quadrant distances, signed valence/arousal offsets, and an exploratory quadrant × OCEAN interaction test.
 
+**`Stage6_h3_supplementary.R` → `analysis/h3/`**
+Separates two things raw alignment distance cannot tell apart: a persona that rates everything higher or lower (already captured by H2) from a persona that orders the stimuli differently (genuinely new). Two checks. **Centred distance** subtracts each persona's own mean valence and arousal before recomputing distance, removing the level shift; traits that still predict it indicate differences in accuracy rather than in level. **Rank agreement** correlates personas on which stimuli they align best with, since a pure level shift leaves the ordering untouched. Diagnostic only — it does not replace or rewrite the primary H3 test.
+
 **`Stage6_mdu.R` → `analysis/mdu/`**
 Interval unfolding via `smacof`: one pooled solution and four quadrant-specific solutions on optimised logos only.
 
@@ -427,6 +437,25 @@ The script prints a warning when Stress-1 falls below 0.01.
 
 **`Stage6_baselines.R` → `analysis/baselines/`**
 `baseline_results.txt` plus per-condition and per-stimulus CSVs and distribution plots. Repetitions are averaged per agent–stimulus, the 32 OCEAN personas are averaged to a stimulus-level mean, and that mean is compared against each control.
+
+**`Stage7_scale_usage.R` → `analysis/stage7_scale_usage/`**
+How the synthetic respondents used the two nine-point scales, and where perceived positions fell relative to the intended quadrants. Descriptive evidence for the response-scale paragraph in Section 4.3.1. Responses are nested (persona × stimulus × repetition), so no inferential test is run here.
+
+---
+
+### On-demand diagnostics
+
+Not part of a normal run — each answers one question and is kept because the answer belongs in the write-up.
+
+| Script | Question | Output |
+|---|---|---|
+| `Check_mdu_degeneracy.R` | Does ordinal unfolding degenerate on this data, and does interval avoid it? | `analysis/mdu/degeneracy_check.txt`, `degeneracy_comparison.csv`, `degeneracy_configurations.png` |
+| `Check_estimator_b_range.R` | How much does a judge's prediction vary across the stimuli, against its own RMSE? | prints to stdout |
+| `Diagnose_baselines.R` | Why does the baselines pivot see duplicate rows? | prints to stdout |
+
+`Check_mdu_degeneracy.R` fits the persona × emotion matrix under interval, ratio, and ordinal transformations at three penalty strengths, and reports Stress-1 alongside the coefficient of variation of the fitted distances. The CV is what separates a good solution from a degenerate one: a degenerate solution reaches *low* stress precisely by collapsing every point of one set onto every point of the other, so stress alone cannot detect it. Note that `smacof::unfolding()` minimises a penalised stress (Busing, Groenen & Heiser, 2005) designed to prevent exactly this, controlled by `omega`; the script varies `omega` down to 0 so the transformation's behaviour is visible with and without that protection.
+
+`Check_estimator_b_range.R` is largely superseded — `Stage6_h1.R` prints the judge's spread at the top of every run and `Check_quadrant_confidence.R` reports it per estimator.
 
 ---
 
@@ -458,7 +487,7 @@ cat analysis/h1/estimator_B2/h1_results.txt
 |---|---|---|
 | *(none)* | 1–5 | select coach, re-measure region, regenerate, score, H1 — then stop |
 | `audience` | 6 | the 9,792-response run |
-| `analysis` | 7 | every statistical test: H1, quadrant confidence, H2, H3, MDU, baselines |
+| `analysis` | 7 | every statistical test: H1, quadrant confidence, H2, H3, H3 supplementary, MDU, baselines, scale usage |
 | `page` | 8 | MP3 conversion and the listening page |
 | `all` | 1–8 | everything, no checkpoint pause |
 | `preflight` | 0 | environment checks only |
@@ -477,7 +506,7 @@ cat analysis/h1/estimator_B2/h1_results.txt
 | 4 | score with both judges, plus the coach as a diagnostic | ~6 min |
 | 5 | H1 for both judges, quadrant confidence | seconds |
 | 6 | synthetic audience | ~9 h |
-| 7 | every statistical test: H1, quadrant confidence, H2, H3, MDU, baselines | minutes |
+| 7 | every statistical test: H1, quadrant confidence, H2, H3, H3 supplementary, MDU, baselines, scale usage | minutes |
 | 8 | MP3 conversion, listening page | ~2 min |
 
 ### Outputs are replaced, not added to
@@ -494,7 +523,7 @@ Cleaning is scoped to the steps requested, so `./run_pipeline.sh analysis` clear
 | 4 | `data/analysis/h1_estimator_b*.csv`, `integrity.json` |
 | 5 | `analysis/h1/` |
 | 6 | `data/audience/responses.csv`, `logs/audience.jsonl` |
-| 7 | `analysis/{h1,h2,h3,mdu,baselines,tables}/` |
+| 7 | `analysis/{h1,h2,h3,mdu,baselines,tables,stage7_scale_usage}/` |
 | 8 | `data/stimuli_mp3/*.mp3`, `index.html` |
 
 Scripts, configs, corpora and frozen estimators are never touched — only generated artefacts.
@@ -559,8 +588,10 @@ Rscript analysis/Check_quadrant_confidence.R
 time python -W ignore src/audience/run_audience.py --backend ollama
 Rscript analysis/Stage6_h2.R
 Rscript analysis/Stage6_h3_alignment.R
+Rscript analysis/Stage6_h3_supplementary.R
 Rscript analysis/Stage6_mdu.R
 Rscript analysis/Stage6_baselines.R
+Rscript analysis/Stage7_scale_usage.R
 ```
 
 Scoring is required before H1: `run_audience.py` reads only `manifest.json` and will run without it, but `score_estimator_b.py` is what writes the H1 input and refreshes `integrity.json`.
