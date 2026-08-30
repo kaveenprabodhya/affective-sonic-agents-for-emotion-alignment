@@ -1,0 +1,8 @@
+H1 RESAMPLING ROBUSTNESS SUMMARY
+Judge: estimator_B2
+
+Observed mean reduction: 0.063331
+Cluster-bootstrap SE:    0.031560
+Bootstrap 95% CI:        [0.003067, 0.127033]
+Exact sign-flip p (2-sided): 0.069336
+Exact sign-flip p (1-sided): 0.034668

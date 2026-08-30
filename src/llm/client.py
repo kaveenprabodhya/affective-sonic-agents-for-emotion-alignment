@@ -39,7 +39,7 @@ def call_seed(*parts) -> int:
 
 class LLMClient:
     def __init__(self, backend="ollama", model="qwen3:8b", temperature=0.7,
-                 host="http://localhost:11434", log_path=None, timeout=180, think=False):
+                host="http://localhost:11434", log_path=None, timeout=300, think=False):
         self.backend = backend
         self.model = model
         self.temperature = temperature

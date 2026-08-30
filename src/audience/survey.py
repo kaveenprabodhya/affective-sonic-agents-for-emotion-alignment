@@ -17,18 +17,56 @@ def render_persona(persona: dict, trait_descriptions: dict) -> str:
 
 
 def render_survey(q: dict) -> str:
-    lines = [q["instruction"], ""]
+    """Render the complete Q1-Q12 survey shown to every audience agent."""
+
+    lines = [
+        q["instruction"],
+        "",
+    ]
+
+    # Q1-Q2: show every point on the 1-9 scale explicitly.
     for item in q["dimensional"]:
-        a = item["anchors"]
-        mid = (item["points"] + 1) // 2
-        lines.append(f"{item['id']}. {item['text']}")
-        lines.append(f"   ({1} = {a[1]}; {mid} = {a[mid]}; {item['points']} = {a[item['points']]})")
+
+        anchors = item["anchors"]
+
+        lines.append(
+            f"{item['id']}. {item['text']}"
+        )
+
+        scale_text = "; ".join(
+            f"{value} = {anchors[value]}"
+            for value in range(
+                1,
+                item["points"] + 1
+            )
+        )
+
+        lines.append(
+            f"   ({scale_text})"
+        )
+
+    # Q3-Q12
     et = q["emotion_terms"]
-    lab = et["labels"]
-    lines += ["", "For Q3-Q12, rate how strongly the sonic logo conveys each quality "
-              f"({1} = {lab[1]}, {2} = {lab[2]}, {3} = {lab[3]}, {4} = {lab[4]}, {5} = {lab[5]}):"]
-    for it in et["items"]:
-        lines.append(f"{it['id']}. {et['stem'].replace('{term}', it['term'])}")
+    labels = et["labels"]
+
+    lines += [
+        "",
+        "For Q3-Q12, rate how strongly the sonic logo "
+        "conveys each quality "
+        f"(1 = {labels[1]}; "
+        f"2 = {labels[2]}; "
+        f"3 = {labels[3]}; "
+        f"4 = {labels[4]}; "
+        f"5 = {labels[5]}):",
+    ]
+
+    for item in et["items"]:
+
+        lines.append(
+            f"{item['id']}. "
+            f"{et['stem'].replace('{term}', item['term'])}"
+        )
+
     return "\n".join(lines)
 
 
@@ -73,22 +111,80 @@ def parse_validate(text: str):
     return {k: obj[k] for k in KEYS}, None
 
 
-def run_survey(client, persona, feature_block_text, cfg, retries=3, agent_kind="ocean",
-               seed=None):
-    """Call the model, validate, retry up to `retries` times. Returns (obj, err, last_response).
+def run_survey(
+    client,
+    persona,
+    feature_block_text,
+    cfg,
+    retries=3,
+    agent_kind="ocean",
+    seed=None,
+):
+    """Call the model, validate, and repair invalid responses.
 
-    `seed` varies by repetition. Without it the prompt for rep 0, 1 and 2 of a
-    persona-stimulus pair is byte-identical, and Ollama's default fixed seed
-    returns the same answer three times - so three trials carry one trial's worth
-    of information.
+    The first call uses the normal audience protocol.
+
+    If validation fails, the next call receives the same survey and acoustic
+    evidence plus the exact mechanical validation error. The repair instruction
+    changes only response-format compliance; it does not provide targets,
+    intended emotion, condition labels, estimator outputs, or desired answers.
     """
-    system, user = build_messages(persona, feature_block_text, cfg, agent_kind)
+
+    system, user = build_messages(
+        persona,
+        feature_block_text,
+        cfg,
+        agent_kind,
+    )
+
     err = None
     r = None
+
+    # First attempt uses the untouched experimental prompt.
+    current_user = user
+
     for attempt in range(retries + 1):
-        r = client.complete(system, user, force_json=True,
-                            seed=None if seed is None else seed + attempt)
-        obj, err = parse_validate(r.text)
+
+        r = client.complete(
+            system,
+            current_user,
+            force_json=True,
+            seed=(
+                None
+                if seed is None
+                else seed + attempt
+            ),
+        )
+
+        obj, err = parse_validate(
+            r.text
+        )
+
         if obj is not None:
             return obj, None, r
+
+        # The next attempt is a mechanical validation repair.
+        # No emotional direction or desired score is supplied.
+        current_user = (
+            user
+            + "\n\n"
+            + "VALIDATION CORRECTION\n"
+            + "Your previous JSON response was invalid for the following "
+              "mechanical reason:\n"
+            + f"{err}\n\n"
+            + "Previous response:\n"
+            + f"{r.text}\n\n"
+            + "Return the complete Q1-Q12 JSON object again.\n"
+            + "Preserve answers that already satisfy their permitted scale.\n"
+            + "For any invalid item, reconsider that item using the same "
+              "acoustic evidence and select a value inside its permitted "
+              "scale.\n\n"
+            + "Mandatory ranges:\n"
+            + "- Q1 and Q2: integers 1 through 9.\n"
+            + "- Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11 and Q12: "
+              "integers 1 through 5 only.\n"
+            + "- Values 6, 7, 8 and 9 are invalid for Q3-Q12.\n\n"
+            + "Return JSON only."
+        )
+
     return None, err, r

@@ -1,11 +1,35 @@
 You are refining a short sonic logo (about {duration} seconds) for a brand.
 
-Current parameters: {params}
+Brand description: {description}
 
-Its measured emotional position is valence {est_v}, arousal {est_a} (on a scale from -1 to 1).
+The best parameter set found so far is:
+{params}
+
+Its measured emotional position is valence {est_v}, arousal {est_a} on a scale from -1 to 1.
 The target position is valence {target_v}, arousal {target_a}.
-Gap (target minus current): valence {gap_v}, arousal {gap_a}.
+Gap (target minus best candidate): valence {gap_v}, arousal {gap_a}.
+
+Previously evaluated candidates in this optimisation run:
+{history}
+
+Use the measured outcomes above as experimental feedback. Compare parameter changes with the resulting valence, arousal, distance and quadrant status. Avoid parameter combinations that have already been tested, particularly changes that previously moved the estimate farther from the target.
+
+Do not assume that increasing or decreasing a musical parameter always changes emotion in a fixed direction. Infer useful directions only from the supplied measured history and explore a genuinely new candidate.
 
 Adjust the parameters to move the sound toward the target position. Return only the updated JSON object with the same keys and allowed values:
 {schema}
+
+Rhythmic design guidance:
+- rhythm_pattern controls only the temporal phrasing of the motif.
+- even uses regularly spaced note onsets.
+- short_short_long groups two shorter intervals followed by a longer interval.
+- long_short_short begins with a longer interval followed by two shorter intervals.
+- syncopated alternates shorter and longer onset intervals.
+- pickup_resolution begins with short pickup intervals and ends each phrase with a longer interval.
+- cadential groups several shorter intervals before a longer closing interval.
+
+Consider all permitted rhythm patterns when revising the motif. Do not treat any one rhythm pattern as the default, and do not assume that similar valence-arousal positions require identical rhythmic designs.
+
+Reconsider rhythm_pattern together with the other parameters only when justified by the brand description, current gap and measured optimisation history. Do not change rhythm merely for the sake of variety.
+
 Return the JSON only, with no other text.

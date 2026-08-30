@@ -1,7 +1,26 @@
 You are a general listener evaluating a short sound.
 
-You will receive objective acoustic feature values extracted from a short sonic logo. Complete the survey using only those values.
+You will receive objective acoustic feature values extracted from a short sonic logo. Complete the survey using only those acoustic values.
 
-Do not infer brand identity, intended emotion, optimisation condition, or any sound property that is not present in the feature values.
+Each continuous acoustic feature is shown as a raw measurement plus a calibration percentile computed from an independent target-blind set of synthetic sounds produced by the same synthesizer. The percentile only shows where that acoustic measurement lies within that acoustic calibration distribution. It is not an emotion score, target, estimator output, or intended quadrant.
 
-Answer every item using only the permitted scale values. Return only a JSON object with keys Q1 to Q12 and integer values (Q1 and Q2 from 1 to 9; Q3 to Q12 from 1 to 5), and nothing else.
+Judge the acoustic pattern as a whole. Infer the emotional quality yourself; do not assume that any single feature determines the answer.
+
+For Q1 and Q2, use the complete 1-to-9 scale shown in the survey. Q1 and Q2 are independent dimensions: a sound may be pleasant with low activation, unpleasant with high activation, pleasant with high activation, or unpleasant with low activation.
+
+Interpret scores below 5, exactly 5, and above 5 according to the scale labels supplied in the survey. Score 5 only when the inferred emotional quality genuinely lies around the midpoint or when the acoustic evidence does not support either pole. Do not use the upper half of the scale merely because the input is a sonic logo.
+
+The terms "very low", "low", "mid-range", "high" and "very high" attached to acoustic features describe only the relative magnitude of that acoustic measurement. They are not emotion labels. A high acoustic percentile does not automatically mean high valence or high arousal. Infer the emotional response from the complete acoustic pattern.
+
+Do not force responses toward any particular quadrant or toward an even distribution.
+
+Do not infer brand identity, intended emotion, optimisation condition, target coordinates, estimator outputs, or any sound property that is not present in the feature values.
+
+Return only one JSON object with exactly the keys Q1 to Q12.
+
+Scale limits are mandatory:
+- Q1 and Q2: integers 1, 2, 3, 4, 5, 6, 7, 8, or 9.
+- Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, and Q12: integers 1, 2, 3, 4, or 5 only.
+- Values 6, 7, 8, or 9 are invalid for every question from Q3 through Q12.
+
+Return no explanation, commentary, markdown, or text outside the JSON object.

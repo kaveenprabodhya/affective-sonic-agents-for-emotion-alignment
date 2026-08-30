@@ -91,14 +91,36 @@ def _mode_and_key(y, sr):
 
 # ----- 1. audience numeric block ---------------------------------------------
 
+# Continuous audience features that receive a target-blind reference percentile.
+# Duration is excluded because every study logo is fixed at 3.0 s, and mode is categorical.
+AUDIENCE_REFERENCE_KEYS = (
+    "tempo_bpm",
+    "mean_pitch_midi",
+    "pitch_slope_midi_per_s",
+    "spectral_centroid_hz",
+    "rms_dbfs",
+    "onset_rate_per_s",
+    "dynamic_range_db",
+)
+
+
 def extract_audience_block(y: np.ndarray, sr: int = SR) -> dict:
-    """Small, interpretable, emotionally-neutral descriptor set for the agents."""
+    """Small, interpretable, emotionally-neutral descriptor set for the agents.
+
+    The audience gets measurements extracted from the waveform only. No target,
+    estimator output, condition label or emotion label is introduced here.
+    """
     dur = len(y) / sr
     mode, _ = _mode_and_key(y, sr)
     mean_midi, slope = _pitch_track(y, sr)
     centroid = float(librosa.feature.spectral_centroid(y=y, sr=sr).mean())
-    rms = float(librosa.feature.rms(y=y).mean())
+
+    # Overall RMS in dBFS is easier to interpret than a unitless 0-1 RMS value.
+    overall_rms = float(np.sqrt(np.mean(np.square(y)))) if len(y) else 0.0
+    rms_dbfs = 20.0 * np.log10(overall_rms + 1e-12)
+
     db = _rms_db(y)
+
     return {
         "duration_s": round(dur, 2),
         "tempo_bpm": round(_tempo(y, sr), 1),
@@ -106,14 +128,90 @@ def extract_audience_block(y: np.ndarray, sr: int = SR) -> dict:
         "mean_pitch_midi": None if np.isnan(mean_midi) else round(mean_midi, 1),
         "pitch_slope_midi_per_s": None if np.isnan(slope) else round(slope, 3),
         "spectral_centroid_hz": round(centroid, 1),
-        "rms_energy": round(rms, 4),
+        "rms_dbfs": round(float(rms_dbfs), 1),
         "onset_rate_per_s": round(_onset_rate(y, sr), 2),
-        "dynamic_range_db": round(float(np.percentile(db, 95) - np.percentile(db, 5)), 1),
+        "dynamic_range_db": round(
+            float(np.percentile(db, 95) - np.percentile(db, 5)), 1
+        ),
     }
 
 
-def format_audience_block(block: dict) -> str:
-    """Render the audience block as a neutral key:value text block for prompts."""
+def build_audience_reference(blocks: list[dict]) -> dict:
+    """Build a target-blind calibration distribution from acoustic blocks."""
+    features = {}
+
+    for key in AUDIENCE_REFERENCE_KEYS:
+        vals = [
+            float(b[key])
+            for b in blocks
+            if b.get(key) is not None
+        ]
+
+        if not vals:
+            raise ValueError(
+                f"no valid values available for audience reference feature {key}"
+            )
+
+        a = np.asarray(vals, dtype=float)
+
+        features[key] = {
+            "values": [round(float(v), 6) for v in vals],
+            "min": round(float(np.min(a)), 6),
+            "p05": round(float(np.percentile(a, 5)), 6),
+            "median": round(float(np.median(a)), 6),
+            "p95": round(float(np.percentile(a, 95)), 6),
+            "max": round(float(np.max(a)), 6),
+        }
+
+    return {
+        "basis": "acoustic values only; target-blind",
+        "n_blocks": len(blocks),
+        "features": features,
+    }
+
+
+def _reference_percentile(value, values) -> int | None:
+    """Mid-rank percentile (0-100), with ties receiving their average rank."""
+    if value is None:
+        return None
+
+    a = np.asarray(values, dtype=float)
+    x = float(value)
+
+    less = float(np.sum(a < x))
+    equal = float(np.sum(a == x))
+
+    pct = 100.0 * (less + 0.5 * equal) / len(a)
+
+    return int(round(pct))
+
+def _relative_band(percentile: int | None) -> str:
+    """Plain-language acoustic position within the target-blind reference set."""
+
+    if percentile is None:
+        return "unknown"
+
+    if percentile <= 10:
+        return "very low"
+
+    if percentile <= 35:
+        return "low"
+
+    if percentile < 65:
+        return "mid-range"
+
+    if percentile < 90:
+        return "high"
+
+    return "very high"
+
+
+def format_audience_block(
+    block: dict,
+    reference: dict | None = None,
+) -> str:
+    """Render the target-blind acoustic evidence supplied to the audience."""
+
     labels = {
         "duration_s": "Duration (s)",
         "tempo_bpm": "Tempo (BPM)",
@@ -121,11 +219,54 @@ def format_audience_block(block: dict) -> str:
         "mean_pitch_midi": "Mean pitch (MIDI)",
         "pitch_slope_midi_per_s": "Pitch slope (MIDI/s)",
         "spectral_centroid_hz": "Spectral centroid (Hz)",
-        "rms_energy": "RMS energy",
+        "rms_dbfs": "RMS level (dBFS)",
         "onset_rate_per_s": "Onset rate (per s)",
         "dynamic_range_db": "Dynamic range (dB)",
     }
-    return "\n".join(f"{labels[k]}: {block[k]}" for k in labels)
+
+    lines = []
+
+    for key, label in labels.items():
+
+        value = block.get(key)
+
+        if (
+            reference is not None
+            and key in AUDIENCE_REFERENCE_KEYS
+        ):
+
+            vals = (
+                reference["features"][key]["values"]
+            )
+
+            pct = _reference_percentile(
+                value,
+                vals,
+            )
+
+            band = _relative_band(
+                pct
+            )
+
+            pct_text = (
+                "NA"
+                if pct is None
+                else f"{pct}/100"
+            )
+
+            lines.append(
+                f"{label}: {value} | "
+                f"relative acoustic level: {band} | "
+                f"calibration percentile: {pct_text}"
+            )
+
+        else:
+
+            lines.append(
+                f"{label}: {value}"
+            )
+
+    return "\n".join(lines)
 
 
 # ----- 2. spectral / timbral feature family ---------------------------------

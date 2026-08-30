@@ -56,7 +56,16 @@ write.csv(data.frame(item = c("Q1", "Q2"),
           file.path(out_dir, "scale_usage_summary.csv"), row.names = FALSE)
 
 # --- 3. intended vs perceived quadrant --------------------------------------
-quad <- function(v, a) paste0(ifelse(v >= 0, "HV", "LV"), ifelse(a >= 0, "_HA", "_LA"))
+quad <- function(v, a) {
+  ifelse(
+    v == 0 | a == 0,
+    "BOUNDARY",
+    paste0(
+      ifelse(v > 0, "HV", "LV"),
+      ifelse(a > 0, "_HA", "_LA")
+    )
+  )
+}
 p$intended  <- quad(p$target_v,    p$target_a)
 p$perceived <- quad(p$perceived_v, p$perceived_a)
 

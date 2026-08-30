@@ -5,45 +5,45 @@ marginal = same sign, but within margin of an axis (would flip under small error
 crossed  = opposite sign on at least one axis
 
 -- estimator_A2  (n = 48 pairs) --
-   spread on these stimuli: valence SD 0.1100, arousal SD 0.1675
+   spread on these stimuli: valence SD 0.1392, arousal SD 0.1971
    margin       held   marginal   crossed   held %
-   0.00           20          0        28    41.7%
-   0.02           18          2        28    37.5%
-   0.05           10         10        28    20.8%
-   0.10            8         12        28    16.7%
-   sign only: non-optimised 14/48 held -> optimised 20/48 held
+   0.00           45          0         3    93.8%
+   0.02           40          5         3    83.3%
+   0.05           27         18         3    56.2%
+   0.10           19         26         3    39.6%
+   sign only: non-optimised 15/48 held -> optimised 45/48 held
 
    by intended quadrant (sign only):
        
         crossed held
-  HV_HA       9    3
-  HV_LA       8    4
-  LV_HA      11    1
+  HV_HA       0   12
+  HV_LA       0   12
+  LV_HA       3    9
   LV_LA       0   12
 
 -- estimator_B2  (n = 48 pairs) --
-   spread on these stimuli: valence SD 0.2274, arousal SD 0.2605
+   spread on these stimuli: valence SD 0.2261, arousal SD 0.3071
    margin       held   marginal   crossed   held %
-   0.00           17          0        31    35.4%
-   0.02           16          1        31    33.3%
-   0.05           13          4        31    27.1%
-   0.10            5         12        31    10.4%
-   sign only: non-optimised 17/48 held -> optimised 17/48 held
+   0.00           21          0        27    43.8%
+   0.02           21          0        27    43.8%
+   0.05           17          4        27    35.4%
+   0.10           14          7        27    29.2%
+   sign only: non-optimised 13/48 held -> optimised 21/48 held
 
    by intended quadrant (sign only):
        
         crossed held
-  HV_HA       9    3
-  HV_LA       2   10
-  LV_HA      12    0
-  LV_LA       8    4
+  HV_HA       5    7
+  HV_LA       1   11
+  LV_HA       9    3
+  LV_LA      12    0
 
 -- estimator_B  (n = 48 pairs) --
-   spread on these stimuli: valence SD 0.0090, arousal SD 0.0130
+   spread on these stimuli: valence SD 0.0124, arousal SD 0.0125
    margin       held   marginal   crossed   held %
    0.00           12          0        36    25.0%
    0.02           12          0        36    25.0%
-   0.05            3          9        36     6.2%
+   0.05            9          3        36    18.8%
    0.10            0         12        36     0.0%
    sign only: non-optimised 12/48 held -> optimised 12/48 held
 
@@ -59,17 +59,17 @@ crossed  = opposite sign on at least one axis
 AGREEMENT BETWEEN JUDGES (optimised stimuli, quadrant of the prediction)
 
 quadrant of each estimator's prediction, across the 48 optimised stimuli:
-  estimator_A2   HV_HA 10   HV_LA 7   LV_HA 1   LV_LA 30
-  estimator_B2   HV_HA 5   HV_LA 36   LV_HA 1   LV_LA 6
+  estimator_A2   HV_HA 14   HV_LA 12   LV_HA 9   LV_LA 13
+  estimator_B2   HV_HA 9   HV_LA 30   LV_HA 5   LV_LA 4
   estimator_B    HV_HA 48   HV_LA 0   LV_HA 0   LV_LA 0
 
 An estimator concentrated in one quadrant inflates raw agreement with
 everything else, which is why kappa is reported alongside it.
 
 pair                                raw   chance    kappa
-estimator_A2 vs estimator_B2      33.3%    21.0%   +0.157
-estimator_A2 vs estimator_B       20.8%    20.8%   +0.000
-estimator_B2 vs estimator_B       10.4%    10.4%   +0.000
+estimator_A2 vs estimator_B2      45.8%    25.3%   +0.275
+estimator_A2 vs estimator_B       29.2%    29.2%   +0.000
+estimator_B2 vs estimator_B       18.8%    18.8%   +0.000
 
 kappa near 0 means the estimators agree no more than their own marginal
 distributions would produce by chance. Negative means less than chance.

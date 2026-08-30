@@ -1,3 +1,14 @@
+Feature guide (acoustic meaning only; these are not emotion labels):
+- Tempo (BPM): estimated pulse rate in beats per minute.
+- Mode: estimated major or minor tonal mode.
+- Mean pitch (MIDI): average detected fundamental pitch.
+- Pitch slope (MIDI/s): average pitch direction; positive values rise and negative values fall.
+- Spectral centroid (Hz): centre of spectral energy; larger values indicate a brighter spectrum.
+- RMS level (dBFS): overall signal level; values closer to 0 dBFS indicate greater signal level.
+- Onset rate (per s): detected note/event onsets per second.
+- Dynamic range (dB): spread between quieter and louder frames.
+- Calibration percentile: relative position of that acoustic measurement within an independent target-blind synthetic calibration set; it carries no emotion label.
+
 Acoustic feature values:
 {feature_block}
 

@@ -1,0 +1,1538 @@
+[
+  {
+    "stimulus_file": "B01_run0_nonopt.wav",
+    "stimulus_sha256": "c1f8adca32375a49d78b04c0760d69939c073c7eb53c8a570bc9ce7710f764ae",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.6,
+      "pitch_slope_midi_per_s": 2.435,
+      "spectral_centroid_hz": 1080.2,
+      "rms_dbfs": -17.3,
+      "onset_rate_per_s": 5.33,
+      "dynamic_range_db": 27.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 60.6 | relative acoustic level: low | calibration percentile: 33/100\nPitch slope (MIDI/s): 2.435 | relative acoustic level: high | calibration percentile: 79/100\nSpectral centroid (Hz): 1080.2 | relative acoustic level: low | calibration percentile: 32/100\nRMS level (dBFS): -17.3 | relative acoustic level: mid-range | calibration percentile: 51/100\nOnset rate (per s): 5.33 | relative acoustic level: high | calibration percentile: 69/100\nDynamic range (dB): 27.8 | relative acoustic level: high | calibration percentile: 68/100"
+  },
+  {
+    "stimulus_file": "B01_run0_opt.wav",
+    "stimulus_sha256": "0a25a23b25660613f0717aba02281c9f7f99ae49611415236faf775a3b603004",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 54.5,
+      "pitch_slope_midi_per_s": 3.485,
+      "spectral_centroid_hz": 1522.4,
+      "rms_dbfs": -14.6,
+      "onset_rate_per_s": 5.33,
+      "dynamic_range_db": 7.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 54.5 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): 3.485 | relative acoustic level: very high | calibration percentile: 95/100\nSpectral centroid (Hz): 1522.4 | relative acoustic level: mid-range | calibration percentile: 63/100\nRMS level (dBFS): -14.6 | relative acoustic level: high | calibration percentile: 79/100\nOnset rate (per s): 5.33 | relative acoustic level: high | calibration percentile: 69/100\nDynamic range (dB): 7.3 | relative acoustic level: low | calibration percentile: 20/100"
+  },
+  {
+    "stimulus_file": "B01_run1_nonopt.wav",
+    "stimulus_sha256": "d7e7abab4fa1ebecce1e0cbc198f9105aa31f98471e224c9015709dff3f67010",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 80.7,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 1.76,
+      "spectral_centroid_hz": 2044.1,
+      "rms_dbfs": -21.1,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 39.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 80.7 | relative acoustic level: low | calibration percentile: 13/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 1.76 | relative acoustic level: high | calibration percentile: 76/100\nSpectral centroid (Hz): 2044.1 | relative acoustic level: high | calibration percentile: 84/100\nRMS level (dBFS): -21.1 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 39.5 | relative acoustic level: high | calibration percentile: 83/100"
+  },
+  {
+    "stimulus_file": "B01_run1_opt.wav",
+    "stimulus_sha256": "d7e7abab4fa1ebecce1e0cbc198f9105aa31f98471e224c9015709dff3f67010",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 80.7,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 1.76,
+      "spectral_centroid_hz": 2044.1,
+      "rms_dbfs": -21.1,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 39.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 80.7 | relative acoustic level: low | calibration percentile: 13/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 1.76 | relative acoustic level: high | calibration percentile: 76/100\nSpectral centroid (Hz): 2044.1 | relative acoustic level: high | calibration percentile: 84/100\nRMS level (dBFS): -21.1 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 39.5 | relative acoustic level: high | calibration percentile: 83/100"
+  },
+  {
+    "stimulus_file": "B01_run2_nonopt.wav",
+    "stimulus_sha256": "053aea4c1057edfa476b58ddd72168c462761488acec7bd2498ed427b34e17ca",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 2.246,
+      "spectral_centroid_hz": 1841.2,
+      "rms_dbfs": -20.9,
+      "onset_rate_per_s": 5.33,
+      "dynamic_range_db": 29.4
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.246 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 1841.2 | relative acoustic level: high | calibration percentile: 78/100\nRMS level (dBFS): -20.9 | relative acoustic level: low | calibration percentile: 25/100\nOnset rate (per s): 5.33 | relative acoustic level: high | calibration percentile: 69/100\nDynamic range (dB): 29.4 | relative acoustic level: high | calibration percentile: 70/100"
+  },
+  {
+    "stimulus_file": "B01_run2_opt.wav",
+    "stimulus_sha256": "053aea4c1057edfa476b58ddd72168c462761488acec7bd2498ed427b34e17ca",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 2.246,
+      "spectral_centroid_hz": 1841.2,
+      "rms_dbfs": -20.9,
+      "onset_rate_per_s": 5.33,
+      "dynamic_range_db": 29.4
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.246 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 1841.2 | relative acoustic level: high | calibration percentile: 78/100\nRMS level (dBFS): -20.9 | relative acoustic level: low | calibration percentile: 25/100\nOnset rate (per s): 5.33 | relative acoustic level: high | calibration percentile: 69/100\nDynamic range (dB): 29.4 | relative acoustic level: high | calibration percentile: 70/100"
+  },
+  {
+    "stimulus_file": "B02_run0_nonopt.wav",
+    "stimulus_sha256": "0507bc4dec1778d49cf7b8eb34deeb4a8f1662cdd6f1ead8b501acf2b428b92e",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 3.232,
+      "spectral_centroid_hz": 704.0,
+      "rms_dbfs": -14.9,
+      "onset_rate_per_s": 7.0,
+      "dynamic_range_db": 6.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 3.232 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 704.0 | relative acoustic level: low | calibration percentile: 14/100\nRMS level (dBFS): -14.9 | relative acoustic level: high | calibration percentile: 76/100\nOnset rate (per s): 7.0 | relative acoustic level: high | calibration percentile: 87/100\nDynamic range (dB): 6.5 | relative acoustic level: low | calibration percentile: 16/100"
+  },
+  {
+    "stimulus_file": "B02_run0_opt.wav",
+    "stimulus_sha256": "1967002b6f3c41f693e8cb303467207faa6553feeb7e53ffb6c7d3e654cdaa84",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 46.9,
+      "pitch_slope_midi_per_s": -7.316,
+      "spectral_centroid_hz": 674.9,
+      "rms_dbfs": -13.8,
+      "onset_rate_per_s": 7.67,
+      "dynamic_range_db": 4.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 46.9 | relative acoustic level: very low | calibration percentile: 5/100\nPitch slope (MIDI/s): -7.316 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 674.9 | relative acoustic level: low | calibration percentile: 13/100\nRMS level (dBFS): -13.8 | relative acoustic level: high | calibration percentile: 85/100\nOnset rate (per s): 7.67 | relative acoustic level: high | calibration percentile: 89/100\nDynamic range (dB): 4.9 | relative acoustic level: very low | calibration percentile: 8/100"
+  },
+  {
+    "stimulus_file": "B02_run1_nonopt.wav",
+    "stimulus_sha256": "6bd29cd86d68efdb3e28484855dea05f2b1b797ea58d9eb974dffa4163b816fa",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.6,
+      "pitch_slope_midi_per_s": 3.206,
+      "spectral_centroid_hz": 1094.9,
+      "rms_dbfs": -13.4,
+      "onset_rate_per_s": 6.0,
+      "dynamic_range_db": 17.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 60.6 | relative acoustic level: low | calibration percentile: 33/100\nPitch slope (MIDI/s): 3.206 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 1094.9 | relative acoustic level: low | calibration percentile: 33/100\nRMS level (dBFS): -13.4 | relative acoustic level: high | calibration percentile: 87/100\nOnset rate (per s): 6.0 | relative acoustic level: high | calibration percentile: 76/100\nDynamic range (dB): 17.9 | relative acoustic level: mid-range | calibration percentile: 53/100"
+  },
+  {
+    "stimulus_file": "B02_run1_opt.wav",
+    "stimulus_sha256": "f317ec883e2d6b000c411afce97e0a36a8291e333ea36371cf7026be6b85f9bb",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 59.2,
+      "pitch_slope_midi_per_s": 4.973,
+      "spectral_centroid_hz": 1323.2,
+      "rms_dbfs": -12.8,
+      "onset_rate_per_s": 5.67,
+      "dynamic_range_db": 7.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 59.2 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 4.973 | relative acoustic level: very high | calibration percentile: 99/100\nSpectral centroid (Hz): 1323.2 | relative acoustic level: mid-range | calibration percentile: 51/100\nRMS level (dBFS): -12.8 | relative acoustic level: very high | calibration percentile: 91/100\nOnset rate (per s): 5.67 | relative acoustic level: high | calibration percentile: 72/100\nDynamic range (dB): 7.3 | relative acoustic level: low | calibration percentile: 20/100"
+  },
+  {
+    "stimulus_file": "B02_run2_nonopt.wav",
+    "stimulus_sha256": "34f7ab29e254db166ad137e13b1e338f5ec81e0063bca294be57e8f23704326d",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 3.202,
+      "spectral_centroid_hz": 947.0,
+      "rms_dbfs": -12.6,
+      "onset_rate_per_s": 7.0,
+      "dynamic_range_db": 6.7
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 3.202 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 947.0 | relative acoustic level: low | calibration percentile: 22/100\nRMS level (dBFS): -12.6 | relative acoustic level: very high | calibration percentile: 92/100\nOnset rate (per s): 7.0 | relative acoustic level: high | calibration percentile: 87/100\nDynamic range (dB): 6.7 | relative acoustic level: low | calibration percentile: 18/100"
+  },
+  {
+    "stimulus_file": "B02_run2_opt.wav",
+    "stimulus_sha256": "ae493ab9acc9968bd8dcf8342d33c4c6976d2e340ee80e20803d8dac3efbec3f",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 136.0,
+      "mode": "minor",
+      "mean_pitch_midi": 43.8,
+      "pitch_slope_midi_per_s": -8.334,
+      "spectral_centroid_hz": 1684.2,
+      "rms_dbfs": -13.6,
+      "onset_rate_per_s": 6.67,
+      "dynamic_range_db": 6.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 136.0 | relative acoustic level: high | calibration percentile: 79/100\nMode: minor\nMean pitch (MIDI): 43.8 | relative acoustic level: very low | calibration percentile: 3/100\nPitch slope (MIDI/s): -8.334 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 1684.2 | relative acoustic level: high | calibration percentile: 72/100\nRMS level (dBFS): -13.6 | relative acoustic level: high | calibration percentile: 86/100\nOnset rate (per s): 6.67 | relative acoustic level: high | calibration percentile: 84/100\nDynamic range (dB): 6.3 | relative acoustic level: low | calibration percentile: 15/100"
+  },
+  {
+    "stimulus_file": "B03_run0_nonopt.wav",
+    "stimulus_sha256": "c673b37d33fd5b3b857df948d4b4978535a59b3378a4ffa0320c96cf4c5ff51e",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 92.3,
+      "mode": "minor",
+      "mean_pitch_midi": 60.2,
+      "pitch_slope_midi_per_s": 2.289,
+      "spectral_centroid_hz": 2036.6,
+      "rms_dbfs": -21.1,
+      "onset_rate_per_s": 5.0,
+      "dynamic_range_db": 35.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 92.3 | relative acoustic level: low | calibration percentile: 23/100\nMode: minor\nMean pitch (MIDI): 60.2 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.289 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 2036.6 | relative acoustic level: high | calibration percentile: 84/100\nRMS level (dBFS): -21.1 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 5.0 | relative acoustic level: high | calibration percentile: 67/100\nDynamic range (dB): 35.3 | relative acoustic level: high | calibration percentile: 76/100"
+  },
+  {
+    "stimulus_file": "B03_run0_opt.wav",
+    "stimulus_sha256": "c673b37d33fd5b3b857df948d4b4978535a59b3378a4ffa0320c96cf4c5ff51e",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 92.3,
+      "mode": "minor",
+      "mean_pitch_midi": 60.2,
+      "pitch_slope_midi_per_s": 2.289,
+      "spectral_centroid_hz": 2036.6,
+      "rms_dbfs": -21.1,
+      "onset_rate_per_s": 5.0,
+      "dynamic_range_db": 35.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 92.3 | relative acoustic level: low | calibration percentile: 23/100\nMode: minor\nMean pitch (MIDI): 60.2 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.289 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 2036.6 | relative acoustic level: high | calibration percentile: 84/100\nRMS level (dBFS): -21.1 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 5.0 | relative acoustic level: high | calibration percentile: 67/100\nDynamic range (dB): 35.3 | relative acoustic level: high | calibration percentile: 76/100"
+  },
+  {
+    "stimulus_file": "B03_run1_nonopt.wav",
+    "stimulus_sha256": "ea1af0e1d2604ca4e8122416c2621f84f964296655fec0fd76bc5033d566abd0",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 143.6,
+      "mode": "minor",
+      "mean_pitch_midi": 60.0,
+      "pitch_slope_midi_per_s": 2.548,
+      "spectral_centroid_hz": 1788.8,
+      "rms_dbfs": -20.0,
+      "onset_rate_per_s": 9.33,
+      "dynamic_range_db": 9.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 143.6 | relative acoustic level: high | calibration percentile: 86/100\nMode: minor\nMean pitch (MIDI): 60.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.548 | relative acoustic level: high | calibration percentile: 80/100\nSpectral centroid (Hz): 1788.8 | relative acoustic level: high | calibration percentile: 75/100\nRMS level (dBFS): -20.0 | relative acoustic level: low | calibration percentile: 33/100\nOnset rate (per s): 9.33 | relative acoustic level: very high | calibration percentile: 96/100\nDynamic range (dB): 9.0 | relative acoustic level: low | calibration percentile: 27/100"
+  },
+  {
+    "stimulus_file": "B03_run1_opt.wav",
+    "stimulus_sha256": "ea1af0e1d2604ca4e8122416c2621f84f964296655fec0fd76bc5033d566abd0",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 143.6,
+      "mode": "minor",
+      "mean_pitch_midi": 60.0,
+      "pitch_slope_midi_per_s": 2.548,
+      "spectral_centroid_hz": 1788.8,
+      "rms_dbfs": -20.0,
+      "onset_rate_per_s": 9.33,
+      "dynamic_range_db": 9.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 143.6 | relative acoustic level: high | calibration percentile: 86/100\nMode: minor\nMean pitch (MIDI): 60.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.548 | relative acoustic level: high | calibration percentile: 80/100\nSpectral centroid (Hz): 1788.8 | relative acoustic level: high | calibration percentile: 75/100\nRMS level (dBFS): -20.0 | relative acoustic level: low | calibration percentile: 33/100\nOnset rate (per s): 9.33 | relative acoustic level: very high | calibration percentile: 96/100\nDynamic range (dB): 9.0 | relative acoustic level: low | calibration percentile: 27/100"
+  },
+  {
+    "stimulus_file": "B03_run2_nonopt.wav",
+    "stimulus_sha256": "05a92207cdee76e1c6ab0e3cb13978bff8064a8fb7f5b2be2413eca2a0fb9aad",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 143.6,
+      "mode": "major",
+      "mean_pitch_midi": 60.0,
+      "pitch_slope_midi_per_s": 2.411,
+      "spectral_centroid_hz": 1788.0,
+      "rms_dbfs": -20.8,
+      "onset_rate_per_s": 9.0,
+      "dynamic_range_db": 9.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 143.6 | relative acoustic level: high | calibration percentile: 86/100\nMode: major\nMean pitch (MIDI): 60.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.411 | relative acoustic level: high | calibration percentile: 79/100\nSpectral centroid (Hz): 1788.0 | relative acoustic level: high | calibration percentile: 75/100\nRMS level (dBFS): -20.8 | relative acoustic level: low | calibration percentile: 26/100\nOnset rate (per s): 9.0 | relative acoustic level: very high | calibration percentile: 95/100\nDynamic range (dB): 9.6 | relative acoustic level: low | calibration percentile: 28/100"
+  },
+  {
+    "stimulus_file": "B03_run2_opt.wav",
+    "stimulus_sha256": "05a92207cdee76e1c6ab0e3cb13978bff8064a8fb7f5b2be2413eca2a0fb9aad",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 143.6,
+      "mode": "major",
+      "mean_pitch_midi": 60.0,
+      "pitch_slope_midi_per_s": 2.411,
+      "spectral_centroid_hz": 1788.0,
+      "rms_dbfs": -20.8,
+      "onset_rate_per_s": 9.0,
+      "dynamic_range_db": 9.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 143.6 | relative acoustic level: high | calibration percentile: 86/100\nMode: major\nMean pitch (MIDI): 60.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.411 | relative acoustic level: high | calibration percentile: 79/100\nSpectral centroid (Hz): 1788.0 | relative acoustic level: high | calibration percentile: 75/100\nRMS level (dBFS): -20.8 | relative acoustic level: low | calibration percentile: 26/100\nOnset rate (per s): 9.0 | relative acoustic level: very high | calibration percentile: 95/100\nDynamic range (dB): 9.6 | relative acoustic level: low | calibration percentile: 28/100"
+  },
+  {
+    "stimulus_file": "B04_run0_nonopt.wav",
+    "stimulus_sha256": "7bfca0a0e7deaaf4aa93f3ff312b980b1a34adc7d1cca7674e28c52d8be6d85b",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 60.5,
+      "pitch_slope_midi_per_s": 3.217,
+      "spectral_centroid_hz": 1106.2,
+      "rms_dbfs": -17.0,
+      "onset_rate_per_s": 8.0,
+      "dynamic_range_db": 13.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 60.5 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 3.217 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 1106.2 | relative acoustic level: low | calibration percentile: 34/100\nRMS level (dBFS): -17.0 | relative acoustic level: mid-range | calibration percentile: 55/100\nOnset rate (per s): 8.0 | relative acoustic level: very high | calibration percentile: 91/100\nDynamic range (dB): 13.1 | relative acoustic level: mid-range | calibration percentile: 40/100"
+  },
+  {
+    "stimulus_file": "B04_run0_opt.wav",
+    "stimulus_sha256": "13993a2f721d5609b28e721ef362010f54ee67a1624e57cf8a759b8dcacacd76",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.4,
+      "pitch_slope_midi_per_s": 4.265,
+      "spectral_centroid_hz": 1297.8,
+      "rms_dbfs": -15.5,
+      "onset_rate_per_s": 4.33,
+      "dynamic_range_db": 9.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 60.4 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 4.265 | relative acoustic level: very high | calibration percentile: 98/100\nSpectral centroid (Hz): 1297.8 | relative acoustic level: mid-range | calibration percentile: 50/100\nRMS level (dBFS): -15.5 | relative acoustic level: high | calibration percentile: 69/100\nOnset rate (per s): 4.33 | relative acoustic level: mid-range | calibration percentile: 59/100\nDynamic range (dB): 9.9 | relative acoustic level: low | calibration percentile: 29/100"
+  },
+  {
+    "stimulus_file": "B04_run1_nonopt.wav",
+    "stimulus_sha256": "139e98ec577f30d1856f458dfdb706bb9fa00cfa463bacb72f98502e2381db48",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.5,
+      "pitch_slope_midi_per_s": 3.24,
+      "spectral_centroid_hz": 995.7,
+      "rms_dbfs": -11.6,
+      "onset_rate_per_s": 6.33,
+      "dynamic_range_db": 6.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 60.5 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 3.24 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 995.7 | relative acoustic level: low | calibration percentile: 26/100\nRMS level (dBFS): -11.6 | relative acoustic level: very high | calibration percentile: 95/100\nOnset rate (per s): 6.33 | relative acoustic level: high | calibration percentile: 80/100\nDynamic range (dB): 6.8 | relative acoustic level: low | calibration percentile: 18/100"
+  },
+  {
+    "stimulus_file": "B04_run1_opt.wav",
+    "stimulus_sha256": "e43e3295d8dbe569a350c05f6db898e5d10c3a52966a17df6bf499a6a2053c1f",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 2.368,
+      "spectral_centroid_hz": 1979.7,
+      "rms_dbfs": -19.0,
+      "onset_rate_per_s": 6.33,
+      "dynamic_range_db": 19.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 2.368 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 1979.7 | relative acoustic level: high | calibration percentile: 82/100\nRMS level (dBFS): -19.0 | relative acoustic level: mid-range | calibration percentile: 38/100\nOnset rate (per s): 6.33 | relative acoustic level: high | calibration percentile: 80/100\nDynamic range (dB): 19.6 | relative acoustic level: mid-range | calibration percentile: 56/100"
+  },
+  {
+    "stimulus_file": "B04_run2_nonopt.wav",
+    "stimulus_sha256": "34f7ab29e254db166ad137e13b1e338f5ec81e0063bca294be57e8f23704326d",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": 3.202,
+      "spectral_centroid_hz": 947.0,
+      "rms_dbfs": -12.6,
+      "onset_rate_per_s": 7.0,
+      "dynamic_range_db": 6.7
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 3.202 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 947.0 | relative acoustic level: low | calibration percentile: 22/100\nRMS level (dBFS): -12.6 | relative acoustic level: very high | calibration percentile: 92/100\nOnset rate (per s): 7.0 | relative acoustic level: high | calibration percentile: 87/100\nDynamic range (dB): 6.7 | relative acoustic level: low | calibration percentile: 18/100"
+  },
+  {
+    "stimulus_file": "B04_run2_opt.wav",
+    "stimulus_sha256": "3fcb90eb75c90f0a2b5a4c68d86a82671c0188242c2805872db95ddfa8bb0048",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.6,
+      "pitch_slope_midi_per_s": -3.195,
+      "spectral_centroid_hz": 1317.0,
+      "rms_dbfs": -13.3,
+      "onset_rate_per_s": 7.33,
+      "dynamic_range_db": 7.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 60.6 | relative acoustic level: low | calibration percentile: 33/100\nPitch slope (MIDI/s): -3.195 | relative acoustic level: low | calibration percentile: 14/100\nSpectral centroid (Hz): 1317.0 | relative acoustic level: mid-range | calibration percentile: 51/100\nRMS level (dBFS): -13.3 | relative acoustic level: high | calibration percentile: 87/100\nOnset rate (per s): 7.33 | relative acoustic level: high | calibration percentile: 88/100\nDynamic range (dB): 7.1 | relative acoustic level: low | calibration percentile: 19/100"
+  },
+  {
+    "stimulus_file": "B05_run0_nonopt.wav",
+    "stimulus_sha256": "65ab9d7d411fe638cb66a5044d954fb32834619fd26e115f48bd5c28000db8da",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 55.1,
+      "pitch_slope_midi_per_s": -29.357,
+      "spectral_centroid_hz": 1718.2,
+      "rms_dbfs": -14.4,
+      "onset_rate_per_s": 6.67,
+      "dynamic_range_db": 4.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 55.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -29.357 | relative acoustic level: very low | calibration percentile: 0/100\nSpectral centroid (Hz): 1718.2 | relative acoustic level: high | calibration percentile: 74/100\nRMS level (dBFS): -14.4 | relative acoustic level: high | calibration percentile: 80/100\nOnset rate (per s): 6.67 | relative acoustic level: high | calibration percentile: 84/100\nDynamic range (dB): 4.5 | relative acoustic level: very low | calibration percentile: 6/100"
+  },
+  {
+    "stimulus_file": "B05_run0_opt.wav",
+    "stimulus_sha256": "ab9abea99afbfa9cd258cca3f6555165d3fd200a08a0315905c9bdfeb6ad1f3f",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": -0.006,
+      "spectral_centroid_hz": 925.7,
+      "rms_dbfs": -10.8,
+      "onset_rate_per_s": 7.67,
+      "dynamic_range_db": 2.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -0.006 | relative acoustic level: mid-range | calibration percentile: 44/100\nSpectral centroid (Hz): 925.7 | relative acoustic level: low | calibration percentile: 21/100\nRMS level (dBFS): -10.8 | relative acoustic level: very high | calibration percentile: 97/100\nOnset rate (per s): 7.67 | relative acoustic level: high | calibration percentile: 89/100\nDynamic range (dB): 2.9 | relative acoustic level: very low | calibration percentile: 2/100"
+  },
+  {
+    "stimulus_file": "B05_run1_nonopt.wav",
+    "stimulus_sha256": "425d2a58e7d58363443b2339c1632ff840c43c4e49bb252b9b2945b6ec889f28",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 48.7,
+      "pitch_slope_midi_per_s": -8.07,
+      "spectral_centroid_hz": 899.0,
+      "rms_dbfs": -12.9,
+      "onset_rate_per_s": 6.33,
+      "dynamic_range_db": 6.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 48.7 | relative acoustic level: very low | calibration percentile: 8/100\nPitch slope (MIDI/s): -8.07 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 899.0 | relative acoustic level: low | calibration percentile: 19/100\nRMS level (dBFS): -12.9 | relative acoustic level: very high | calibration percentile: 90/100\nOnset rate (per s): 6.33 | relative acoustic level: high | calibration percentile: 80/100\nDynamic range (dB): 6.0 | relative acoustic level: low | calibration percentile: 12/100"
+  },
+  {
+    "stimulus_file": "B05_run1_opt.wav",
+    "stimulus_sha256": "6911b9e8c7979337311ab382609a475ea7a359ff272c7f28e89991c443d0b783",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 112.3,
+      "mode": "minor",
+      "mean_pitch_midi": 60.4,
+      "pitch_slope_midi_per_s": 0.249,
+      "spectral_centroid_hz": 952.6,
+      "rms_dbfs": -10.9,
+      "onset_rate_per_s": 9.0,
+      "dynamic_range_db": 4.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 112.3 | relative acoustic level: mid-range | calibration percentile: 50/100\nMode: minor\nMean pitch (MIDI): 60.4 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 0.249 | relative acoustic level: mid-range | calibration percentile: 59/100\nSpectral centroid (Hz): 952.6 | relative acoustic level: low | calibration percentile: 23/100\nRMS level (dBFS): -10.9 | relative acoustic level: very high | calibration percentile: 97/100\nOnset rate (per s): 9.0 | relative acoustic level: very high | calibration percentile: 95/100\nDynamic range (dB): 4.2 | relative acoustic level: very low | calibration percentile: 4/100"
+  },
+  {
+    "stimulus_file": "B05_run2_nonopt.wav",
+    "stimulus_sha256": "425d2a58e7d58363443b2339c1632ff840c43c4e49bb252b9b2945b6ec889f28",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "major",
+      "mean_pitch_midi": 48.7,
+      "pitch_slope_midi_per_s": -8.07,
+      "spectral_centroid_hz": 899.0,
+      "rms_dbfs": -12.9,
+      "onset_rate_per_s": 6.33,
+      "dynamic_range_db": 6.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: major\nMean pitch (MIDI): 48.7 | relative acoustic level: very low | calibration percentile: 8/100\nPitch slope (MIDI/s): -8.07 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 899.0 | relative acoustic level: low | calibration percentile: 19/100\nRMS level (dBFS): -12.9 | relative acoustic level: very high | calibration percentile: 90/100\nOnset rate (per s): 6.33 | relative acoustic level: high | calibration percentile: 80/100\nDynamic range (dB): 6.0 | relative acoustic level: low | calibration percentile: 12/100"
+  },
+  {
+    "stimulus_file": "B05_run2_opt.wav",
+    "stimulus_sha256": "854935d168f71456e7610c97a1b9d0ce602f97d5554f917014ddef73c9b92736",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 57.1,
+      "pitch_slope_midi_per_s": -4.815,
+      "spectral_centroid_hz": 804.5,
+      "rms_dbfs": -11.1,
+      "onset_rate_per_s": 6.33,
+      "dynamic_range_db": 5.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 57.1 | relative acoustic level: low | calibration percentile: 30/100\nPitch slope (MIDI/s): -4.815 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 804.5 | relative acoustic level: low | calibration percentile: 17/100\nRMS level (dBFS): -11.1 | relative acoustic level: very high | calibration percentile: 95/100\nOnset rate (per s): 6.33 | relative acoustic level: high | calibration percentile: 80/100\nDynamic range (dB): 5.0 | relative acoustic level: very low | calibration percentile: 8/100"
+  },
+  {
+    "stimulus_file": "B06_run0_nonopt.wav",
+    "stimulus_sha256": "2a04077f4f55ab177b06e3d89b46bd154e809ea142d07688fcfcf22ffc400015",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 198.8,
+      "mode": "major",
+      "mean_pitch_midi": 66.1,
+      "pitch_slope_midi_per_s": -2.115,
+      "spectral_centroid_hz": 1583.0,
+      "rms_dbfs": -19.0,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 14.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 198.8 | relative acoustic level: very high | calibration percentile: 99/100\nMode: major\nMean pitch (MIDI): 66.1 | relative acoustic level: mid-range | calibration percentile: 61/100\nPitch slope (MIDI/s): -2.115 | relative acoustic level: low | calibration percentile: 23/100\nSpectral centroid (Hz): 1583.0 | relative acoustic level: high | calibration percentile: 66/100\nRMS level (dBFS): -19.0 | relative acoustic level: mid-range | calibration percentile: 38/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 14.9 | relative acoustic level: mid-range | calibration percentile: 47/100"
+  },
+  {
+    "stimulus_file": "B06_run0_opt.wav",
+    "stimulus_sha256": "198b69d8fafe6988e98d3236b117a4c8a57993ae8e6955a58c82fd0320f37519",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 152.0,
+      "mode": "minor",
+      "mean_pitch_midi": 63.3,
+      "pitch_slope_midi_per_s": -0.021,
+      "spectral_centroid_hz": 1541.8,
+      "rms_dbfs": -23.3,
+      "onset_rate_per_s": 1.33,
+      "dynamic_range_db": 23.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 152.0 | relative acoustic level: high | calibration percentile: 88/100\nMode: minor\nMean pitch (MIDI): 63.3 | relative acoustic level: mid-range | calibration percentile: 58/100\nPitch slope (MIDI/s): -0.021 | relative acoustic level: mid-range | calibration percentile: 44/100\nSpectral centroid (Hz): 1541.8 | relative acoustic level: high | calibration percentile: 65/100\nRMS level (dBFS): -23.3 | relative acoustic level: very low | calibration percentile: 9/100\nOnset rate (per s): 1.33 | relative acoustic level: very low | calibration percentile: 6/100\nDynamic range (dB): 23.2 | relative acoustic level: mid-range | calibration percentile: 63/100"
+  },
+  {
+    "stimulus_file": "B06_run1_nonopt.wav",
+    "stimulus_sha256": "2a04077f4f55ab177b06e3d89b46bd154e809ea142d07688fcfcf22ffc400015",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 198.8,
+      "mode": "major",
+      "mean_pitch_midi": 66.1,
+      "pitch_slope_midi_per_s": -2.115,
+      "spectral_centroid_hz": 1583.0,
+      "rms_dbfs": -19.0,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 14.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 198.8 | relative acoustic level: very high | calibration percentile: 99/100\nMode: major\nMean pitch (MIDI): 66.1 | relative acoustic level: mid-range | calibration percentile: 61/100\nPitch slope (MIDI/s): -2.115 | relative acoustic level: low | calibration percentile: 23/100\nSpectral centroid (Hz): 1583.0 | relative acoustic level: high | calibration percentile: 66/100\nRMS level (dBFS): -19.0 | relative acoustic level: mid-range | calibration percentile: 38/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 14.9 | relative acoustic level: mid-range | calibration percentile: 47/100"
+  },
+  {
+    "stimulus_file": "B06_run1_opt.wav",
+    "stimulus_sha256": "1ebccc66c00e6f192618dc45d6ab7d0f9003c97c95eff150f152f96dee45a825",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 136.0,
+      "mode": "minor",
+      "mean_pitch_midi": 59.7,
+      "pitch_slope_midi_per_s": 1.579,
+      "spectral_centroid_hz": 2079.1,
+      "rms_dbfs": -25.7,
+      "onset_rate_per_s": 1.67,
+      "dynamic_range_db": 59.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 136.0 | relative acoustic level: high | calibration percentile: 79/100\nMode: minor\nMean pitch (MIDI): 59.7 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 1.579 | relative acoustic level: high | calibration percentile: 75/100\nSpectral centroid (Hz): 2079.1 | relative acoustic level: high | calibration percentile: 84/100\nRMS level (dBFS): -25.7 | relative acoustic level: very low | calibration percentile: 4/100\nOnset rate (per s): 1.67 | relative acoustic level: very low | calibration percentile: 10/100\nDynamic range (dB): 59.2 | relative acoustic level: very high | calibration percentile: 97/100"
+  },
+  {
+    "stimulus_file": "B06_run2_nonopt.wav",
+    "stimulus_sha256": "1971c4989659113f991a491c335d7abd6c78f5353866665af4061f5f6977ff38",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 95.7,
+      "mode": "minor",
+      "mean_pitch_midi": 63.5,
+      "pitch_slope_midi_per_s": -2.946,
+      "spectral_centroid_hz": 1593.2,
+      "rms_dbfs": -18.2,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 14.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 95.7 | relative acoustic level: low | calibration percentile: 24/100\nMode: minor\nMean pitch (MIDI): 63.5 | relative acoustic level: mid-range | calibration percentile: 59/100\nPitch slope (MIDI/s): -2.946 | relative acoustic level: low | calibration percentile: 19/100\nSpectral centroid (Hz): 1593.2 | relative acoustic level: high | calibration percentile: 67/100\nRMS level (dBFS): -18.2 | relative acoustic level: mid-range | calibration percentile: 44/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 14.0 | relative acoustic level: mid-range | calibration percentile: 44/100"
+  },
+  {
+    "stimulus_file": "B06_run2_opt.wav",
+    "stimulus_sha256": "593ac8694634961c266c1c313dcbd0cfb9a74affce3e3af8237791050fb2a209",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 54.0,
+      "pitch_slope_midi_per_s": 1.964,
+      "spectral_centroid_hz": 574.1,
+      "rms_dbfs": -14.0,
+      "onset_rate_per_s": 5.33,
+      "dynamic_range_db": 6.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 54.0 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): 1.964 | relative acoustic level: high | calibration percentile: 77/100\nSpectral centroid (Hz): 574.1 | relative acoustic level: very low | calibration percentile: 8/100\nRMS level (dBFS): -14.0 | relative acoustic level: high | calibration percentile: 84/100\nOnset rate (per s): 5.33 | relative acoustic level: high | calibration percentile: 69/100\nDynamic range (dB): 6.8 | relative acoustic level: low | calibration percentile: 18/100"
+  },
+  {
+    "stimulus_file": "B07_run0_nonopt.wav",
+    "stimulus_sha256": "64e718cb9ab555088d678f52ebbe0b60844be9034caa7a6babe5f3927fbede7f",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 66.3,
+      "mode": "minor",
+      "mean_pitch_midi": 53.8,
+      "pitch_slope_midi_per_s": -5.762,
+      "spectral_centroid_hz": 574.4,
+      "rms_dbfs": -15.3,
+      "onset_rate_per_s": 3.33,
+      "dynamic_range_db": 15.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 66.3 | relative acoustic level: very low | calibration percentile: 6/100\nMode: minor\nMean pitch (MIDI): 53.8 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -5.762 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 574.4 | relative acoustic level: very low | calibration percentile: 8/100\nRMS level (dBFS): -15.3 | relative acoustic level: high | calibration percentile: 71/100\nOnset rate (per s): 3.33 | relative acoustic level: mid-range | calibration percentile: 40/100\nDynamic range (dB): 15.1 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B07_run0_opt.wav",
+    "stimulus_sha256": "70cffd0a49cbae2ddd29ce675a9306a595361e70345343fbbe99843d7aa68de2",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 51.7,
+      "pitch_slope_midi_per_s": 2.362,
+      "spectral_centroid_hz": 564.6,
+      "rms_dbfs": -14.2,
+      "onset_rate_per_s": 8.0,
+      "dynamic_range_db": 6.4
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 51.7 | relative acoustic level: low | calibration percentile: 28/100\nPitch slope (MIDI/s): 2.362 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 564.6 | relative acoustic level: very low | calibration percentile: 8/100\nRMS level (dBFS): -14.2 | relative acoustic level: high | calibration percentile: 82/100\nOnset rate (per s): 8.0 | relative acoustic level: very high | calibration percentile: 91/100\nDynamic range (dB): 6.4 | relative acoustic level: low | calibration percentile: 16/100"
+  },
+  {
+    "stimulus_file": "B07_run1_nonopt.wav",
+    "stimulus_sha256": "7bdaeb45c9e2bb632d6565bff8377e9f58582d16bd45229a1f3741df32aafacf",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 136.0,
+      "mode": "major",
+      "mean_pitch_midi": 52.2,
+      "pitch_slope_midi_per_s": -7.759,
+      "spectral_centroid_hz": 669.9,
+      "rms_dbfs": -14.5,
+      "onset_rate_per_s": 6.67,
+      "dynamic_range_db": 7.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 136.0 | relative acoustic level: high | calibration percentile: 79/100\nMode: major\nMean pitch (MIDI): 52.2 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -7.759 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 669.9 | relative acoustic level: low | calibration percentile: 12/100\nRMS level (dBFS): -14.5 | relative acoustic level: high | calibration percentile: 80/100\nOnset rate (per s): 6.67 | relative acoustic level: high | calibration percentile: 84/100\nDynamic range (dB): 7.1 | relative acoustic level: low | calibration percentile: 19/100"
+  },
+  {
+    "stimulus_file": "B07_run1_opt.wav",
+    "stimulus_sha256": "7e9258a8a7b4c25d7a0e40d7745d2c8266e0ce00e0ec52da4a4a36008bee46f1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 112.3,
+      "mode": "minor",
+      "mean_pitch_midi": 55.6,
+      "pitch_slope_midi_per_s": 0.213,
+      "spectral_centroid_hz": 908.1,
+      "rms_dbfs": -13.1,
+      "onset_rate_per_s": 9.0,
+      "dynamic_range_db": 2.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 112.3 | relative acoustic level: mid-range | calibration percentile: 50/100\nMode: minor\nMean pitch (MIDI): 55.6 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): 0.213 | relative acoustic level: mid-range | calibration percentile: 57/100\nSpectral centroid (Hz): 908.1 | relative acoustic level: low | calibration percentile: 20/100\nRMS level (dBFS): -13.1 | relative acoustic level: high | calibration percentile: 88/100\nOnset rate (per s): 9.0 | relative acoustic level: very high | calibration percentile: 95/100\nDynamic range (dB): 2.9 | relative acoustic level: very low | calibration percentile: 2/100"
+  },
+  {
+    "stimulus_file": "B07_run2_nonopt.wav",
+    "stimulus_sha256": "075917bf66e641dcd311ddaf01a90fcebeb31855c278e477efc42f89dcf6726f",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 99.4,
+      "mode": "minor",
+      "mean_pitch_midi": 60.4,
+      "pitch_slope_midi_per_s": -2.662,
+      "spectral_centroid_hz": 1486.3,
+      "rms_dbfs": -16.8,
+      "onset_rate_per_s": 3.67,
+      "dynamic_range_db": 11.7
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 99.4 | relative acoustic level: low | calibration percentile: 34/100\nMode: minor\nMean pitch (MIDI): 60.4 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -2.662 | relative acoustic level: low | calibration percentile: 22/100\nSpectral centroid (Hz): 1486.3 | relative acoustic level: mid-range | calibration percentile: 61/100\nRMS level (dBFS): -16.8 | relative acoustic level: mid-range | calibration percentile: 56/100\nOnset rate (per s): 3.67 | relative acoustic level: mid-range | calibration percentile: 49/100\nDynamic range (dB): 11.7 | relative acoustic level: low | calibration percentile: 35/100"
+  },
+  {
+    "stimulus_file": "B07_run2_opt.wav",
+    "stimulus_sha256": "0dd0734eee6aca41f1075dfe756e1895a5baecc2c48110d8a1130531cff9bb2e",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 136.0,
+      "mode": "minor",
+      "mean_pitch_midi": 64.8,
+      "pitch_slope_midi_per_s": -0.392,
+      "spectral_centroid_hz": 1421.6,
+      "rms_dbfs": -16.5,
+      "onset_rate_per_s": 2.33,
+      "dynamic_range_db": 7.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 136.0 | relative acoustic level: high | calibration percentile: 79/100\nMode: minor\nMean pitch (MIDI): 64.8 | relative acoustic level: mid-range | calibration percentile: 59/100\nPitch slope (MIDI/s): -0.392 | relative acoustic level: low | calibration percentile: 32/100\nSpectral centroid (Hz): 1421.6 | relative acoustic level: mid-range | calibration percentile: 56/100\nRMS level (dBFS): -16.5 | relative acoustic level: mid-range | calibration percentile: 60/100\nOnset rate (per s): 2.33 | relative acoustic level: low | calibration percentile: 20/100\nDynamic range (dB): 7.2 | relative acoustic level: low | calibration percentile: 20/100"
+  },
+  {
+    "stimulus_file": "B08_run0_nonopt.wav",
+    "stimulus_sha256": "cf9e6e36a75a72443ae951c0ae80816b94db337517a67e8309eeac66ec22621d",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 80.7,
+      "mode": "minor",
+      "mean_pitch_midi": 55.0,
+      "pitch_slope_midi_per_s": -1.008,
+      "spectral_centroid_hz": 734.3,
+      "rms_dbfs": -12.1,
+      "onset_rate_per_s": 3.67,
+      "dynamic_range_db": 12.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 80.7 | relative acoustic level: low | calibration percentile: 13/100\nMode: minor\nMean pitch (MIDI): 55.0 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -1.008 | relative acoustic level: low | calibration percentile: 27/100\nSpectral centroid (Hz): 734.3 | relative acoustic level: low | calibration percentile: 15/100\nRMS level (dBFS): -12.1 | relative acoustic level: very high | calibration percentile: 94/100\nOnset rate (per s): 3.67 | relative acoustic level: mid-range | calibration percentile: 49/100\nDynamic range (dB): 12.2 | relative acoustic level: mid-range | calibration percentile: 36/100"
+  },
+  {
+    "stimulus_file": "B08_run0_opt.wav",
+    "stimulus_sha256": "7b4bd19c347a002239933f3d113c7620e982715dc360b36b4975d84c6d27dbdf",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 59.7,
+      "pitch_slope_midi_per_s": 0.764,
+      "spectral_centroid_hz": 728.8,
+      "rms_dbfs": -10.5,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 3.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 59.7 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 0.764 | relative acoustic level: high | calibration percentile: 70/100\nSpectral centroid (Hz): 728.8 | relative acoustic level: low | calibration percentile: 15/100\nRMS level (dBFS): -10.5 | relative acoustic level: very high | calibration percentile: 98/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 3.1 | relative acoustic level: very low | calibration percentile: 2/100"
+  },
+  {
+    "stimulus_file": "B08_run1_nonopt.wav",
+    "stimulus_sha256": "55000a337232c8df298860a7a639850f472d5c6cf374bc837e1059c5438a6fe2",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 80.7,
+      "mode": "major",
+      "mean_pitch_midi": 70.1,
+      "pitch_slope_midi_per_s": 0.0,
+      "spectral_centroid_hz": 1664.7,
+      "rms_dbfs": -14.3,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 9.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 80.7 | relative acoustic level: low | calibration percentile: 13/100\nMode: major\nMean pitch (MIDI): 70.1 | relative acoustic level: mid-range | calibration percentile: 62/100\nPitch slope (MIDI/s): 0.0 | relative acoustic level: mid-range | calibration percentile: 44/100\nSpectral centroid (Hz): 1664.7 | relative acoustic level: high | calibration percentile: 71/100\nRMS level (dBFS): -14.3 | relative acoustic level: high | calibration percentile: 81/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 9.6 | relative acoustic level: low | calibration percentile: 28/100"
+  },
+  {
+    "stimulus_file": "B08_run1_opt.wav",
+    "stimulus_sha256": "a87dffb404c4e9ea210fcc37c005d0f1d4dc1eb8e3643321481eb0245bf2bb8c",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 136.0,
+      "mode": "minor",
+      "mean_pitch_midi": 60.1,
+      "pitch_slope_midi_per_s": -6.296,
+      "spectral_centroid_hz": 1510.5,
+      "rms_dbfs": -23.7,
+      "onset_rate_per_s": 1.0,
+      "dynamic_range_db": 26.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 136.0 | relative acoustic level: high | calibration percentile: 79/100\nMode: minor\nMean pitch (MIDI): 60.1 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -6.296 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 1510.5 | relative acoustic level: mid-range | calibration percentile: 62/100\nRMS level (dBFS): -23.7 | relative acoustic level: very low | calibration percentile: 8/100\nOnset rate (per s): 1.0 | relative acoustic level: very low | calibration percentile: 2/100\nDynamic range (dB): 26.1 | relative acoustic level: high | calibration percentile: 66/100"
+  },
+  {
+    "stimulus_file": "B08_run2_nonopt.wav",
+    "stimulus_sha256": "9ec3519c58bcfceedd65e0cbb8835e26c2f27e945c317870980a607b40d814c1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 80.7,
+      "mode": "major",
+      "mean_pitch_midi": 60.4,
+      "pitch_slope_midi_per_s": -3.051,
+      "spectral_centroid_hz": 879.2,
+      "rms_dbfs": -13.0,
+      "onset_rate_per_s": 3.67,
+      "dynamic_range_db": 18.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 80.7 | relative acoustic level: low | calibration percentile: 13/100\nMode: major\nMean pitch (MIDI): 60.4 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.051 | relative acoustic level: low | calibration percentile: 17/100\nSpectral centroid (Hz): 879.2 | relative acoustic level: low | calibration percentile: 18/100\nRMS level (dBFS): -13.0 | relative acoustic level: high | calibration percentile: 89/100\nOnset rate (per s): 3.67 | relative acoustic level: mid-range | calibration percentile: 49/100\nDynamic range (dB): 18.3 | relative acoustic level: mid-range | calibration percentile: 54/100"
+  },
+  {
+    "stimulus_file": "B08_run2_opt.wav",
+    "stimulus_sha256": "18b3afabb657154932deb31454f4f5c1423ead5adfcc3cf153cb9432925ae043",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 136.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.7,
+      "pitch_slope_midi_per_s": -3.218,
+      "spectral_centroid_hz": 1316.9,
+      "rms_dbfs": -16.9,
+      "onset_rate_per_s": 1.33,
+      "dynamic_range_db": 18.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 136.0 | relative acoustic level: high | calibration percentile: 79/100\nMode: minor\nMean pitch (MIDI): 56.7 | relative acoustic level: low | calibration percentile: 30/100\nPitch slope (MIDI/s): -3.218 | relative acoustic level: low | calibration percentile: 13/100\nSpectral centroid (Hz): 1316.9 | relative acoustic level: mid-range | calibration percentile: 51/100\nRMS level (dBFS): -16.9 | relative acoustic level: mid-range | calibration percentile: 56/100\nOnset rate (per s): 1.33 | relative acoustic level: very low | calibration percentile: 6/100\nDynamic range (dB): 18.1 | relative acoustic level: mid-range | calibration percentile: 54/100"
+  },
+  {
+    "stimulus_file": "B09_run0_nonopt.wav",
+    "stimulus_sha256": "2b154931abd8f5fe07f637453882fffd4d467445dfaa14993bbed7f1a6f72003",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 112.3,
+      "mode": "minor",
+      "mean_pitch_midi": 59.0,
+      "pitch_slope_midi_per_s": -3.334,
+      "spectral_centroid_hz": 1502.1,
+      "rms_dbfs": -24.7,
+      "onset_rate_per_s": 3.0,
+      "dynamic_range_db": 21.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 112.3 | relative acoustic level: mid-range | calibration percentile: 50/100\nMode: minor\nMean pitch (MIDI): 59.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.334 | relative acoustic level: low | calibration percentile: 11/100\nSpectral centroid (Hz): 1502.1 | relative acoustic level: mid-range | calibration percentile: 62/100\nRMS level (dBFS): -24.7 | relative acoustic level: very low | calibration percentile: 5/100\nOnset rate (per s): 3.0 | relative acoustic level: low | calibration percentile: 31/100\nDynamic range (dB): 21.5 | relative acoustic level: mid-range | calibration percentile: 60/100"
+  },
+  {
+    "stimulus_file": "B09_run0_opt.wav",
+    "stimulus_sha256": "09e1df033ebad39572f3e3e3403069aa9bce0a35bbb34256961bd87dab3d2307",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 49.2,
+      "pitch_slope_midi_per_s": -6.639,
+      "spectral_centroid_hz": 433.7,
+      "rms_dbfs": -17.5,
+      "onset_rate_per_s": 2.33,
+      "dynamic_range_db": 15.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 49.2 | relative acoustic level: low | calibration percentile: 11/100\nPitch slope (MIDI/s): -6.639 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 433.7 | relative acoustic level: very low | calibration percentile: 3/100\nRMS level (dBFS): -17.5 | relative acoustic level: mid-range | calibration percentile: 49/100\nOnset rate (per s): 2.33 | relative acoustic level: low | calibration percentile: 20/100\nDynamic range (dB): 15.1 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B09_run1_nonopt.wav",
+    "stimulus_sha256": "2b154931abd8f5fe07f637453882fffd4d467445dfaa14993bbed7f1a6f72003",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 112.3,
+      "mode": "minor",
+      "mean_pitch_midi": 59.0,
+      "pitch_slope_midi_per_s": -3.334,
+      "spectral_centroid_hz": 1502.1,
+      "rms_dbfs": -24.7,
+      "onset_rate_per_s": 3.0,
+      "dynamic_range_db": 21.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 112.3 | relative acoustic level: mid-range | calibration percentile: 50/100\nMode: minor\nMean pitch (MIDI): 59.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.334 | relative acoustic level: low | calibration percentile: 11/100\nSpectral centroid (Hz): 1502.1 | relative acoustic level: mid-range | calibration percentile: 62/100\nRMS level (dBFS): -24.7 | relative acoustic level: very low | calibration percentile: 5/100\nOnset rate (per s): 3.0 | relative acoustic level: low | calibration percentile: 31/100\nDynamic range (dB): 21.5 | relative acoustic level: mid-range | calibration percentile: 60/100"
+  },
+  {
+    "stimulus_file": "B09_run1_opt.wav",
+    "stimulus_sha256": "54efc208901a29eb36bb9306c6724837ceb1cb023b326aa01a53fa5695320b20",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.3,
+      "pitch_slope_midi_per_s": -1.299,
+      "spectral_centroid_hz": 676.8,
+      "rms_dbfs": -12.3,
+      "onset_rate_per_s": 1.67,
+      "dynamic_range_db": 3.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: major\nMean pitch (MIDI): 60.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -1.299 | relative acoustic level: low | calibration percentile: 26/100\nSpectral centroid (Hz): 676.8 | relative acoustic level: low | calibration percentile: 13/100\nRMS level (dBFS): -12.3 | relative acoustic level: very high | calibration percentile: 93/100\nOnset rate (per s): 1.67 | relative acoustic level: very low | calibration percentile: 10/100\nDynamic range (dB): 3.8 | relative acoustic level: very low | calibration percentile: 3/100"
+  },
+  {
+    "stimulus_file": "B09_run2_nonopt.wav",
+    "stimulus_sha256": "2b154931abd8f5fe07f637453882fffd4d467445dfaa14993bbed7f1a6f72003",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 112.3,
+      "mode": "minor",
+      "mean_pitch_midi": 59.0,
+      "pitch_slope_midi_per_s": -3.334,
+      "spectral_centroid_hz": 1502.1,
+      "rms_dbfs": -24.7,
+      "onset_rate_per_s": 3.0,
+      "dynamic_range_db": 21.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 112.3 | relative acoustic level: mid-range | calibration percentile: 50/100\nMode: minor\nMean pitch (MIDI): 59.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.334 | relative acoustic level: low | calibration percentile: 11/100\nSpectral centroid (Hz): 1502.1 | relative acoustic level: mid-range | calibration percentile: 62/100\nRMS level (dBFS): -24.7 | relative acoustic level: very low | calibration percentile: 5/100\nOnset rate (per s): 3.0 | relative acoustic level: low | calibration percentile: 31/100\nDynamic range (dB): 21.5 | relative acoustic level: mid-range | calibration percentile: 60/100"
+  },
+  {
+    "stimulus_file": "B09_run2_opt.wav",
+    "stimulus_sha256": "9d327a54a7331eafa1c71e6a0ba49aa7fccbb4b59bf53970dfa724c5120a133b",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.9,
+      "pitch_slope_midi_per_s": -6.382,
+      "spectral_centroid_hz": 496.2,
+      "rms_dbfs": -21.5,
+      "onset_rate_per_s": 2.67,
+      "dynamic_range_db": 18.4
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.9 | relative acoustic level: low | calibration percentile: 30/100\nPitch slope (MIDI/s): -6.382 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 496.2 | relative acoustic level: very low | calibration percentile: 4/100\nRMS level (dBFS): -21.5 | relative acoustic level: low | calibration percentile: 22/100\nOnset rate (per s): 2.67 | relative acoustic level: low | calibration percentile: 25/100\nDynamic range (dB): 18.4 | relative acoustic level: mid-range | calibration percentile: 54/100"
+  },
+  {
+    "stimulus_file": "B10_run0_nonopt.wav",
+    "stimulus_sha256": "23cb66f6f3f4bbf1b127dc1935e4aefbb8b1bc80d3c86f1116782850dede9c7b",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 59.0,
+      "pitch_slope_midi_per_s": -3.292,
+      "spectral_centroid_hz": 1425.4,
+      "rms_dbfs": -20.6,
+      "onset_rate_per_s": 1.0,
+      "dynamic_range_db": 29.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 59.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.292 | relative acoustic level: low | calibration percentile: 12/100\nSpectral centroid (Hz): 1425.4 | relative acoustic level: mid-range | calibration percentile: 56/100\nRMS level (dBFS): -20.6 | relative acoustic level: low | calibration percentile: 27/100\nOnset rate (per s): 1.0 | relative acoustic level: very low | calibration percentile: 2/100\nDynamic range (dB): 29.1 | relative acoustic level: high | calibration percentile: 69/100"
+  },
+  {
+    "stimulus_file": "B10_run0_opt.wav",
+    "stimulus_sha256": "52d81cf896eab7dc8c52bf64545f93ded0da238f7ac2566b9c4d44548ad8caa2",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 58.8,
+      "pitch_slope_midi_per_s": -3.108,
+      "spectral_centroid_hz": 381.0,
+      "rms_dbfs": -17.4,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 17.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 58.8 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.108 | relative acoustic level: low | calibration percentile: 15/100\nSpectral centroid (Hz): 381.0 | relative acoustic level: very low | calibration percentile: 3/100\nRMS level (dBFS): -17.4 | relative acoustic level: mid-range | calibration percentile: 50/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 17.6 | relative acoustic level: mid-range | calibration percentile: 53/100"
+  },
+  {
+    "stimulus_file": "B10_run1_nonopt.wav",
+    "stimulus_sha256": "23cb66f6f3f4bbf1b127dc1935e4aefbb8b1bc80d3c86f1116782850dede9c7b",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 59.0,
+      "pitch_slope_midi_per_s": -3.292,
+      "spectral_centroid_hz": 1425.4,
+      "rms_dbfs": -20.6,
+      "onset_rate_per_s": 1.0,
+      "dynamic_range_db": 29.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 59.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.292 | relative acoustic level: low | calibration percentile: 12/100\nSpectral centroid (Hz): 1425.4 | relative acoustic level: mid-range | calibration percentile: 56/100\nRMS level (dBFS): -20.6 | relative acoustic level: low | calibration percentile: 27/100\nOnset rate (per s): 1.0 | relative acoustic level: very low | calibration percentile: 2/100\nDynamic range (dB): 29.1 | relative acoustic level: high | calibration percentile: 69/100"
+  },
+  {
+    "stimulus_file": "B10_run1_opt.wav",
+    "stimulus_sha256": "b9556ca2a5eaad6c6cb6476083631c0fda361ed7edbfa3a5233f79423f90b39b",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 57.0,
+      "pitch_slope_midi_per_s": -6.252,
+      "spectral_centroid_hz": 445.2,
+      "rms_dbfs": -10.6,
+      "onset_rate_per_s": 2.33,
+      "dynamic_range_db": 13.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 57.0 | relative acoustic level: low | calibration percentile: 30/100\nPitch slope (MIDI/s): -6.252 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 445.2 | relative acoustic level: very low | calibration percentile: 3/100\nRMS level (dBFS): -10.6 | relative acoustic level: very high | calibration percentile: 98/100\nOnset rate (per s): 2.33 | relative acoustic level: low | calibration percentile: 20/100\nDynamic range (dB): 13.2 | relative acoustic level: mid-range | calibration percentile: 41/100"
+  },
+  {
+    "stimulus_file": "B10_run2_nonopt.wav",
+    "stimulus_sha256": "887ac4290a9d0b5c968ece23dbaa2e888d8480293e4561cbbec180a48b527d73",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 59.2,
+      "pitch_slope_midi_per_s": -3.334,
+      "spectral_centroid_hz": 1443.6,
+      "rms_dbfs": -20.6,
+      "onset_rate_per_s": 1.33,
+      "dynamic_range_db": 28.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 59.2 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.334 | relative acoustic level: low | calibration percentile: 11/100\nSpectral centroid (Hz): 1443.6 | relative acoustic level: mid-range | calibration percentile: 57/100\nRMS level (dBFS): -20.6 | relative acoustic level: low | calibration percentile: 27/100\nOnset rate (per s): 1.33 | relative acoustic level: very low | calibration percentile: 6/100\nDynamic range (dB): 28.2 | relative acoustic level: high | calibration percentile: 68/100"
+  },
+  {
+    "stimulus_file": "B10_run2_opt.wav",
+    "stimulus_sha256": "0cafedec4dc38e7a67d593c7098239c182d45d24027656cd7aba1329a8be1698",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 58.8,
+      "pitch_slope_midi_per_s": -3.216,
+      "spectral_centroid_hz": 523.1,
+      "rms_dbfs": -16.1,
+      "onset_rate_per_s": 4.67,
+      "dynamic_range_db": 45.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 58.8 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -3.216 | relative acoustic level: low | calibration percentile: 13/100\nSpectral centroid (Hz): 523.1 | relative acoustic level: very low | calibration percentile: 5/100\nRMS level (dBFS): -16.1 | relative acoustic level: mid-range | calibration percentile: 64/100\nOnset rate (per s): 4.67 | relative acoustic level: mid-range | calibration percentile: 64/100\nDynamic range (dB): 45.2 | relative acoustic level: high | calibration percentile: 89/100"
+  },
+  {
+    "stimulus_file": "B11_run0_nonopt.wav",
+    "stimulus_sha256": "7107cc90a15e88f4ef65ee20d285b814f3e3ea5d6a6ce4381f9871fb401f726c",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 46.8,
+      "pitch_slope_midi_per_s": -3.195,
+      "spectral_centroid_hz": 1308.0,
+      "rms_dbfs": -21.0,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 33.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 46.8 | relative acoustic level: very low | calibration percentile: 5/100\nPitch slope (MIDI/s): -3.195 | relative acoustic level: low | calibration percentile: 14/100\nSpectral centroid (Hz): 1308.0 | relative acoustic level: mid-range | calibration percentile: 51/100\nRMS level (dBFS): -21.0 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 33.5 | relative acoustic level: high | calibration percentile: 75/100"
+  },
+  {
+    "stimulus_file": "B11_run0_opt.wav",
+    "stimulus_sha256": "aaa5aaa6020f41dc997af1bfe7ebc44f2003534d5425dd7425e3237c897e84da",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 63.2,
+      "pitch_slope_midi_per_s": -4.409,
+      "spectral_centroid_hz": 470.5,
+      "rms_dbfs": -19.7,
+      "onset_rate_per_s": 1.0,
+      "dynamic_range_db": 23.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 63.2 | relative acoustic level: mid-range | calibration percentile: 58/100\nPitch slope (MIDI/s): -4.409 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 470.5 | relative acoustic level: very low | calibration percentile: 4/100\nRMS level (dBFS): -19.7 | relative acoustic level: low | calibration percentile: 34/100\nOnset rate (per s): 1.0 | relative acoustic level: very low | calibration percentile: 2/100\nDynamic range (dB): 23.3 | relative acoustic level: mid-range | calibration percentile: 63/100"
+  },
+  {
+    "stimulus_file": "B11_run1_nonopt.wav",
+    "stimulus_sha256": "38d9d0a214ffac72b56f8f60d1823d21cf3bf7f27cc0d4319f34d6aaacd018bd",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 47.4,
+      "pitch_slope_midi_per_s": -4.485,
+      "spectral_centroid_hz": 1287.5,
+      "rms_dbfs": -19.2,
+      "onset_rate_per_s": 1.33,
+      "dynamic_range_db": 12.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 47.4 | relative acoustic level: very low | calibration percentile: 6/100\nPitch slope (MIDI/s): -4.485 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 1287.5 | relative acoustic level: mid-range | calibration percentile: 49/100\nRMS level (dBFS): -19.2 | relative acoustic level: mid-range | calibration percentile: 37/100\nOnset rate (per s): 1.33 | relative acoustic level: very low | calibration percentile: 6/100\nDynamic range (dB): 12.8 | relative acoustic level: mid-range | calibration percentile: 39/100"
+  },
+  {
+    "stimulus_file": "B11_run1_opt.wav",
+    "stimulus_sha256": "b28cb6f363f5e35224b4d015dc656ab976254a4a232b5d035226153d21bf012a",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 48.6,
+      "pitch_slope_midi_per_s": 2.193,
+      "spectral_centroid_hz": 1180.9,
+      "rms_dbfs": -19.1,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 14.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 48.6 | relative acoustic level: very low | calibration percentile: 8/100\nPitch slope (MIDI/s): 2.193 | relative acoustic level: high | calibration percentile: 78/100\nSpectral centroid (Hz): 1180.9 | relative acoustic level: mid-range | calibration percentile: 42/100\nRMS level (dBFS): -19.1 | relative acoustic level: mid-range | calibration percentile: 38/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 14.1 | relative acoustic level: mid-range | calibration percentile: 45/100"
+  },
+  {
+    "stimulus_file": "B11_run2_nonopt.wav",
+    "stimulus_sha256": "38d9d0a214ffac72b56f8f60d1823d21cf3bf7f27cc0d4319f34d6aaacd018bd",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 47.4,
+      "pitch_slope_midi_per_s": -4.485,
+      "spectral_centroid_hz": 1287.5,
+      "rms_dbfs": -19.2,
+      "onset_rate_per_s": 1.33,
+      "dynamic_range_db": 12.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 47.4 | relative acoustic level: very low | calibration percentile: 6/100\nPitch slope (MIDI/s): -4.485 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 1287.5 | relative acoustic level: mid-range | calibration percentile: 49/100\nRMS level (dBFS): -19.2 | relative acoustic level: mid-range | calibration percentile: 37/100\nOnset rate (per s): 1.33 | relative acoustic level: very low | calibration percentile: 6/100\nDynamic range (dB): 12.8 | relative acoustic level: mid-range | calibration percentile: 39/100"
+  },
+  {
+    "stimulus_file": "B11_run2_opt.wav",
+    "stimulus_sha256": "0415b23f98f25f0aac0579da36dd09272b583621b4abc3f019ee94100a3d0005",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 59.3,
+      "pitch_slope_midi_per_s": -4.414,
+      "spectral_centroid_hz": 786.4,
+      "rms_dbfs": -23.7,
+      "onset_rate_per_s": 1.33,
+      "dynamic_range_db": 20.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 59.3 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -4.414 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 786.4 | relative acoustic level: low | calibration percentile: 16/100\nRMS level (dBFS): -23.7 | relative acoustic level: very low | calibration percentile: 8/100\nOnset rate (per s): 1.33 | relative acoustic level: very low | calibration percentile: 6/100\nDynamic range (dB): 20.8 | relative acoustic level: mid-range | calibration percentile: 58/100"
+  },
+  {
+    "stimulus_file": "B12_run0_nonopt.wav",
+    "stimulus_sha256": "187b20c186a3dc78d7f16f9a15bbd8cde4fc4abe99fe53b7a16cc5f6213c21d1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.1,
+      "pitch_slope_midi_per_s": -8.437,
+      "spectral_centroid_hz": 340.1,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -8.437 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 340.1 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.6 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B12_run0_opt.wav",
+    "stimulus_sha256": "187b20c186a3dc78d7f16f9a15bbd8cde4fc4abe99fe53b7a16cc5f6213c21d1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.1,
+      "pitch_slope_midi_per_s": -8.437,
+      "spectral_centroid_hz": 340.1,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -8.437 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 340.1 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.6 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B12_run1_nonopt.wav",
+    "stimulus_sha256": "187b20c186a3dc78d7f16f9a15bbd8cde4fc4abe99fe53b7a16cc5f6213c21d1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.1,
+      "pitch_slope_midi_per_s": -8.437,
+      "spectral_centroid_hz": 340.1,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -8.437 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 340.1 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.6 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B12_run1_opt.wav",
+    "stimulus_sha256": "187b20c186a3dc78d7f16f9a15bbd8cde4fc4abe99fe53b7a16cc5f6213c21d1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.1,
+      "pitch_slope_midi_per_s": -8.437,
+      "spectral_centroid_hz": 340.1,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -8.437 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 340.1 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.6 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B12_run2_nonopt.wav",
+    "stimulus_sha256": "187b20c186a3dc78d7f16f9a15bbd8cde4fc4abe99fe53b7a16cc5f6213c21d1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.1,
+      "pitch_slope_midi_per_s": -8.437,
+      "spectral_centroid_hz": 340.1,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -8.437 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 340.1 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.6 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B12_run2_opt.wav",
+    "stimulus_sha256": "187b20c186a3dc78d7f16f9a15bbd8cde4fc4abe99fe53b7a16cc5f6213c21d1",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.1,
+      "pitch_slope_midi_per_s": -8.437,
+      "spectral_centroid_hz": 340.1,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.1 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -8.437 | relative acoustic level: very low | calibration percentile: 1/100\nSpectral centroid (Hz): 340.1 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.6 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B13_run0_nonopt.wav",
+    "stimulus_sha256": "8b30f1a716eaddbca4b2c4092cf121190e04bb795affd08fac211a7cd351a0aa",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "minor",
+      "mean_pitch_midi": 58.5,
+      "pitch_slope_midi_per_s": 2.774,
+      "spectral_centroid_hz": 1238.9,
+      "rms_dbfs": -19.1,
+      "onset_rate_per_s": 3.33,
+      "dynamic_range_db": 15.7
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: minor\nMean pitch (MIDI): 58.5 | relative acoustic level: low | calibration percentile: 31/100\nPitch slope (MIDI/s): 2.774 | relative acoustic level: high | calibration percentile: 82/100\nSpectral centroid (Hz): 1238.9 | relative acoustic level: mid-range | calibration percentile: 45/100\nRMS level (dBFS): -19.1 | relative acoustic level: mid-range | calibration percentile: 38/100\nOnset rate (per s): 3.33 | relative acoustic level: mid-range | calibration percentile: 40/100\nDynamic range (dB): 15.7 | relative acoustic level: mid-range | calibration percentile: 49/100"
+  },
+  {
+    "stimulus_file": "B13_run0_opt.wav",
+    "stimulus_sha256": "772742676a025811e4bb77441caea9a66a7bfeea22b3caa4baf3fe2f55a20c3c",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 198.8,
+      "mode": "major",
+      "mean_pitch_midi": 63.7,
+      "pitch_slope_midi_per_s": 4.726,
+      "spectral_centroid_hz": 1487.5,
+      "rms_dbfs": -14.9,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 10.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 198.8 | relative acoustic level: very high | calibration percentile: 99/100\nMode: major\nMean pitch (MIDI): 63.7 | relative acoustic level: mid-range | calibration percentile: 59/100\nPitch slope (MIDI/s): 4.726 | relative acoustic level: very high | calibration percentile: 99/100\nSpectral centroid (Hz): 1487.5 | relative acoustic level: mid-range | calibration percentile: 61/100\nRMS level (dBFS): -14.9 | relative acoustic level: high | calibration percentile: 76/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 10.6 | relative acoustic level: low | calibration percentile: 32/100"
+  },
+  {
+    "stimulus_file": "B13_run1_nonopt.wav",
+    "stimulus_sha256": "5cd557e8371cefc55f54e0b8395143ca134bf8807d66b7494475c93bcfa6a231",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 57.0,
+      "pitch_slope_midi_per_s": -5.966,
+      "spectral_centroid_hz": 1248.7,
+      "rms_dbfs": -20.5,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 7.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 57.0 | relative acoustic level: low | calibration percentile: 30/100\nPitch slope (MIDI/s): -5.966 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 1248.7 | relative acoustic level: mid-range | calibration percentile: 45/100\nRMS level (dBFS): -20.5 | relative acoustic level: low | calibration percentile: 28/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 7.6 | relative acoustic level: low | calibration percentile: 22/100"
+  },
+  {
+    "stimulus_file": "B13_run1_opt.wav",
+    "stimulus_sha256": "9667ece679a2fb2ba737a211aadb5b23effaffb9ab83b457827c7b60817d555a",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.7,
+      "pitch_slope_midi_per_s": 3.211,
+      "spectral_centroid_hz": 586.1,
+      "rms_dbfs": -22.0,
+      "onset_rate_per_s": 4.33,
+      "dynamic_range_db": 25.5
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: major\nMean pitch (MIDI): 60.7 | relative acoustic level: low | calibration percentile: 33/100\nPitch slope (MIDI/s): 3.211 | relative acoustic level: very high | calibration percentile: 90/100\nSpectral centroid (Hz): 586.1 | relative acoustic level: very low | calibration percentile: 8/100\nRMS level (dBFS): -22.0 | relative acoustic level: low | calibration percentile: 17/100\nOnset rate (per s): 4.33 | relative acoustic level: mid-range | calibration percentile: 59/100\nDynamic range (dB): 25.5 | relative acoustic level: high | calibration percentile: 65/100"
+  },
+  {
+    "stimulus_file": "B13_run2_nonopt.wav",
+    "stimulus_sha256": "2b5cbf7e069f1c6aa252b47df85e7ac9b5645911eb8d0548afbe074d46435053",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.0,
+      "pitch_slope_midi_per_s": -6.068,
+      "spectral_centroid_hz": 1137.1,
+      "rms_dbfs": -22.1,
+      "onset_rate_per_s": 2.67,
+      "dynamic_range_db": 11.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.0 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -6.068 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 1137.1 | relative acoustic level: mid-range | calibration percentile: 39/100\nRMS level (dBFS): -22.1 | relative acoustic level: low | calibration percentile: 16/100\nOnset rate (per s): 2.67 | relative acoustic level: low | calibration percentile: 25/100\nDynamic range (dB): 11.3 | relative acoustic level: low | calibration percentile: 34/100"
+  },
+  {
+    "stimulus_file": "B13_run2_opt.wav",
+    "stimulus_sha256": "51782932a57ad7acce5a269087e39026d1dcc7c88c0f644484ca7167ae633288",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 161.5,
+      "mode": "minor",
+      "mean_pitch_midi": 56.6,
+      "pitch_slope_midi_per_s": 2.771,
+      "spectral_centroid_hz": 946.1,
+      "rms_dbfs": -17.1,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 24.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 161.5 | relative acoustic level: very high | calibration percentile: 90/100\nMode: minor\nMean pitch (MIDI): 56.6 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): 2.771 | relative acoustic level: high | calibration percentile: 82/100\nSpectral centroid (Hz): 946.1 | relative acoustic level: low | calibration percentile: 22/100\nRMS level (dBFS): -17.1 | relative acoustic level: mid-range | calibration percentile: 53/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 24.1 | relative acoustic level: mid-range | calibration percentile: 64/100"
+  },
+  {
+    "stimulus_file": "B14_run0_nonopt.wav",
+    "stimulus_sha256": "7cb997ad81c5ece90087fc7f2d51dc5e145aa3105afdf92f9fe7c47783410e72",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 234.9,
+      "mode": "major",
+      "mean_pitch_midi": 60.0,
+      "pitch_slope_midi_per_s": 0.63,
+      "spectral_centroid_hz": 371.2,
+      "rms_dbfs": -17.2,
+      "onset_rate_per_s": 2.67,
+      "dynamic_range_db": 17.4
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 234.9 | relative acoustic level: very high | calibration percentile: 100/100\nMode: major\nMean pitch (MIDI): 60.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): 0.63 | relative acoustic level: high | calibration percentile: 68/100\nSpectral centroid (Hz): 371.2 | relative acoustic level: very low | calibration percentile: 3/100\nRMS level (dBFS): -17.2 | relative acoustic level: mid-range | calibration percentile: 52/100\nOnset rate (per s): 2.67 | relative acoustic level: low | calibration percentile: 25/100\nDynamic range (dB): 17.4 | relative acoustic level: mid-range | calibration percentile: 53/100"
+  },
+  {
+    "stimulus_file": "B14_run0_opt.wav",
+    "stimulus_sha256": "35a0c81e06abe77f8bfdab5667df0a2b3437d072f206eee511109c6e5bbfbb3f",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 198.8,
+      "mode": "minor",
+      "mean_pitch_midi": 61.8,
+      "pitch_slope_midi_per_s": -0.273,
+      "spectral_centroid_hz": 1354.4,
+      "rms_dbfs": -21.9,
+      "onset_rate_per_s": 2.67,
+      "dynamic_range_db": 8.7
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 198.8 | relative acoustic level: very high | calibration percentile: 99/100\nMode: minor\nMean pitch (MIDI): 61.8 | relative acoustic level: mid-range | calibration percentile: 41/100\nPitch slope (MIDI/s): -0.273 | relative acoustic level: mid-range | calibration percentile: 38/100\nSpectral centroid (Hz): 1354.4 | relative acoustic level: mid-range | calibration percentile: 53/100\nRMS level (dBFS): -21.9 | relative acoustic level: low | calibration percentile: 18/100\nOnset rate (per s): 2.67 | relative acoustic level: low | calibration percentile: 25/100\nDynamic range (dB): 8.7 | relative acoustic level: low | calibration percentile: 26/100"
+  },
+  {
+    "stimulus_file": "B14_run1_nonopt.wav",
+    "stimulus_sha256": "392c77ae6303352717db884c62dcc9a38b4e5a936805ccb70c4c6e1bc39b117b",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.0,
+      "pitch_slope_midi_per_s": -0.238,
+      "spectral_centroid_hz": 543.8,
+      "rms_dbfs": -21.0,
+      "onset_rate_per_s": 5.0,
+      "dynamic_range_db": 16.2
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: major\nMean pitch (MIDI): 60.0 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -0.238 | relative acoustic level: mid-range | calibration percentile: 38/100\nSpectral centroid (Hz): 543.8 | relative acoustic level: very low | calibration percentile: 7/100\nRMS level (dBFS): -21.0 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 5.0 | relative acoustic level: high | calibration percentile: 67/100\nDynamic range (dB): 16.2 | relative acoustic level: mid-range | calibration percentile: 50/100"
+  },
+  {
+    "stimulus_file": "B14_run1_opt.wav",
+    "stimulus_sha256": "bc0f1256730062d3e66e41c92d4ac103e172ef2790a0bcc4981ff3390e00db08",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "major",
+      "mean_pitch_midi": 56.6,
+      "pitch_slope_midi_per_s": -0.245,
+      "spectral_centroid_hz": 461.2,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 10.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: major\nMean pitch (MIDI): 56.6 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -0.245 | relative acoustic level: mid-range | calibration percentile: 38/100\nSpectral centroid (Hz): 461.2 | relative acoustic level: very low | calibration percentile: 3/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 10.3 | relative acoustic level: low | calibration percentile: 31/100"
+  },
+  {
+    "stimulus_file": "B14_run2_nonopt.wav",
+    "stimulus_sha256": "c1a56cf41cf14a978a6c92e1ab6144bdb75e9c65a2cc7604de0713ee21272f52",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 198.8,
+      "mode": "minor",
+      "mean_pitch_midi": 59.9,
+      "pitch_slope_midi_per_s": -0.912,
+      "spectral_centroid_hz": 335.3,
+      "rms_dbfs": -20.2,
+      "onset_rate_per_s": 1.67,
+      "dynamic_range_db": 14.6
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 198.8 | relative acoustic level: very high | calibration percentile: 99/100\nMode: minor\nMean pitch (MIDI): 59.9 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -0.912 | relative acoustic level: low | calibration percentile: 27/100\nSpectral centroid (Hz): 335.3 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -20.2 | relative acoustic level: low | calibration percentile: 31/100\nOnset rate (per s): 1.67 | relative acoustic level: very low | calibration percentile: 10/100\nDynamic range (dB): 14.6 | relative acoustic level: mid-range | calibration percentile: 47/100"
+  },
+  {
+    "stimulus_file": "B14_run2_opt.wav",
+    "stimulus_sha256": "ca8c70e1137f8997bd2d9ca0840827a327b0e281c99d887189ae1eb98e918cb9",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 198.8,
+      "mode": "major",
+      "mean_pitch_midi": 64.6,
+      "pitch_slope_midi_per_s": 3.275,
+      "spectral_centroid_hz": 1529.3,
+      "rms_dbfs": -15.0,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 198.8 | relative acoustic level: very high | calibration percentile: 99/100\nMode: major\nMean pitch (MIDI): 64.6 | relative acoustic level: mid-range | calibration percentile: 59/100\nPitch slope (MIDI/s): 3.275 | relative acoustic level: very high | calibration percentile: 91/100\nSpectral centroid (Hz): 1529.3 | relative acoustic level: mid-range | calibration percentile: 63/100\nRMS level (dBFS): -15.0 | relative acoustic level: high | calibration percentile: 75/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.0 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B15_run0_nonopt.wav",
+    "stimulus_sha256": "06c735ab2303976a18d9207675618db4fc99c95cf0ac41cc9edb2330a6cb534e",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "major",
+      "mean_pitch_midi": 60.4,
+      "pitch_slope_midi_per_s": -0.181,
+      "spectral_centroid_hz": 1246.4,
+      "rms_dbfs": -21.0,
+      "onset_rate_per_s": 4.0,
+      "dynamic_range_db": 6.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: major\nMean pitch (MIDI): 60.4 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -0.181 | relative acoustic level: mid-range | calibration percentile: 40/100\nSpectral centroid (Hz): 1246.4 | relative acoustic level: mid-range | calibration percentile: 45/100\nRMS level (dBFS): -21.0 | relative acoustic level: low | calibration percentile: 24/100\nOnset rate (per s): 4.0 | relative acoustic level: mid-range | calibration percentile: 54/100\nDynamic range (dB): 6.1 | relative acoustic level: low | calibration percentile: 13/100"
+  },
+  {
+    "stimulus_file": "B15_run0_opt.wav",
+    "stimulus_sha256": "672e77edd2ee973a5b746f4b3f28c0f0852c00dd207de53cef8d9381eaf7a5ef",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 59.8,
+      "pitch_slope_midi_per_s": -0.276,
+      "spectral_centroid_hz": 613.0,
+      "rms_dbfs": -19.1,
+      "onset_rate_per_s": 4.33,
+      "dynamic_range_db": 26.1
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 59.8 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -0.276 | relative acoustic level: mid-range | calibration percentile: 38/100\nSpectral centroid (Hz): 613.0 | relative acoustic level: very low | calibration percentile: 10/100\nRMS level (dBFS): -19.1 | relative acoustic level: mid-range | calibration percentile: 38/100\nOnset rate (per s): 4.33 | relative acoustic level: mid-range | calibration percentile: 59/100\nDynamic range (dB): 26.1 | relative acoustic level: high | calibration percentile: 66/100"
+  },
+  {
+    "stimulus_file": "B15_run1_nonopt.wav",
+    "stimulus_sha256": "2b5cbf7e069f1c6aa252b47df85e7ac9b5645911eb8d0548afbe074d46435053",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.0,
+      "pitch_slope_midi_per_s": -6.068,
+      "spectral_centroid_hz": 1137.1,
+      "rms_dbfs": -22.1,
+      "onset_rate_per_s": 2.67,
+      "dynamic_range_db": 11.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.0 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -6.068 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 1137.1 | relative acoustic level: mid-range | calibration percentile: 39/100\nRMS level (dBFS): -22.1 | relative acoustic level: low | calibration percentile: 16/100\nOnset rate (per s): 2.67 | relative acoustic level: low | calibration percentile: 25/100\nDynamic range (dB): 11.3 | relative acoustic level: low | calibration percentile: 34/100"
+  },
+  {
+    "stimulus_file": "B15_run1_opt.wav",
+    "stimulus_sha256": "e99516bb8d1acd650e067febdcadab4d8e1d9ae6c1e8c8ddb127c94a0dee5478",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 99.4,
+      "mode": "major",
+      "mean_pitch_midi": 64.4,
+      "pitch_slope_midi_per_s": 2.726,
+      "spectral_centroid_hz": 660.8,
+      "rms_dbfs": -20.1,
+      "onset_rate_per_s": 3.67,
+      "dynamic_range_db": 21.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 99.4 | relative acoustic level: low | calibration percentile: 34/100\nMode: major\nMean pitch (MIDI): 64.4 | relative acoustic level: mid-range | calibration percentile: 59/100\nPitch slope (MIDI/s): 2.726 | relative acoustic level: high | calibration percentile: 81/100\nSpectral centroid (Hz): 660.8 | relative acoustic level: low | calibration percentile: 12/100\nRMS level (dBFS): -20.1 | relative acoustic level: low | calibration percentile: 32/100\nOnset rate (per s): 3.67 | relative acoustic level: mid-range | calibration percentile: 49/100\nDynamic range (dB): 21.8 | relative acoustic level: mid-range | calibration percentile: 60/100"
+  },
+  {
+    "stimulus_file": "B15_run2_nonopt.wav",
+    "stimulus_sha256": "2b5cbf7e069f1c6aa252b47df85e7ac9b5645911eb8d0548afbe074d46435053",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 123.0,
+      "mode": "minor",
+      "mean_pitch_midi": 56.0,
+      "pitch_slope_midi_per_s": -6.068,
+      "spectral_centroid_hz": 1137.1,
+      "rms_dbfs": -22.1,
+      "onset_rate_per_s": 2.67,
+      "dynamic_range_db": 11.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 123.0 | relative acoustic level: mid-range | calibration percentile: 58/100\nMode: minor\nMean pitch (MIDI): 56.0 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -6.068 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 1137.1 | relative acoustic level: mid-range | calibration percentile: 39/100\nRMS level (dBFS): -22.1 | relative acoustic level: low | calibration percentile: 16/100\nOnset rate (per s): 2.67 | relative acoustic level: low | calibration percentile: 25/100\nDynamic range (dB): 11.3 | relative acoustic level: low | calibration percentile: 34/100"
+  },
+  {
+    "stimulus_file": "B15_run2_opt.wav",
+    "stimulus_sha256": "52f9b62765de8cffd16d1fb8696391c53613e5bbc8600b7b7c3e7b3a35fd14a2",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "major",
+      "mean_pitch_midi": 39.8,
+      "pitch_slope_midi_per_s": -2.847,
+      "spectral_centroid_hz": 513.0,
+      "rms_dbfs": -15.2,
+      "onset_rate_per_s": 5.33,
+      "dynamic_range_db": 6.0
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: major\nMean pitch (MIDI): 39.8 | relative acoustic level: very low | calibration percentile: 0/100\nPitch slope (MIDI/s): -2.847 | relative acoustic level: low | calibration percentile: 20/100\nSpectral centroid (Hz): 513.0 | relative acoustic level: very low | calibration percentile: 5/100\nRMS level (dBFS): -15.2 | relative acoustic level: high | calibration percentile: 72/100\nOnset rate (per s): 5.33 | relative acoustic level: high | calibration percentile: 69/100\nDynamic range (dB): 6.0 | relative acoustic level: low | calibration percentile: 12/100"
+  },
+  {
+    "stimulus_file": "B16_run0_nonopt.wav",
+    "stimulus_sha256": "e3c8120bad63acf08ef3735c15fc12c8455084234b0897a328639812824d902d",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 234.9,
+      "mode": "major",
+      "mean_pitch_midi": 56.4,
+      "pitch_slope_midi_per_s": -4.419,
+      "spectral_centroid_hz": 346.9,
+      "rms_dbfs": -19.6,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 14.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 234.9 | relative acoustic level: very high | calibration percentile: 100/100\nMode: major\nMean pitch (MIDI): 56.4 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -4.419 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 346.9 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.6 | relative acoustic level: low | calibration percentile: 34/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 14.8 | relative acoustic level: mid-range | calibration percentile: 47/100"
+  },
+  {
+    "stimulus_file": "B16_run0_opt.wav",
+    "stimulus_sha256": "2f80b03cf646778f367079970e508ecda2590c0637a9f0a1fc3b8d245553ec5a",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 152.0,
+      "mode": "major",
+      "mean_pitch_midi": 60.1,
+      "pitch_slope_midi_per_s": -5.583,
+      "spectral_centroid_hz": 588.2,
+      "rms_dbfs": -18.7,
+      "onset_rate_per_s": 4.33,
+      "dynamic_range_db": 17.7
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 152.0 | relative acoustic level: high | calibration percentile: 88/100\nMode: major\nMean pitch (MIDI): 60.1 | relative acoustic level: low | calibration percentile: 32/100\nPitch slope (MIDI/s): -5.583 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 588.2 | relative acoustic level: very low | calibration percentile: 8/100\nRMS level (dBFS): -18.7 | relative acoustic level: mid-range | calibration percentile: 40/100\nOnset rate (per s): 4.33 | relative acoustic level: mid-range | calibration percentile: 59/100\nDynamic range (dB): 17.7 | relative acoustic level: mid-range | calibration percentile: 53/100"
+  },
+  {
+    "stimulus_file": "B16_run1_nonopt.wav",
+    "stimulus_sha256": "da3422dc054fdadd934919dcda87774554955ea5c4f5b5b372c188dbb02620e4",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 234.9,
+      "mode": "major",
+      "mean_pitch_midi": 58.2,
+      "pitch_slope_midi_per_s": -4.021,
+      "spectral_centroid_hz": 349.6,
+      "rms_dbfs": -19.5,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 15.3
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 234.9 | relative acoustic level: very high | calibration percentile: 100/100\nMode: major\nMean pitch (MIDI): 58.2 | relative acoustic level: low | calibration percentile: 31/100\nPitch slope (MIDI/s): -4.021 | relative acoustic level: very low | calibration percentile: 5/100\nSpectral centroid (Hz): 349.6 | relative acoustic level: very low | calibration percentile: 3/100\nRMS level (dBFS): -19.5 | relative acoustic level: low | calibration percentile: 35/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 15.3 | relative acoustic level: mid-range | calibration percentile: 48/100"
+  },
+  {
+    "stimulus_file": "B16_run1_opt.wav",
+    "stimulus_sha256": "78e7817308498bd4d037f5a51f371ed5f7e8df0b391d692064ba677551d421b2",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 117.5,
+      "mode": "major",
+      "mean_pitch_midi": 58.4,
+      "pitch_slope_midi_per_s": 3.516,
+      "spectral_centroid_hz": 574.3,
+      "rms_dbfs": -18.6,
+      "onset_rate_per_s": 5.0,
+      "dynamic_range_db": 11.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 117.5 | relative acoustic level: mid-range | calibration percentile: 56/100\nMode: major\nMean pitch (MIDI): 58.4 | relative acoustic level: low | calibration percentile: 31/100\nPitch slope (MIDI/s): 3.516 | relative acoustic level: very high | calibration percentile: 95/100\nSpectral centroid (Hz): 574.3 | relative acoustic level: very low | calibration percentile: 8/100\nRMS level (dBFS): -18.6 | relative acoustic level: mid-range | calibration percentile: 40/100\nOnset rate (per s): 5.0 | relative acoustic level: high | calibration percentile: 67/100\nDynamic range (dB): 11.9 | relative acoustic level: mid-range | calibration percentile: 36/100"
+  },
+  {
+    "stimulus_file": "B16_run2_nonopt.wav",
+    "stimulus_sha256": "e3c8120bad63acf08ef3735c15fc12c8455084234b0897a328639812824d902d",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 234.9,
+      "mode": "major",
+      "mean_pitch_midi": 56.4,
+      "pitch_slope_midi_per_s": -4.419,
+      "spectral_centroid_hz": 346.9,
+      "rms_dbfs": -19.6,
+      "onset_rate_per_s": 2.0,
+      "dynamic_range_db": 14.8
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 234.9 | relative acoustic level: very high | calibration percentile: 100/100\nMode: major\nMean pitch (MIDI): 56.4 | relative acoustic level: low | calibration percentile: 29/100\nPitch slope (MIDI/s): -4.419 | relative acoustic level: very low | calibration percentile: 3/100\nSpectral centroid (Hz): 346.9 | relative acoustic level: very low | calibration percentile: 2/100\nRMS level (dBFS): -19.6 | relative acoustic level: low | calibration percentile: 34/100\nOnset rate (per s): 2.0 | relative acoustic level: low | calibration percentile: 16/100\nDynamic range (dB): 14.8 | relative acoustic level: mid-range | calibration percentile: 47/100"
+  },
+  {
+    "stimulus_file": "B16_run2_opt.wav",
+    "stimulus_sha256": "e37c93a1111bf8200927ee68aa17446f4203def3150d4553e3f422d58c490f54",
+    "raw_features": {
+      "duration_s": 3.0,
+      "tempo_bpm": 143.6,
+      "mode": "major",
+      "mean_pitch_midi": 58.6,
+      "pitch_slope_midi_per_s": -6.03,
+      "spectral_centroid_hz": 602.7,
+      "rms_dbfs": -13.9,
+      "onset_rate_per_s": 5.0,
+      "dynamic_range_db": 20.9
+    },
+    "presented_feature_block": "Duration (s): 3.0\nTempo (BPM): 143.6 | relative acoustic level: high | calibration percentile: 86/100\nMode: major\nMean pitch (MIDI): 58.6 | relative acoustic level: low | calibration percentile: 31/100\nPitch slope (MIDI/s): -6.03 | relative acoustic level: very low | calibration percentile: 2/100\nSpectral centroid (Hz): 602.7 | relative acoustic level: very low | calibration percentile: 10/100\nRMS level (dBFS): -13.9 | relative acoustic level: high | calibration percentile: 84/100\nOnset rate (per s): 5.0 | relative acoustic level: high | calibration percentile: 67/100\nDynamic range (dB): 20.9 | relative acoustic level: mid-range | calibration percentile: 58/100"
+  }
+]

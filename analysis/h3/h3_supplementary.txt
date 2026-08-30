@@ -1,15 +1,22 @@
 ========== TEST 1: DISTANCE AFTER REMOVING EACH PERSONA'S LEVEL ==========
 
-mean raw distance:      0.731
-mean centred distance:  0.694
+mean raw distance:      0.442
+mean centred distance:  0.431
 
-                          Estimate Std. Error       df    t value     Pr(>|t|)
-(Intercept)            0.692752652 0.06994294 17.76498  9.9045405 1.173556e-08
-opennesshigh          -0.023790446 0.01324483 31.01952 -1.7962062 8.220779e-02
-conscientiousnesshigh  0.003178566 0.01324483 31.01952  0.2399854 8.119204e-01
-extraversionhigh       0.042903952 0.01324483 31.01952  3.2392981 2.855628e-03
-agreeablenesshigh     -0.009324237 0.01324483 31.01952 -0.7039907 4.866902e-01
-neuroticismhigh       -0.010902469 0.01324483 31.01952 -0.8231491 4.167069e-01
+                           Estimate  Std. Error         df    t value
+(Intercept)            0.4281386130 0.031162153   16.56181 13.7390574
+opennesshigh           0.0100140424 0.003645597 4560.00000  2.7468867
+conscientiousnesshigh -0.0005549080 0.003645597 4560.00000 -0.1522132
+extraversionhigh      -0.0003941749 0.003645597 4560.00000 -0.1081235
+agreeablenesshigh     -0.0063878646 0.003645597 4560.00000 -1.7522135
+neuroticismhigh        0.0035597532 0.003645597 4560.00000  0.9764527
+                          Pr(>|t|)
+(Intercept)           1.771318e-10
+opennesshigh          6.040019e-03
+conscientiousnesshigh 8.790255e-01
+extraversionhigh      9.139025e-01
+agreeablenesshigh     7.980431e-02
+neuroticismhigh       3.288920e-01
 
 -- omnibus test of all five traits --
 Data: oc
@@ -17,8 +24,8 @@ Models:
 m_null: dist_centred ~ 1 + (1 | persona_id) + (1 | brief/run)
 m_full: f
        npar     AIC     BIC logLik deviance  Chisq Df Pr(>Chisq)  
-m_null    5 -928.02 -895.84 469.01  -938.02                       
-m_full   10 -930.22 -865.87 475.11  -950.22 12.202  5    0.03212 *
+m_null    5 -5914.6 -5882.5 2962.3  -5924.6                       
+m_full   10 -5916.2 -5851.9 2968.1  -5936.2 11.589  5    0.04087 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
@@ -31,8 +38,8 @@ restatement of H2 and should be reported as such.
 ========== TEST 2: DO PERSONAS RANK THE SAME STIMULI AS BEST ALIGNED? ==========
 
 persona pairs compared: 496
-mean pairwise Spearman rho: 0.736
-range: -0.063 to 0.986
+mean pairwise Spearman rho: 0.714
+range: 0.184 to 0.954
 
 Reading: rho near 1 means every persona ranks the same logos as best
 aligned, so persona differences are level shifts only. Lower values mean

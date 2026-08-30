@@ -31,10 +31,22 @@ from features.extracts import load_audio, extract_audience_block, format_audienc
 
 TRAITS = ["openness", "conscientiousness", "extraversion", "agreeableness", "neuroticism"]
 Q_COLS = [f"Q{i}" for i in range(1, 13)]
-FIELDS = (["agent_kind", "persona_id"] + TRAITS +
-          ["stimulus_file", "brief", "condition", "target_v", "target_a",
-           "stimulus_sha256", "rep"] +
-          Q_COLS + ["perceived_v", "perceived_a"])
+FIELDS = (
+    ["agent_kind", "persona_id"]
+    + TRAITS
+    + [
+        "stimulus_file",
+        "brief",
+        "condition",
+        "target_v",
+        "target_a",
+        "stimulus_sha256",
+        "audience_protocol_sha256",
+        "rep",
+    ]
+    + Q_COLS
+    + ["perceived_v", "perceived_a"]
+)
 
 
 def build_agents(personas_cfg):
@@ -70,6 +82,36 @@ def sha256_of(path, chunk=1 << 20):
             h.update(block)
     return h.hexdigest()
 
+def audience_protocol_sha256(
+    cfg,
+    reference,
+    backend,
+    model,
+    temperature,
+    think,
+):
+    """Hash everything that changes the audience protocol."""
+    payload = {
+        "backend": backend,
+        "model": model,
+        "temperature": temperature,
+        "think": think,
+        "questionnaire": cfg["questionnaire"],
+        "prompts": cfg["prompts"],
+        "feature_reference": reference,
+        "validation_retry_policy": "targeted_validation_feedback_v1",
+    }
+
+    txt = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+
+    return hashlib.sha256(
+        txt.encode("utf-8")
+    ).hexdigest()
+
 
 def load_done(csv_path):
     done = set()
@@ -80,7 +122,7 @@ def load_done(csv_path):
     return done
 
 
-def stale_rows(csv_path, stimuli, tol=1e-6):
+def stale_rows(csv_path,stimuli,protocol_sha256=None,tol=1e-6):
     """Rows in an existing CSV that do not describe the current stimuli.
 
     Generation reuses filenames, so old rows carry the same stimulus_file while
@@ -104,6 +146,16 @@ def stale_rows(csv_path, stimuli, tol=1e-6):
             total += 1
             fn = row["stimulus_file"]
             if fn not in want_t:
+                stale += 1
+                continue
+            have_protocol = (
+                row.get("audience_protocol_sha256") or ""
+            ).strip()
+
+            if (
+                protocol_sha256
+                and have_protocol != protocol_sha256
+            ):
                 stale += 1
                 continue
             have_h = (row.get("stimulus_sha256") or "").strip()
@@ -130,7 +182,21 @@ def main():
                          "different stimuli (not recommended)")
     ap.add_argument("--limit-stimuli", type=int)
     ap.add_argument("--limit-agents", type=int)
+
+    ap.add_argument(
+        "--briefs",
+        default=None,
+        help="comma-separated brief IDs, e.g. B01,B05,B09,B13",
+    )
+
+    ap.add_argument(
+        "--runs",
+        default=None,
+        help="comma-separated run numbers, e.g. 0 or 0,1",
+    )
+
     ap.add_argument("--out", default=None)
+
     args = ap.parse_args()
 
     exp = load("experiment.yaml")
@@ -148,47 +214,226 @@ def main():
 
     agents = build_agents(cfg["personas"])
     stimuli = build_stimuli(manifest)
+
+
+    # Optional brief filter.
+    if args.briefs:
+
+        wanted_briefs = {
+            x.strip()
+            for x in args.briefs.split(",")
+            if x.strip()
+        }
+
+        stimuli = [
+            s
+            for s in stimuli
+            if s["brief"] in wanted_briefs
+        ]
+
+
+    # Optional run-number filter.
+    if args.runs:
+
+        wanted_runs = {
+            int(x.strip())
+            for x in args.runs.split(",")
+            if x.strip()
+        }
+
+        def stimulus_run_number(stimulus_file):
+
+            name = Path(stimulus_file).stem
+
+            if "_run" not in name:
+                raise ValueError(
+                    f"Cannot identify run number from "
+                    f"stimulus filename: {stimulus_file}"
+                )
+
+            return int(
+                name
+                .split("_run", 1)[1]
+                .split("_", 1)[0]
+            )
+
+        stimuli = [
+            s
+            for s in stimuli
+            if stimulus_run_number(
+                s["file"]
+            ) in wanted_runs
+        ]
+
+
     if args.limit_agents:
         agents = agents[:args.limit_agents]
+
     if args.limit_stimuli:
         stimuli = stimuli[:args.limit_stimuli]
 
-    model = args.model or exp["models"]["audience_primary"]["checkpoint"]
+
+    print(
+        f"selected {len(stimuli)} stimuli "
+        f"from briefs: "
+        f"{sorted(set(s['brief'] for s in stimuli))}"
+    )
+
+    for s in stimuli:
+        print(
+            f"  {s['brief']}  {s['file']}"
+        )
+
+    model_cfg = exp["models"]["audience_primary"]
+
+    model = args.model or model_cfg["checkpoint"]
+
     if args.backend == "ollama" and model in (None, "TBD_at_pilot"):
         model = "qwen3:8b"
+
+    temperature = float(
+        model_cfg.get("temperature", 0.7)
+    )
+
+    think = bool(
+        model_cfg.get("think", False)
+    )
+
     LOGS.mkdir(exist_ok=True)
-    client = LLMClient(backend=args.backend, model=model, host=args.host,
-                       log_path=str(LOGS / "audience.jsonl"))
+
+    client = LLMClient(
+        backend=args.backend,
+        model=model,
+        temperature=temperature,
+        think=think,
+        host=args.host,
+        log_path=str(LOGS / "audience.jsonl"),
+    )
 
     out_dir = ROOT / "data" / "audience"
     out_dir.mkdir(parents=True, exist_ok=True)
     csv_path = Path(args.out) if args.out else out_dir / "responses.csv"
 
-    # pre-extract each stimulus's feature block once (not per agent x rep)
+    # Load the independent, target-blind acoustic calibration reference.
+    reference_path = (
+        ROOT
+        / "models"
+        / "audience_feature_reference.json"
+    )
+
+    if not reference_path.exists():
+        sys.exit(
+            "Missing models/audience_feature_reference.json.\n"
+            "Run first:\n"
+            "python -W ignore src/audience/build_feature_reference.py"
+        )
+
+    feature_reference = json.loads(
+        reference_path.read_text()
+    )
+
+    # Pre-extract each study stimulus once.
     stim_dir = ROOT / "data" / "stimuli"
-    print(f"extracting feature blocks for {len(stimuli)} stimuli...")
+
+    print(
+        f"extracting calibrated feature blocks "
+        f"for {len(stimuli)} stimuli..."
+    )
+
     with warnings.catch_warnings():
+
         warnings.simplefilter("ignore")
+
         for s in stimuli:
+
             path = stim_dir / s["file"]
+
             s["sha256"] = sha256_of(path)
-            y, _sr = load_audio(str(path), sr=sr)
-            s["ftext"] = format_audience_block(extract_audience_block(y, _sr))
+
+            y, _sr = load_audio(
+                str(path),
+                sr=sr,
+            )
+
+            s["fblock"] = extract_audience_block(
+                y,
+                _sr,
+            )
+
+            s["ftext"] = format_audience_block(
+                s["fblock"],
+                feature_reference,
+            )
+
+
+    protocol_hash = audience_protocol_sha256(
+        cfg,
+        feature_reference,
+        args.backend,
+        model,
+        temperature,
+        think,
+    )
+
+
+    # Save the exact feature information supplied to Qwen.
+    (
+        out_dir
+        / "feature_reference.json"
+    ).write_text(
+        json.dumps(
+            feature_reference,
+            indent=2,
+            sort_keys=True,
+        )
+    )
+
+    (
+        out_dir
+        / "stimulus_feature_blocks.json"
+    ).write_text(
+        json.dumps(
+            [
+                {
+                    "stimulus_file": s["file"],
+                    "stimulus_sha256": s["sha256"],
+                    "raw_features": s["fblock"],
+                    "presented_feature_block": s["ftext"],
+                }
+                for s in stimuli
+            ],
+            indent=2,
+        )
+    )
+
+    (
+        out_dir
+        / "audience_protocol_sha256.txt"
+    ).write_text(
+        protocol_hash + "\n"
+    )
+
+    print(
+        f"audience protocol sha256: "
+        f"{protocol_hash[:16]}..."
+    )
 
     # A run without --resume starts a new file. The previous one is kept under a
     # timestamped name rather than deleted:
     if args.resume:
-        stale, total = stale_rows(csv_path, stimuli)
+        stale, total = stale_rows(csv_path,stimuli,protocol_hash)
         if stale and not args.force:
             sys.exit(
-                f"\nRefusing to resume: {stale} of {total} rows in {csv_path.name} were\n"
-                f"scored against different stimuli than the current manifest (the brief\n"
-                f"targets have changed since they were written).\n\n"
-                f"Filenames are reused across generations, so resuming would mix two\n"
-                f"studies into one file with no way to separate them afterwards.\n\n"
+                f"\nRefusing to resume: {stale} of {total} rows in {csv_path.name} "
+                f"do not match the current audience protocol or current stimuli.\n\n"
+                f"This can occur because the acoustic feature representation, prompts, "
+                f"model settings, calibration reference, or stimulus audio changed.\n"
+                f"Resuming would mix responses generated under different experimental "
+                f"conditions in the same dataset.\n\n"
                 f"  start fresh:      python {Path(__file__).name} --backend <backend>\n"
                 f"  inspect/salvage:  python src/analysis/clean_audience.py\n"
-                f"  override anyway:  --force\n")
+                f"  override anyway:  --force\n"
+            )
         if stale and args.force:
             print(f"WARNING: --force with {stale}/{total} rows from different stimuli.\n")
         done = load_done(csv_path)
@@ -227,7 +472,9 @@ def main():
                    **a["traits"],
                    "stimulus_file": s["file"], "brief": s["brief"], "condition": s["condition"],
                    "target_v": s["target"][0], "target_a": s["target"][1],
-                   "stimulus_sha256": s.get("sha256", ""), "rep": rep,
+                   "stimulus_sha256": s.get("sha256", ""),
+                   "audience_protocol_sha256": protocol_hash, 
+                   "rep": rep,
                    **{q: obj[q] for q in Q_COLS},
                    "perceived_v": round((obj["Q1"] - 5) / 4, 3),
                    "perceived_a": round((obj["Q2"] - 5) / 4, 3)}

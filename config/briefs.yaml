@@ -1,6 +1,6 @@
 # 16 brand briefs, 4 per quadrant. Targets rescaled into the reachable VA
 # region measured by probe_reachable.py (synthetic logos scored by estimator_A2):
-#   reachable valence [-0.26, +0.28], arousal [-0.36, +0.21].
+#   reachable valence [-0.25, +0.25], arousal [-0.39, +0.21].
 # Original full-circumplex targets are preserved in briefs_full_range.yaml.
 scale: [-1, 1]
 n_briefs: 16
@@ -8,65 +8,65 @@ n_briefs: 16
 briefs:
   - id: B01
     quadrant: HV_HA
-    target: {valence: 0.193, arousal: 0.173}
+    target: {valence: 0.172, arousal: 0.175}
     brand_description: "A sports energy drink for young athletes, promising a burst of vitality and peak performance."
   - id: B02
     quadrant: HV_HA
-    target: {valence: 0.263, arousal: 0.12}
+    target: {valence: 0.234, arousal: 0.121}
     brand_description: "A family theme park advertising a joyful day out full of fun and laughter."
   - id: B03
     quadrant: HV_HA
-    target: {valence: 0.158, arousal: 0.213}
+    target: {valence: 0.141, arousal: 0.215}
     brand_description: "A competitive mobile game launch, fast-paced and thrilling, built for quick reflexes and adrenaline."
   - id: B04
     quadrant: HV_HA
-    target: {valence: 0.228, arousal: 0.16}
+    target: {valence: 0.203, arousal: 0.161}
     brand_description: "A summer music festival celebrating upbeat, celebratory energy and shared euphoria."
   - id: B05
     quadrant: LV_HA
-    target: {valence: -0.181, arousal: 0.173}
+    target: {valence: -0.171, arousal: 0.175}
     brand_description: "A home security alarm conveying urgency and the need for immediate attention to a threat."
   - id: B06
     quadrant: LV_HA
-    target: {valence: -0.247, arousal: 0.12}
+    target: {valence: -0.233, arousal: 0.121}
     brand_description: "A horror film release, unsettling and menacing, designed to provoke dread and unease."
   - id: B07
     quadrant: LV_HA
-    target: {valence: -0.149, arousal: 0.213}
+    target: {valence: -0.14, arousal: 0.215}
     brand_description: "A road-safety campaign warning of the sudden danger of distracted driving."
   - id: B08
     quadrant: LV_HA
-    target: {valence: -0.215, arousal: 0.16}
+    target: {valence: -0.202, arousal: 0.161}
     brand_description: "A cybersecurity breach-alert service signalling alarm and pressing risk."
   - id: B09
     quadrant: LV_LA
-    target: {valence: -0.181, arousal: -0.248}
+    target: {valence: -0.171, arousal: -0.267}
     brand_description: "A bereavement-support charity offering quiet comfort in times of grief and loss."
   - id: B10
     quadrant: LV_LA
-    target: {valence: -0.247, arousal: -0.158}
+    target: {valence: -0.233, arousal: -0.17}
     brand_description: "A documentary on isolation and loneliness, sombre and reflective in tone."
   - id: B11
     quadrant: LV_LA
-    target: {valence: -0.132, arousal: -0.338}
+    target: {valence: -0.124, arousal: -0.365}
     brand_description: "A funeral-planning service, subdued and solemn, providing dignified support."
   - id: B12
     quadrant: LV_LA
-    target: {valence: -0.198, arousal: -0.271}
+    target: {valence: -0.187, arousal: -0.292}
     brand_description: "A mental-health service addressing low mood and quiet despair with gentle care."
   - id: B13
     quadrant: HV_LA
-    target: {valence: 0.193, arousal: -0.248}
+    target: {valence: 0.172, arousal: -0.267}
     brand_description: "A spa and wellness retreat offering deep relaxation and tranquil escape."
   - id: B14
     quadrant: HV_LA
-    target: {valence: 0.263, arousal: -0.158}
+    target: {valence: 0.234, arousal: -0.17}
     brand_description: "A herbal tea brand evoking warmth, comfort and gentle contentment."
   - id: B15
     quadrant: HV_LA
-    target: {valence: 0.141, arousal: -0.338}
+    target: {valence: 0.125, arousal: -0.365}
     brand_description: "A meditation and sleep app promoting stillness, peace and calm."
   - id: B16
     quadrant: HV_LA
-    target: {valence: 0.211, arousal: -0.271}
+    target: {valence: 0.187, arousal: -0.292}
     brand_description: "A luxury linens brand conveying soft, serene comfort and quiet indulgence."

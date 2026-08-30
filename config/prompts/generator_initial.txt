@@ -4,4 +4,28 @@ Brand description: {description}
 
 Choose acoustic parameters that express this brand's character in sound. Return only a JSON object with exactly these keys and allowed values:
 {schema}
-Return the JSON only, with no other text.
+
+Melodic and rhythmic design guidance:
+
+- contour controls the broad melodic trajectory across the complete sonic logo:
+  rising, falling, arch, flat, or wave.
+
+- motif_pattern controls the local interval movement around that broad contour:
+  - stepwise: neighbouring scale movement around the contour.
+  - skip_return: a moderate leap away from an anchor followed by a return.
+  - thirds: alternating third-like interval movement.
+  - anchor_leap: stronger leaps away from and back to an anchor pitch.
+  - zigzag: alternating upward and downward interval movement.
+  - arpeggio: chord-like expansion around the contour.
+
+- rhythm_pattern controls temporal phrasing, independently of the melodic motif:
+  - even uses regularly spaced note onsets.
+  - short_short_long groups two shorter intervals followed by a longer interval.
+  - long_short_short begins with a longer interval followed by two shorter intervals.
+  - syncopated alternates shorter and longer onset intervals.
+  - pickup_resolution begins with short pickup intervals and ends each phrase with a longer interval.
+  - cadential groups several shorter intervals before a longer closing interval.
+
+Choose contour, motif_pattern and rhythm_pattern from the complete brand description.
+Do not use any one option as a default and do not force diversity merely for its own sake.
+Different briefs may legitimately share parameters when justified by their descriptions.

@@ -1,53 +1,53 @@
 H1 - stimulus alignment. Judge: estimator_B2 (held out). Paired within brief/run.
 
-judge spread across stimuli: valence SD 0.2274, arousal SD 0.2605
-judge valence range: 0.824   arousal range: 0.982
+judge spread across stimuli: valence SD 0.2261, arousal SD 0.3071
+judge valence range: 1.028   arousal range: 1.397
 Compare against this judge's own held-out RMSE in models/<judge>.meta.json.
 If the SD is a small fraction of that RMSE, H1 is untestable with this judge
 rather than rejected, and should be reported that way.
 
-mean non-optimised B2-distance: 0.512
-mean optimised B2-distance:     0.445
-mean B2-reduction (non-opt - opt): +0.067
-pairs improved: 22 / 48
+mean non-optimised B2-distance: 0.408
+mean optimised B2-distance:     0.344
+mean B2-reduction (non-opt - opt): +0.063
+pairs improved: 23 / 48
 
 -- paired model: B2-distance ~ condition + (1|brief/run) --
                       Estimate Std. Error       df  t value     Pr(>|t|)
-(Intercept)         0.51236042 0.03784973 16.68794 13.53670 2.005859e-10
-conditionoptimised -0.06745417 0.01729501 79.00004 -3.90021 2.006381e-04
+(Intercept)         0.40761042 0.03076542 21.87109 13.24898 6.331142e-12
+conditionoptimised -0.06333125 0.02595788 46.99997 -2.43977 1.852394e-02
 
 -- paired t-test on optimised vs non-optimised B2-distance (48 pairs) --
 
 	Paired t-test
 
 data:  h1$opt_B_dist and h1$nonopt_B_dist
-t = -3.6154, df = 47, p-value = 0.0007291
+t = -2.4398, df = 47, p-value = 0.01852
 alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
- -0.10498803 -0.02992031
+ -0.11555176 -0.01111074
 sample estimates:
 mean difference 
-    -0.06745417 
+    -0.06333125 
 
 
--- tie check: 15 / 48 pairs show an exact zero difference --
+-- tie check: 8 / 48 pairs show an exact zero difference --
 (structural candidate: the optimiser's first candidate may already have been
  its best Estimator-A-scored candidate, so optimised == non-optimised by
  construction; check history logs before treating these as noise.)
 
--- sign test on the 33 non-tied pairs (improved vs worsened) --
-improved: 22   worsened: 11
+-- sign test on the 40 non-tied pairs (improved vs worsened) --
+improved: 23   worsened: 17
 
 	Exact binomial test
 
 data:  n_down and length(nz)
-number of successes = 22, number of trials = 33, p-value = 0.08014
+number of successes = 23, number of trials = 40, p-value = 0.4296
 alternative hypothesis: true probability of success is not equal to 0.5
 95 percent confidence interval:
- 0.4817325 0.8203949
+ 0.4089006 0.7295710
 sample estimates:
 probability of success 
-             0.6666667 
+                 0.575 
 
 
 -- Wilcoxon signed-rank test (optimised vs non-optimised B2-distance) --
@@ -55,7 +55,7 @@ probability of success
 	Wilcoxon signed rank test with continuity correction
 
 data:  h1$opt_B_dist and h1$nonopt_B_dist
-V = 113, p-value = 0.002844
+V = 263, p-value = 0.04894
 alternative hypothesis: true location shift is not equal to 0
 
 
@@ -66,8 +66,8 @@ paired t-test can mask a directional pattern that the sign/Wilcoxon tests reveal
 all three and interpret the direction, not only significance.
 
 -- quadrant verification (Estimator B2 vs target sign, independent check) --
-optimised stimuli crossing target quadrant sign:     31 / 48 (64.6%)
-non-optimised stimuli crossing target quadrant sign: 31 / 48 (64.6%)
+optimised stimuli crossing target quadrant sign:     27 / 48 (56.2%)
+non-optimised stimuli crossing target quadrant sign: 35 / 48 (72.9%)
 Non-optimised stimuli are iteration 0 and are NOT subject to the stopping rule,
 so crossings there are expected. Crossings among OPTIMISED stimuli indicate
 Estimator A/B2 disagreement on quadrant, not a failure of the rule: the loop can

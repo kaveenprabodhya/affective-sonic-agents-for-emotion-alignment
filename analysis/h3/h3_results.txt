@@ -4,13 +4,13 @@ Model: distance ~ OCEAN traits + (1|persona_id) + (1|brief/run)
 Quadrant is not a primary H3 factor. It is reported descriptively below.
 
 ---------- FIXED-EFFECT ESTIMATES ----------
-                         Estimate Std. Error       df    t value     Pr(>|t|)
-(Intercept)            0.56983296 0.07895456 29.30493  7.2172264 5.670900e-08
-opennesshigh           0.17703530 0.03716320 25.99973  4.7637257 6.270749e-05
-conscientiousnesshigh  0.07742470 0.03716320 25.99973  2.0833701 4.719137e-02
-extraversionhigh       0.29220936 0.03716320 25.99973  7.8628683 2.442661e-08
-agreeablenesshigh      0.03431816 0.03716320 25.99973  0.9234445 3.642668e-01
-neuroticismhigh       -0.25768679 0.03716320 25.99973 -6.9339232 2.315925e-07
+                          Estimate  Std. Error       df    t value     Pr(>|t|)
+(Intercept)            0.400296833 0.032011175 18.75698 12.5049092 1.523040e-10
+opennesshigh           0.009775364 0.008810359 25.99977  1.1095307 2.773587e-01
+conscientiousnesshigh -0.003518321 0.008810359 25.99977 -0.3993391 6.929048e-01
+extraversionhigh       0.064067919 0.008810359 25.99977  7.2718847 1.008931e-07
+agreeablenesshigh     -0.068386209 0.008810359 25.99977 -7.7620226 3.101608e-08
+neuroticismhigh        0.082413131 0.008810359 25.99977  9.3541167 8.356793e-10
 
 Singular fit: FALSE 
 
@@ -20,8 +20,8 @@ Models:
 m_null: dist ~ (1 | persona_id) + (1 | brief/run)
 m_full: dist ~ openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
        npar     AIC     BIC logLik deviance  Chisq Df Pr(>Chisq)    
-m_null    5 -292.31 -260.13 151.15  -302.31                         
-m_full   10 -339.67 -275.32 179.84  -359.67 57.363  5  4.257e-11 ***
+m_null    5 -5212.8 -5180.6 2611.4  -5222.8                         
+m_full   10 -5270.2 -5205.9 2645.1  -5290.2 67.447  5   3.48e-13 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
@@ -32,18 +32,18 @@ The omnibus test determines whether the five OCEAN traits jointly
 # A tibble: 4 × 4
   quadrant mean_dist    sd     n
   <fct>        <dbl> <dbl> <int>
-1 HV_HA        0.585 0.339  1152
-2 HV_LA        1.00  0.401  1152
-3 LV_HA        0.569 0.385  1152
-4 LV_LA        0.767 0.476  1152
+1 HV_HA        0.484 0.191  1152
+2 HV_LA        0.576 0.268  1152
+3 LV_HA        0.388 0.176  1152
+4 LV_LA        0.322 0.12   1152
 
 These values are descriptive and are not used to test H3.
 
 ========== DESCRIPTIVE DIAGNOSTIC: DIRECTION OF MISALIGNMENT ==========
-HV_HA: valence +0.186, arousal +0.320
-HV_LA: valence +0.318, arousal +0.896
-LV_HA: valence +0.387, arousal +0.161
-LV_LA: valence +0.453, arousal +0.573
+HV_HA: valence -0.240, arousal +0.341
+HV_LA: valence -0.232, arousal +0.507
+LV_HA: valence +0.089, arousal +0.205
+LV_LA: valence +0.073, arousal +0.277
 
 Positive valence values mean that personas perceived the logos as more
  positive than intended. Positive arousal values mean that personas perceived
@@ -51,8 +51,8 @@ Positive valence values mean that personas perceived the logos as more
 
 ========== EXPLORATORY DIAGNOSTIC: QUADRANT × OCEAN INTERACTIONS ==========
 
-Additive model singular: FALSE 
-Interaction model singular: FALSE 
+Additive model singular: TRUE 
+Interaction model singular: TRUE 
 
 Joint likelihood-ratio test of all quadrant × OCEAN interactions:
 Data: oc
@@ -60,8 +60,8 @@ Models:
 diagnostic_additive: dist ~ quadrant + openness + conscientiousness + extraversion + agreeableness + neuroticism + (1 | persona_id) + (1 | brief/run)
 diagnostic_interaction: dist ~ quadrant * (openness + conscientiousness + extraversion + agreeableness + neuroticism) + (1 | persona_id) + (1 | brief/run)
                        npar     AIC     BIC logLik deviance  Chisq Df
-diagnostic_additive      13 -344.53 -260.87 185.27  -370.53          
-diagnostic_interaction   28 -437.89 -257.70 246.95  -493.89 123.36 15
+diagnostic_additive      13 -5281.8 -5198.1 2653.9  -5307.8          
+diagnostic_interaction   28 -5988.4 -5808.2 3022.2  -6044.4 736.59 15
                        Pr(>Chisq)    
 diagnostic_additive                  
 diagnostic_interaction  < 2.2e-16 ***
