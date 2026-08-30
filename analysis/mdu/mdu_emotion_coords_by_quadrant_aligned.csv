@@ -1,0 +1,81 @@
+"dim1","dim2","term","quadrant","panel","point_type"
+-1.11718874646585,0.0708288691744801,"happy","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+0.216008817973278,0.0570434262325431,"tense","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+-1.12452401976329,0.335053584166539,"calm","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+0.373737310337784,0.628053328121548,"sad","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+0.0544116581739636,-0.0580001976463753,"excited","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+1.18899630624246,-0.540016859141524,"afraid","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+-0.847002648029174,0.0826789835077515,"content","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+1.04066365411349,-0.194282328218766,"bored","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+-0.986577093528685,0.0367278423881617,"relaxed","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+1.20147476094603,-0.418086648584358,"angry","HV_HA","High valence / high arousal
+Stress-1 = 0.089","Emotion term"
+-1.29892107918288,-0.179091861422566,"happy","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+0.156601404372979,-0.122402086123289,"tense","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+-0.967271717123435,0.577369614856354,"calm","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+0.511342852853332,0.0823435213889481,"sad","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+-0.0227388869721469,-0.345657591365201,"excited","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+1.23394109443873,-0.247595473953182,"afraid","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+-0.858201330305428,0.121144531486886,"content","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+0.817612503885542,0.131251466994066,"bored","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+-0.758269063407749,0.347143411432265,"relaxed","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+1.18590422144106,-0.364505533294282,"angry","HV_LA","High valence / low arousal
+Stress-1 = 0.128","Emotion term"
+-0.0974736817471685,-0.952681704553756,"happy","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+0.290642046287059,0.362568078581839,"tense","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+-0.899452215313406,0.827697936117976,"calm","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+0.529348086233861,0.711980135438561,"sad","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+0.399690274677323,-0.0234580307753393,"excited","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+0.230617521572669,-0.989644379562932,"afraid","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+-0.525214638291925,-0.344353341109519,"content","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+0.446709929260311,1.19046031697522,"bored","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+-0.815227585176686,0.156085460818818,"relaxed","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+0.440360262497963,-0.938654471930867,"angry","LV_HA","Low valence / high arousal
+Stress-1 = 0.087","Emotion term"
+-1.16814977937582,0.567321435575075,"happy","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+0.258218855603951,0.285235175087126,"tense","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+-0.786960595036562,-0.249678627651789,"calm","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+0.402018132525841,0.149792715624695,"sad","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+-0.708224458360898,0.807536473104379,"excited","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+1.12245666765866,-0.666598327042788,"afraid","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+-0.794736200491768,0.0633992989915511,"content","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+0.84028839821885,0.0723004329728147,"bored","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+-0.302983954639003,-0.383475864663729,"relaxed","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
+1.13807293389675,-0.645832711997335,"angry","LV_LA","Low valence / low arousal
+Stress-1 = 0.088","Emotion term"
