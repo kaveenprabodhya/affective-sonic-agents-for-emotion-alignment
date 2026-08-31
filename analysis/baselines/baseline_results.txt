@@ -27,12 +27,12 @@ Generic-listener control          Neutral control           OCEAN audience
            OCEAN audience non_optimised        48 -0.075683594 0.04073299
            OCEAN audience     optimised        48 -0.077148438 0.04929547
  mean_arousal sd_arousal mean_distance sd_distance
-    0.2083333  0.3070295     0.3773992   0.1378419
-    0.2465278  0.3103601     0.4152018   0.1798592
-    0.1545139  0.2787752     0.3510382   0.1201176
-    0.1562500  0.2884831     0.3626920   0.1251771
-    0.2261285  0.2926378     0.4112309   0.1422081
-    0.2797309  0.2883635     0.4424728   0.1629765
+    0.2083333  0.3070295     0.3773992   0.3070295
+    0.2465278  0.3103601     0.4152018   0.3103601
+    0.1545139  0.2787752     0.3510382   0.2787752
+    0.1562500  0.2884831     0.3626920   0.2884831
+    0.2261285  0.2926378     0.4112309   0.2926378
+    0.2797309  0.2883635     0.4424728   0.2883635
 
 ---------- Mean control-minus-OCEAN differences (per stimulus) ----------
  neutral_minus_ocean_v neutral_minus_ocean_a neutral_minus_ocean_d

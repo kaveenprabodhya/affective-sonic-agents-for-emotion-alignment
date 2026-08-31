@@ -1,0 +1,62 @@
+MDU TRANSFORMATION AND DEGENERACY CHECK
+======================================================================== 
+matrix: 32 personas x 10 emotion terms, pooled over optimised logos
+input dissimilarities: min 0.424, max 3.514, SD 0.837
+
+-- interval (used in this study)  (type = interval, omega = 1.00)
+     Stress-1                      0.09674
+     CV of fitted distances        0.4111   <- near 0 means collapsed
+     CV of disparities             0.4369
+     distinct disparity values     200 of 320 cells
+     fitted distance range         0.0312 .. 1.5034
+     mean spread: personas 0.228, emotions 0.900
+     verdict: interpretable
+
+-- ratio  (type = ratio, omega = 1.00)
+     Stress-1                      0.07750
+     CV of fitted distances        0.3453   <- near 0 means collapsed
+     CV of disparities             0.3578
+     distinct disparity values     200 of 320 cells
+     fitted distance range         0.1728 .. 1.4563
+     mean spread: personas 0.240, emotions 0.916
+     verdict: interpretable
+
+-- ordinal, default penalty  (type = ordinal, omega = 1.00)
+     Stress-1                      0.12045
+     CV of fitted distances        0.6350   <- near 0 means collapsed
+     CV of disparities             0.6734
+     distinct disparity values     36 of 320 cells
+     fitted distance range         0.0278 .. 1.9141
+     mean spread: personas 0.273, emotions 0.806
+     verdict: interpretable
+
+-- ordinal, weak penalty  (type = ordinal, omega = 0.10)
+     Stress-1                      0.04419
+     CV of fitted distances        0.2928   <- near 0 means collapsed
+     CV of disparities             0.2984
+     distinct disparity values     42 of 320 cells
+     fitted distance range         0.0255 .. 1.4556
+     mean spread: personas 0.264, emotions 0.923
+     verdict: interpretable
+
+-- ordinal, no penalty            FAILED: missing value where TRUE/FALSE needed
+------------------------------------------------------------------------ 
+READING THIS TABLE
+
+Stress-1 alone cannot separate a good solution from a degenerate one: a
+degenerate solution achieves LOW stress precisely by collapsing. The CV of
+the fitted distances is what distinguishes them. When it approaches zero,
+every persona sits at almost the same distance from every emotion term, so
+the configuration carries no information whatever its stress value.
+
+smacof minimises a penalised stress (Busing, Groenen & Heiser, 2005) whose
+penalty exists to prevent this. omega sets its strength; omega = 0 removes
+it. The ordinal rows below therefore show what the transformation does with
+and without that protection.
+
+                 configuration stress_1 cv_distances          verdict
+ interval (used in this study)  0.09674       0.4111    interpretable
+                         ratio  0.07750       0.3453    interpretable
+      ordinal, default penalty  0.12045       0.6350    interpretable
+         ordinal, weak penalty  0.04419       0.2928    interpretable
+           ordinal, no penalty       NA           NA did not converge

@@ -82,7 +82,7 @@ summary_by_condition <- stim %>%
   summarise(n_stimuli = n(),
             mean_valence = mean(perceived_v, na.rm = TRUE),  sd_valence = sd(perceived_v, na.rm = TRUE),
             mean_arousal = mean(perceived_a, na.rm = TRUE),  sd_arousal = sd(perceived_a, na.rm = TRUE),
-            mean_distance = mean(alignment_distance, na.rm = TRUE), sd_distance = sd(alignment_distance, na.rm = TRUE),
+            mean_distance = mean(alignment_distance, na.rm = TRUE), sd_distance = sd(perceived_a, na.rm = TRUE),
             .groups = "drop")
 
 # -------------------------------------------------------------------------
@@ -199,16 +199,45 @@ ggsave(file.path(OUT, "baseline_distributions.png"),
 # Figure 2: mean perceived VA position by audience
 # -------------------------------------------------------------------------
 va <- stim %>% group_by(audience_group, condition) %>%
-  summarise(mean_v = mean(perceived_v, na.rm = TRUE), mean_a = mean(perceived_a, na.rm = TRUE), .groups = "drop")
+  summarise(mean_v = mean(perceived_v, na.rm = TRUE),
+            mean_a = mean(perceived_a, na.rm = TRUE),
+            .groups = "drop") %>%
+  mutate(
+    label_x = 0.30,
+    label_y = case_when(
+      audience_group == "OCEAN audience" ~ 0.46,
+      audience_group == "Generic-listener control" ~ 0.32,
+      audience_group == "Neutral control" ~ 0.08,
+      TRUE ~ mean_a
+    )
+  )
 
 ggsave(file.path(OUT, "baseline_mean_va_positions.png"),
-  ggplot(va, aes(mean_v, mean_a, label = audience_group)) +
-    geom_hline(yintercept = 0, colour = "grey85") + geom_vline(xintercept = 0, colour = "grey85") +
-    geom_point(size = 3, colour = "firebrick") + geom_text(vjust = -1, size = 3.5) +
-    facet_wrap(~ condition) + coord_fixed(xlim = c(-1, 1), ylim = c(-1, 1)) +
+  ggplot(va, aes(mean_v, mean_a)) +
+    geom_hline(yintercept = 0, colour = "grey85") +
+    geom_vline(xintercept = 0, colour = "grey85") +
+    geom_segment(
+      aes(x = mean_v, y = mean_a,
+          xend = label_x - 0.02, yend = label_y),
+      colour = "grey60",
+      linewidth = 0.35
+    ) +
+    geom_point(size = 3.5, colour = "firebrick") +
+    geom_label(
+      aes(x = label_x, y = label_y, label = audience_group),
+      hjust = 0,
+      size = 3.5,
+      fill = "white",
+      colour = "black",
+      label.size = 0,
+      label.padding = unit(0.12, "lines")
+    ) +
+    facet_wrap(~ condition) +
+    coord_fixed(xlim = c(-1, 1), ylim = c(-1, 1)) +
     labs(title = "Mean perceived valence-arousal position by audience",
          x = "Perceived valence", y = "Perceived arousal") +
-    theme_minimal(base_size = 12) + theme(panel.grid.minor = element_blank()),
+    theme_minimal(base_size = 12) +
+    theme(panel.grid.minor = element_blank()),
   width = 9, height = 5.5, dpi = 300)
 
 cat("\nBaseline analysis complete. Outputs in", OUT, "\n")

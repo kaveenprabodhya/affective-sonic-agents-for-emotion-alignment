@@ -76,8 +76,7 @@ def main():
     client = LLMClient(backend=args.backend, model=model, host=args.host,
                        log_path=str(LOGS / "generation.jsonl"))
     predict_a, meta_a = load_estimator(args.coach)
-    templates = {"initial": (ROOT / "config/prompts/generator_initial.txt").read_text(),
-                 "revision": (ROOT / "config/prompts/generator_revision.txt").read_text()}
+    templates = {"initial": (ROOT / "config/prompts/generator_initial.txt").read_text()}
 
     out_dir = ROOT / "data" / "stimuli"
     out_dir.mkdir(parents=True, exist_ok=True)
