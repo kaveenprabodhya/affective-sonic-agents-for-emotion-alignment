@@ -110,7 +110,6 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   ├── questionnaire.yaml           # the Q1–Q12 survey instrument
 │   └── prompts/
 │       ├── generator_initial.txt    # first parameter proposal from brand description
-│       ├── generator_revision.txt   # revision prompt (receives the signed VA gap)
 │       ├── audience_system.txt      # OCEAN persona system prompt
 │       ├── audience_system_generic.txt   # generic-listener control
 │       ├── audience_system_neutral.txt   # neutral control
@@ -131,7 +130,9 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   │   ├── loop.py                  # the optimisation controller (stopping rule lives here)
 │   │   └── run_generation.py        # ENTRY: Stage 2, produces the 96 stimuli
 │   ├── analysis/score_estimator_b.py # ENTRY: Stage 3, held-out scoring for H1
+│   ├── analysis/clean_audience.py    # diagnoses/salvages merged audience runs
 │   ├── audience/
+│   │   ├── build_feature_reference.py # target-blind acoustic calibration for audience prompts
 │   │   ├── survey.py                # prompt assembly, response parsing
 │   │   └── run_audience.py          # ENTRY: Stage 4, the 9,792 responses
 │   └── llm/client.py                # Ollama/Anthropic/mock backend, logs every call
@@ -151,6 +152,11 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   │                                              held / marginal / crossed per estimator,
 │   │                                              plus raw, chance and kappa agreement
 │   ├── Check_mdu_degeneracy.R -> analysis/mdu/    ordinal vs interval degeneracy evidence
+│   ├── Check_h1_brief_level.R -> analysis/diagnostics/h1_robustness/
+│   │                                              brief-level H1 sensitivity analysis
+│   ├── Check_h1_resampling.R -> analysis/diagnostics/h1_robustness/
+│   │                                              cluster bootstrap + exact sign-flip test
+│   ├── Check_audience_optimisation_effect.R        audience-rated opt vs non-opt alignment
 │   ├── Check_estimator_b_range.R                  judge spread vs own RMSE (superseded)
 │   └── Diagnose_baselines.R                       why the baselines pivot sees duplicates
 │
@@ -161,7 +167,11 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   │   ├── h1_estimator_b.csv       # 48 matched pairs, held-out estimator distances -> input to H1
 │   │   ├── h1_estimator_b_<judge>.csv  # same, for any additional judge scored
 │   │   └── integrity.json           # per-stimulus sha256, peak, RMS, duration
-│   └── audience/responses.csv       # 9,792 rows -> input to H2, H3, MDU, baselines
+│   └── audience/
+│       ├── responses.csv             # 9,792 rows -> input to H2, H3, MDU, baselines
+│       ├── audience_protocol_sha256.txt # hash binding responses to the audience protocol
+│       ├── feature_reference.json    # calibration snapshot used for this audience run
+│       └── stimulus_feature_blocks.json # exact target-blind prompt features by stimulus
 │
 ├── models/
 │   ├── estimator_A.joblib(.meta.json)   # DEAM, random forest — guides optimisation
@@ -170,6 +180,7 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 │   ├── estimator_A2.joblib(.meta.json)  # architecture-selected coach, if built
 │   ├── selection/                       # candidate_comparison.csv + selection_report.txt
 │   ├── reachable_va.json                # measured reachable region
+│   ├── audience_feature_reference.json  # calibration distribution built before Stage 4
 │   └── cache/                           # feature caches (safe to delete, slow to rebuild)
 │
 ├── logs/                            # every LLM call, with ts / tokens / prompt / response
@@ -183,7 +194,12 @@ Rscript -e 'library(lme4); library(lmerTest); library(smacof); cat("R deps ok\n"
 └── spike/                           # exploratory work, not part of the pipeline
     ├── estimator_transfer_test.py   # window-length transfer check
     ├── estimator_family_comparison.py # feature-family comparison
-    └── persona_pilot.py             # persona differentiation pilot
+    ├── persona_pilot.py             # persona differentiation pilot
+    ├── audience_feature_pilot.py    # pilot of target-blind audience feature prompts
+    ├── deterministic_search_test.py # deterministic optimiser experiment
+    ├── local_search_test.py         # local-search experiment
+    ├── render_soundfont_ab.py       # soundfont rendering comparison
+    └── rhythm_gallery.py            # rhythm-pattern rendering gallery
 ```
 
 `briefs.yaml` holds the rescaled targets used by the pipeline. `briefs_full_range.yaml` holds the originals and is never overwritten.
@@ -331,6 +347,7 @@ Do not pass the coach to `Stage6_h1.R`. The loop selected `best` by minimising t
 ### Stage 4 — Run the synthetic audience
 
 ```bash
+python -W ignore src/audience/build_feature_reference.py
 time python -W ignore src/audience/run_audience.py --backend ollama
 ```
 
@@ -339,6 +356,8 @@ time python -W ignore src/audience/run_audience.py --backend ollama
 ```bash
 python src/audience/run_audience.py --backend ollama --resume    # skips rows already written
 ```
+
+The first command renders 300 sounds sampled independently from the synthesiser space and writes `models/audience_feature_reference.json`. Audience prompts use this target-blind distribution to express acoustic features consistently; it contains no study target, condition, estimator output, emotion label, or brand brief. Build it once at the start of a fresh audience run. Do not rebuild it while resuming an interrupted run.
 
 A run without `--resume` starts a new file, moving the previous one to `responses_<timestamp>.csv`. A run with `--resume` refuses to continue if the existing rows were scored against different stimuli: generation reuses filenames, so resuming after the brief targets change would merge two studies into one file with no way to separate them afterwards. `--force` overrides; `python src/analysis/clean_audience.py` reports and salvages a file that has already been merged.
 
@@ -385,8 +404,10 @@ The coordinates being plotted are printed under each plot and the target in the 
 
 ```bash
 Rscript analysis/Stage6_h1.R                     # H1, estimator_B
-Rscript analysis/Stage6_h1.R estimator_B2        # H1, another judge -> analysis/h1/estimator_B2/
+Rscript analysis/Stage6_h1.R estimator_B2        # H1, another judge -> analysis/h1/h1_results_b2.txt
 Rscript analysis/Check_quadrant_confidence.R     # quadrant classification + judge agreement
+Rscript analysis/Check_h1_brief_level.R estimator_B2
+Rscript analysis/Check_h1_resampling.R estimator_B2 10000 20260829
 Rscript analysis/Stage6_h2.R
 Rscript analysis/Stage6_h3_alignment.R
 Rscript analysis/Stage6_h3_supplementary.R
@@ -397,8 +418,8 @@ Rscript analysis/Stage7_scale_usage.R
 
 #### What each produces
 
-**`Stage6_h1.R` → `analysis/h1/`** (or `analysis/h1/<judge>/` when a judge is named)
-`h1_results.txt` — the judge's spread across the stimuli, descriptives, mixed-effects model, paired t-test, tie count, sign test, Wilcoxon signed-rank, and a quadrant check counting how often optimised and non-optimised stimuli sit on the target's side of both axes.
+**`Stage6_h1.R` → `analysis/h1/h1_results_<judge>.txt`**
+The judge's spread across the stimuli, descriptives, mixed-effects model, paired t-test, tie count, sign test, Wilcoxon signed-rank, and a quadrant check counting how often optimised and non-optimised stimuli sit on the target's side of both axes. The default incumbent writes `h1_results_b.txt`; `estimator_B2` writes `h1_results_b2.txt`.
 
 **`Check_quadrant_confidence.R` → `analysis/h1/quadrant_confidence.txt`**
 Reads every `data/analysis/h1_estimator_b*.csv` and classifies each optimised stimulus per estimator as **held** (same sign as the target on both axes, both coordinates at least `margin` clear of the axes), **marginal** (same sign, but within `margin` of an axis, so a small error flips it) or **crossed** (opposite sign on at least one axis). The margin is not a property of the data, so the table is reported across several values — 0.00, 0.02, 0.05, 0.10 by default, or pass your own:
@@ -441,6 +462,9 @@ The script prints a warning when Stress-1 falls below 0.01.
 **`Stage7_scale_usage.R` → `analysis/stage7_scale_usage/`**
 How the synthetic respondents used the two nine-point scales, and where perceived positions fell relative to the intended quadrants. Descriptive evidence for the response-scale paragraph in Section 4.3.1. Responses are nested (persona × stimulus × repetition), so no inferential test is run here.
 
+**`Check_h1_brief_level.R` and `Check_h1_resampling.R` → `analysis/diagnostics/h1_robustness/`**
+Robustness checks for the selected H1 judge. The first averages the three runs within each brief and tests the 16 brief means. The second keeps runs clustered by brief, reports a cluster-bootstrap confidence interval, and performs the exact `2^16` sign-flip test. Arguments are `[judge]` for the brief-level check and `[judge] [bootstrap repetitions] [seed]` for resampling.
+
 ---
 
 ### On-demand diagnostics
@@ -450,10 +474,17 @@ Not part of a normal run — each answers one question and is kept because the a
 | Script | Question | Output |
 |---|---|---|
 | `Check_mdu_degeneracy.R` | Does ordinal unfolding degenerate on this data, and does interval avoid it? | `analysis/mdu/degeneracy_check.txt`, `degeneracy_comparison.csv`, `degeneracy_configurations.png` |
+| `Check_audience_optimisation_effect.R` | Did optimisation change intended–perceived distance for the OCEAN audience? | mixed-model and 48-pair results printed to stdout |
 | `Check_estimator_b_range.R` | How much does a judge's prediction vary across the stimuli, against its own RMSE? | prints to stdout |
 | `Diagnose_baselines.R` | Why does the baselines pivot see duplicate rows? | prints to stdout |
 
 `Check_mdu_degeneracy.R` fits the persona × emotion matrix under interval, ratio, and ordinal transformations at three penalty strengths, and reports Stress-1 alongside the coefficient of variation of the fitted distances. The CV is what separates a good solution from a degenerate one: a degenerate solution reaches *low* stress precisely by collapsing every point of one set onto every point of the other, so stress alone cannot detect it. Note that `smacof::unfolding()` minimises a penalised stress (Busing, Groenen & Heiser, 2005) designed to prevent exactly this, controlled by `omega`; the script varies `omega` down to 0 so the transformation's behaviour is visible with and without that protection.
+
+Run the audience optimisation diagnostic after Stage 4 with:
+
+```bash
+Rscript analysis/Check_audience_optimisation_effect.R
+```
 
 `Check_estimator_b_range.R` is largely superseded — `Stage6_h1.R` prints the judge's spread at the top of every run and `Check_quadrant_confidence.R` reports it per estimator.
 
@@ -468,17 +499,18 @@ chmod +x run_pipeline.sh
 source .venv/bin/activate
 
 DRY=1 ./run_pipeline.sh all      # print every command, run nothing
-./run_pipeline.sh                # steps 1-6, then stop at the checkpoint
+./run_pipeline.sh                # steps 1-5, then stop at the checkpoint
 ```
 
 The default run stops after H1 so the result can be read before committing to the 9-hour audience stage:
 
 ```bash
-cat analysis/h1/estimator_B2/h1_results.txt
+cat analysis/h1/h1_results_b2.txt
 
-./run_pipeline.sh audience       # step 7,  ~9 h
-./run_pipeline.sh analysis       # step 8,  H2, H3, MDU, baselines
-./run_pipeline.sh page           # step 9,  MP3s + listening page
+./run_pipeline.sh audience       # step 6,  ~9 h
+./run_pipeline.sh audience-resume # resume step 6 without replacing its calibration/data
+./run_pipeline.sh analysis       # step 7,  complete statistical analysis
+./run_pipeline.sh page           # step 8,  MP3s + listening page
 ```
 
 ### Targets
@@ -486,8 +518,12 @@ cat analysis/h1/estimator_B2/h1_results.txt
 | Argument | Steps | What it does |
 |---|---|---|
 | *(none)* | 1–5 | select coach, re-measure region, regenerate, score, H1 — then stop |
-| `audience` | 6 | the 9,792-response run |
-| `analysis` | 7 | every statistical test: H1, quadrant confidence, H2, H3, H3 supplementary, MDU, baselines, scale usage |
+| `audience` | 6 | rebuild the target-blind feature reference, then run 9,792 responses |
+| `audience-resume` | 6 | resume existing responses while preserving the existing feature reference |
+| `h1-checks` | 7 | H1, quadrant confidence, brief-level sensitivity, bootstrap and exact sign-flip checks |
+| `h2-checks` | 7 | H2 and control-baseline analyses only |
+| `h3-checks` | 7 | H3 and its supplementary analyses only |
+| `analysis` | 7 | complete H1/H2/H3 analyses, robustness checks, MDU, baselines and scale usage |
 | `page` | 8 | MP3 conversion and the listening page |
 | `all` | 1–8 | everything, no checkpoint pause |
 | `preflight` | 0 | environment checks only |
@@ -505,8 +541,8 @@ cat analysis/h1/estimator_B2/h1_results.txt
 | 3 | regenerate all 96 stimuli | ~20 min |
 | 4 | score with both judges, plus the coach as a diagnostic | ~6 min |
 | 5 | H1 for both judges, quadrant confidence | seconds |
-| 6 | synthetic audience | ~9 h |
-| 7 | every statistical test: H1, quadrant confidence, H2, H3, H3 supplementary, MDU, baselines, scale usage | minutes |
+| 6 | rebuild audience feature reference, then run the synthetic audience | ~9 h |
+| 7 | H1/H2/H3 analyses, H1 robustness checks, MDU, baselines and scale usage | minutes |
 | 8 | MP3 conversion, listening page | ~2 min |
 
 ### Outputs are replaced, not added to
@@ -518,13 +554,13 @@ Cleaning is scoped to the steps requested, so `./run_pipeline.sh analysis` clear
 | Steps | Cleared first |
 |---|---|
 | 1 | `models/selection/` |
-| 2 | `models/reachable_va.json` |
-| 3 | `data/stimuli/*.wav`, `manifest.json`, `logs/generation.jsonl` |
-| 4 | `data/analysis/h1_estimator_b*.csv`, `integrity.json` |
+| 2 | `models/reachable_va.json`, `config/briefs.yaml` |
+| 3 | `data/stimuli/`, `logs/generation.jsonl`, `logs/pilot.jsonl` |
+| 4 | `data/analysis/` |
 | 5 | `analysis/h1/` |
-| 6 | `data/audience/responses.csv`, `logs/audience.jsonl` |
-| 7 | `analysis/{h1,h2,h3,mdu,baselines,tables,stage7_scale_usage}/` |
-| 8 | `data/stimuli_mp3/*.mp3`, `index.html` |
+| 6 | `models/audience_feature_reference.json`, `data/audience/`, `logs/audience.jsonl` |
+| 7 | `analysis/{h1,h2,h3,mdu,baselines,tables,stage7_scale_usage}/`, `analysis/diagnostics/h1_robustness/` |
+| 8 | `data/stimuli_mp3/*.mp3`, `*.html`, `*.tmp` |
 
 Scripts, configs, corpora and frozen estimators are never touched — only generated artefacts.
 
@@ -585,6 +621,9 @@ python src/analysis/score_estimator_b.py --estimator estimator_B2
 Rscript analysis/Stage6_h1.R
 Rscript analysis/Stage6_h1.R estimator_B2
 Rscript analysis/Check_quadrant_confidence.R
+Rscript analysis/Check_h1_brief_level.R estimator_B2
+Rscript analysis/Check_h1_resampling.R estimator_B2 10000 20260829
+python -W ignore src/audience/build_feature_reference.py
 time python -W ignore src/audience/run_audience.py --backend ollama
 Rscript analysis/Stage6_h2.R
 Rscript analysis/Stage6_h3_alignment.R
@@ -654,13 +693,13 @@ Run `./run_pipeline.sh preflight` to check all of the above at once.
 
 | Stage | Calls | Time |
 |---|---|---|
-| Pilot (4 briefs) | ~98 | ~5 min |
-| Full generation | ~416 | ~17 min |
+| Pilot (4 briefs × 3 runs) | ~12 initial proposals | ~5 min |
+| Full generation (16 briefs × 3 runs) | ~48 initial proposals | ~20 min |
 | Estimator scoring | 0 | ~1 min |
 | Architecture selection (judge) | 0 | ~10 min (cached features) |
 | Architecture selection (coach, probe grid) | 0 | ~15 min (300 renders) |
 | Audience | 9,792 | ~9 h |
-| R analysis (all five) | 0 | minutes |
+| R analysis (complete target) | 0 | minutes |
 
 ---
 
