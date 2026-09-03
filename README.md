@@ -6,6 +6,31 @@ MSc dissertation project — WMG, University of Warwick.
 
 A parametric synthesiser generates short sonic logos toward target valence–arousal (VA) coordinates. Two independently frozen estimators score them. A synthetic audience of 32 OCEAN personas rates them.
 
+## Listen to the stimuli
+
+Explore the generated sonic logos in the public interactive gallery:
+
+**[Open the Sonic Logo Stimuli gallery](https://kaveenprabodhya.github.io/sonic-logo-stimuli/)**
+
+The gallery contains all 16 brand briefs, 48 repeated generation runs, and 96 audio stimuli. Each matched pair shows the first and best candidates, estimator movement, the target VA position, and the synthesiser parameters changed during optimisation. The gallery is a convenient way to inspect the published stimuli; the full pipeline below explains how to reproduce the artefacts locally.
+
+## Quick start
+
+For the shortest path from a fresh checkout to the first H1 result:
+
+```bash
+git lfs install
+git lfs pull
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+./run_pipeline.sh preflight
+DRY=1 ./run_pipeline.sh all       # inspect the commands first
+./run_pipeline.sh                 # generate and score stimuli, then stop at H1
+```
+
+The complete pipeline needs FluidSynth, FFmpeg, R, Ollama, the `qwen3:8b` model, and the DEAM/PMEmo corpora. See [Setup](#3-setup) for installation details. The audience stage takes approximately nine hours and is intentionally separated from the default run; use `./run_pipeline.sh audience` when you are ready to run it.
+
 ---
 
 ## 1. What runs where
@@ -17,27 +42,29 @@ A parametric synthesiser generates short sonic logos toward target valence–aro
 | LLM (all agents) | Qwen3:8b via Ollama, local | — |
 | Audio rendering | FluidSynth + GeneralUser-GS SoundFont | `assets/soundfonts/` |
 
-The same LLM is used for every agent and every stage.
+The same LLM is used for the generator and synthetic-audience agents at every stage that requires an LLM.
 
 ---
 
 ## 2. Hypotheses and what tests them
 
-**H1** — Optimised sonic logos sit closer to their intended valence–arousal target than their matched non-optimised counterparts, as judged by the held-out estimator.
+**H1** — Optimisation of synthetic sonic logos will improve their emotional alignment with brand-intended valence–arousal targets.
 
-**H2** — Systematically varied OCEAN profiles produce distinguishable perceived valence and arousal ratings for the same stimulus.
+**H2** — Audience-perceived emotional responses to the same sonic logo will differ across OCEAN personality profiles.
 
-**H3** — The distance between intended and perceived valence–arousal positions differs across OCEAN-based synthetic audience personas.
+**H3** — The degree of alignment between brand-intended and audience-perceived emotional positions will differ across OCEAN-based synthetic audience personas.
 
 | Hypothesis | What is compared | Test | Script | Input |
 |---|---|---|---|---|
-| **H1** | Intended VA target vs held-out estimator, optimised vs non-optimised | Paired t-test on 48 matched pairs, mixed-effects model, sign test, Wilcoxon | `Stage6_h1.R` | `data/analysis/h1_estimator_b.csv` |
+| **H1** | Intended VA target vs independent Estimator B2, optimised vs non-optimised | Paired t-test on 48 matched pairs, mixed-effects model, sign test, Wilcoxon | `Stage6_h1.R estimator_B2` | `data/analysis/h1_estimator_b_estimator_B2.csv` |
 | **H2** | Perceived valence and arousal across OCEAN profiles, same stimuli | Separate mixed-effects models, omnibus LRT, Holm adjustment | `Stage6_h2.R` | `data/audience/responses.csv` |
 | **H3** | Distance between intended and persona-perceived VA, by OCEAN trait | Mixed-effects, five traits jointly by LRT | `Stage6_h3_alignment.R` | `data/audience/responses.csv` |
 
 H1 tests RO2, H2 tests RO3, H3 tests RO5. RO4 carries no hypothesis.
 
 H1 is stimulus-level and uses only Stage 3 output. H2 and H3 are audience-level and need the full Stage 4 run.
+
+Estimator B2 is the dissertation's primary independent H1 judge. The incumbent Estimator B remains available as a comparative judge through the commands that omit the estimator argument.
 
 Supporting analyses:
 
@@ -211,6 +238,8 @@ Estimator A guides the optimisation loop. Estimator B is held out and used only 
 ## 5. The pipeline
 
 Later stages depend on earlier outputs, so run in order.
+
+The `Stage` labels below describe the research procedure. `run_pipeline.sh` uses runner step numbers 1–8 for the same work, with research Stage 4 (the audience) implemented as runner step 6.
 
 ### Stage 0 — Build and freeze the estimators
 
